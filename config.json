@@ -4,8 +4,7 @@
 
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
 
-    "printErrOnTerminal": true,
-    
+    "printErrOnTerminal": false,
     
     "commands": [
         {
@@ -13,6 +12,22 @@
             "functions": [
                 {
                     "name": "errTemplate"
+                }
+            ]
+        },
+        {
+            "name": "help",
+            "functions": [
+                {
+                    "name": "embed",
+                    "embedContent": {
+                        "author": "",
+                        "title": "ConfBot Ajuda",
+                        "description": ">>> Este é o ConfBot!!!\n Para ter mais detalhes sobre a configuração deste bot, acesse: https://github.com/M4THEWS2/ConfBot/",
+                        "color": "",
+                        "thumnail (URL)": "",
+                        "image (URL)": ""
+                    }
                 }
             ]
         }

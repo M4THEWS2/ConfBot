@@ -2,6 +2,10 @@ const Discord = require('discord.js');
 const config = require('../config.json');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
+client.on('ready', () => {
+    console.log("I'm ready!!")
+});
+
 client.on("messageCreate", msg => {    
     if (msg.author.bot === true) {return}
     else if (!msg.content.startsWith(config.prefix)) {return};
