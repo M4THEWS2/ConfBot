@@ -30,6 +30,22 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "variables",
+            "functions": [
+                {
+                    "name": "embed",
+                    "embedContent": {
+                        "author": "",
+                        "title": "ConfBot Variables",
+                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_username}\n **Não se esqueça de tirar os ponto das chaves!!**",
+                        "color": "",
+                        "thumnail (URL)": "",
+                        "image (URL)": ""
+                    }
+                }
+            ]
         }
     ]
 }

@@ -1,13 +1,15 @@
 const Discord = require('discord.js');
+const getVariables = require('../functions/getVariables.js');
 const config = require('../../config.json');
 
 module.exports = function (client, msg, args, command) {
     let embed = new Discord.MessageEmbed()
-        .setAuthor(command.embedContent.author)
-        .setTitle(command.embedContent.title)
-        .setDescription(command.embedContent.description)
-        .setThumbnail(command.embedContent.thumbnail)
-        .setImage(command.embedContent.image);
+        .setAuthor(getVariables(command.embedContent.author, msg))
+        .setTitle(getVariables(command.embedContent.title, msg))
+        .setDescription(getVariables(command.embedContent.description, msg))
+        .setThumbnail(getVariables(command.embedContent.thumbnail, msg))
+        .setImage(getVariables(command.embedContent.image, msg))
+        .setFooter(getVariables(command.embedContent.footer, msg));
     
     if (command.embedContent.color) {
         embed.setColor(command.embedContent.color);
