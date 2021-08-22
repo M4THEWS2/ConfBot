@@ -1,4 +1,20 @@
 {
-    "token": "",
-    "prefix": "!"
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.YJWMMA.f51Pbwzx7xDC1FRh4PO6Mg7Mbx8",
+    "prefix": "!",
+
+    "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
+
+    "printErrOnTerminal": true,
+    
+    
+    "commands": [
+        {
+            "name": "errTemplate",
+            "functions": [
+                {
+                    "name": "errTemplate"
+                }
+            ]
+        }
+    ]
 }
