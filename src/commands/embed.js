@@ -15,5 +15,9 @@ module.exports = function (client, msg, args, command) {
         embed.setColor(command.embedContent.color);
     };
 
-    msg.reply({"embeds": [embed]});
+    if (!command.reply) {
+        msg.channel.send({ "embeds": [embed] });
+    } else {
+        msg.reply({ "embeds": [embed] });
+    }
 }
