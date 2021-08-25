@@ -1,5 +1,5 @@
 {
-    "token": "",
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.YJWMMA.yDF8kB3PnLjXTtaeYL1nUAKf9oA",
     "prefix": "!",
 
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
@@ -44,7 +44,7 @@
                     "embedContent": {
                         "author": "",
                         "title": "ConfBot Variables",
-                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n **Não se esqueça de tirar os ponto das chaves!!**",
+                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n Comando digitado: {.command}\n **Não se esqueça de tirar os ponto das chaves!!**",
                         "color": "",
                         "thumnail (URL)": "",
                         "image (URL)": ""
