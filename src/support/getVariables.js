@@ -20,6 +20,10 @@ module.exports = function (content, msg) {
         {
             "name": "command",
             "value": command
+        },
+        {
+            "name": "prefix",
+            "value": config.prefix
         }
     ];
 

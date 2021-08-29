@@ -44,11 +44,22 @@
                     "embedContent": {
                         "author": "",
                         "title": "ConfBot Variables",
-                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n Comando digitado: {.command}\n **Não se esqueça de tirar os ponto das chaves!!**",
+                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n Comando digitado: {.command}\n **Não se esqueça de tirar os ponto das chaves!!** Você pode ver todas as variáveis na documentação!!",
                         "color": "",
                         "thumnail (URL)": "",
                         "image (URL)": ""
                     }
+                }
+            ]
+        },
+        {
+            "name": "ban",
+            "functions": [
+                {
+                    "name": "ban",
+                    "content": "O usuário foi banido com sucesso!!",
+                    "banErrorMessage": "> Forma de uso: {prefix}ban <usuário> <motivo(opcional)>!!",
+                    "reply": true
                 }
             ]
         }
