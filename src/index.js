@@ -5,19 +5,7 @@ const getVariables = require('./support/getVariables.js');
 const date = new Date();
 const activities = require('../activities.json');
 
-// Quando o bot ficar on
-client.on('ready', () => {
-    console.log(`I'm ready at: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`); // Manda uma mensagem quando o bot estiver pronto
-
-    let i;
-    setInterval(() => {
-        i = activities[Math.floor(Math.random() * activities.length)]; // Copia uma activitie aleatória do array json
-        client.user.setActivity(i.msg, { type: i.type /*Type pode ser: "WATCHING", "PLAYING", "STREAMING", "LISTENING", "CUSTOM", "COMPETING"*/ });
-    }, 5000);
-});
-
-// Toda vez que um mensagem for enviada
-client.on("messageCreate", msg => {
+function executeCommand(msg) {
     if (msg.author.bot === true) { return } // Set a mensagem for de um bot restorna
     else if (!msg.content.startsWith(config.prefix)) { return }; // Se a mensagem não começar com o prefixo retorna
 
@@ -59,7 +47,27 @@ client.on("messageCreate", msg => {
     if (config.printErrOnTerminal) {
         console.log(`${command}: not found.`);
     }
+}
+
+// Quando o bot ficar on
+client.on('ready', () => {
+    console.log(`I'm ready at: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`); // Manda uma mensagem quando o bot estiver pronto
+
+    let i;
+    setInterval(() => {
+        i = activities[Math.floor(Math.random() * activities.length)]; // Copia uma activitie aleatória do array json
+        client.user.setActivity(i.msg, { type: i.type /*Type pode ser: "WATCHING", "PLAYING", "STREAMING", "LISTENING", "CUSTOM", "COMPETING"*/ });
+    }, 5000);
 });
+
+// Toda vez que um mensagem for enviada
+client.on("messageCreate", msg => {
+    executeCommand(msg);
+});
+
+client.on("messageUpdate", (oldMsg, msg) => {
+    executeCommand(msg);
+})
 
 // Deixa o bot on
 client.login(config.token);
