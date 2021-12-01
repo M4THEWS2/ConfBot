@@ -1,11 +1,8 @@
 {
-    "token": "",
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.YJWMMA.tQjOE7ITaEsZCn39zMxaULX_4Rs",
     "prefix": "!",
-
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
-
     "printErrOnTerminal": false,
-    
     "commands": [
         {
             "name": "errTemplate",
@@ -44,7 +41,7 @@
                     "embedContent": {
                         "author": "",
                         "title": "ConfBot Variables",
-                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n Comando digitado: {.command}\n **Não se esqueça de tirar os ponto das chaves!!** Você pode ver todas as variáveis na documentação!!",
+                        "description": ">>> Mencionar usuário: {.user_mention}\n Pegar ID: {.user_id}\n Pegar nome: {.user_name}\n Comando digitado: {.command}\n\n **Não se esqueça de tirar os ponto das chaves!!**\n Você pode ver todas as variáveis na documentação!!",
                         "color": "",
                         "thumnail (URL)": "",
                         "image (URL)": ""
@@ -60,6 +57,51 @@
                     "content": "O usuário foi banido com sucesso!!",
                     "banErrorMessage": "> Forma de uso: {prefix}ban <usuário> <motivo(opcional)>!!",
                     "reply": true
+                }
+            ]
+        },
+        {
+            "name": "performace-test",
+            "functions": [
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
+                },
+                {
+                    "name": "send",
+                    "content": "Test"
                 }
             ]
         }

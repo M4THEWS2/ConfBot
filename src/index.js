@@ -6,21 +6,23 @@ const date = new Date();
 const activities = require('../activities.json');
 
 function executeCommand(msg) {
-    if (msg.author.bot === true) { return } // Set a mensagem for de um bot restorna
+    if (msg.author.bot === true) { return } // Se a mensagem for de um bot retorna
     else if (!msg.content.startsWith(config.prefix)) { return }; // Se a mensagem não começar com o prefixo retorna
 
-    let command = msg.content.includes(" ") ? msg.content.split(" ")[0] : msg.content; // Cria uma variável que contém o comando enviado com o prefixo
+    let command = msg.content.split(" ")[0]; // Cria uma variável que contém o comando enviado com o prefixo
     command = command.substring(config.prefix.length, command.length).toLowerCase(); // Retira o prefixo do comando
 
     let args = msg.content.split(" "); // Cria uma variável de argumentos
+    args[0] = command;
 
-    for (let confCommand = 0; confCommand < config.commands.length; confCommand++) { // Todos os comandos dentro do config.json
-        if (command == config.commands[confCommand].name.toLowerCase()) { // Verifica se o command bate com algum comando dentro do config.json 
-            for (let functionName = 0; functionName < Object.keys(config.commands[confCommand].functions).length; functionName++) { // Começa a pegar todas as funções do comando e tenta executa-las
+    let res = false;
+    config.commands.forEach((value, index, array) => {
+        if (command == value.name.toLowerCase()) {
+            value.functions.forEach((val, ind, arr) => {
                 try {
-                    let commandFunction = require(`./functions/${config.commands[confCommand].functions[functionName].name}.js`); // Procura pelo comando digitado no config.json
-                    commandFunction(client, msg, args, config.commands[confCommand].functions[functionName]); // Caso encontre o executa
-                } catch (err) { // Se não conseguir executar o comando
+                    let commandFunction = require(`./functions/${val.name}.js`);
+                    commandFunction(client, msg, args, val);
+                } catch (err) {
                     let errembed = new Discord.MessageEmbed()
                         .setTitle("ConfBot Error")
                         .setDescription("> Ocorreu um erro durante a execução do código :disappointed_relieved:. Tente contatar o desenvolvedor deste bot saber a causa do erro. Se você for o desenvolvedor e encontrou um bug, entre na documentação do ConfBot: https://github.com/M4THEWS2/ConfBot/issues e reporte-o.\n ```" + err + "```")
@@ -28,24 +30,25 @@ function executeCommand(msg) {
 
                     msg.reply({ "embeds": [errembed] }); // Envia mensagem de erro
 
-                    if (config.printErrOnTerminal) { // Se estiver ativo printa no terminal o que aconteceu
+                    if (config.printErrOnTerminal) { // Se estiver ativo escreve no terminal o que aconteceu
                         console.log(err);
                     }
                 }
-            }
-
-            return; // Caso encontre algum comando com o nome, retorna no final da execução
+            });
+            res = true;
         }
-    }
+    });
 
-    // Caso não retorne printa outro erro
-    let cmdNotFound = new Discord.MessageEmbed()
-        .setTitle("Comando não encontrado:")
-        .setDescription(getVariables(config.commandNotFoundMessage, msg));
+    if (!res) {
+        // Caso não retorne, fala que o comando não foi encontrado
+        let cmdNotFound = new Discord.MessageEmbed()
+            .setTitle("Comando não encontrado:")
+            .setDescription(getVariables(config.commandNotFoundMessage, msg));
 
-    msg.reply({ "embeds": [cmdNotFound] })
-    if (config.printErrOnTerminal) {
-        console.log(`${command}: not found.`);
+        msg.reply({ "embeds": [cmdNotFound] })
+        if (config.printErrOnTerminal) {
+            console.log(`${command}: not found.`);
+        }
     }
 }
 
