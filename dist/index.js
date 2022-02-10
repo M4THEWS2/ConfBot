@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const readConfig_1 = __importDefault(require("./readConfig"));
 const readActivities_1 = __importDefault(require("./readActivities"));
-const hidden_1 = __importDefault(require("./hidden"));
+// import hidden from "./hidden";
 const client = new discord_js_1.Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES"] });
 client.on("ready", (c) => {
     const date = new Date();
@@ -51,4 +51,4 @@ client.on("messageCreate", (msg) => {
     });
     notFound ? msg.reply(readConfig_1.default.commandNotFoundMessage) : null;
 });
-client.login(hidden_1.default.TOKEN);
+client.login(readConfig_1.default.token);
