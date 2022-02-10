@@ -1,17 +1,22 @@
 import { Client, MessageEmbed } from "discord.js";
-import config from "./readConfig"
-import hidden from "./hidden";
+
+import config from "./readConfig";
+import activities from "./readActivities";
+
+// import hidden from "./hidden";
 
 const client = new Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES"] });
 
-interface commandInterface {
-    name: string;
-    functions: Array<any>;
-}
-
 client.on("ready", (c) => {
-    console.log("I'm ready!");
-})
+    const date = new Date();
+    console.log(`I'm ready at: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`); // Manda uma mensagem quando o bot estiver pronto
+
+    let i;
+    setInterval(() => {
+        i = activities[Math.floor(Math.random() * activities.length)]; // Copia uma activity aleatória do array json
+        c.user.setActivity(i.msg, { type: i.type /*Type pode ser: "WATCHING", "PLAYING", "STREAMING", "LISTENING", "CUSTOM", "COMPETING"*/ });
+    }, 5000);
+});
 
 client.on("messageCreate", (msg) => {
     if (msg.author.bot === true) { return } // Verifica se a mensagem não é de um bot
@@ -21,9 +26,12 @@ client.on("messageCreate", (msg) => {
     let args = msg.content.split(" "); // Cria variável que contém os parametros do comando
     commandName = commandName.substring(config.prefix.length, commandName.length).toLowerCase(); // Retira o prefixo do comando
     
-    config.commands.forEach((command: commandInterface) => {
+
+    let notFound = true;
+    config.commands.forEach((command: any) => {
         if (command.name == commandName) {
-            command.functions.forEach(val => {
+            notFound = false;
+            command.functions.forEach((val: any) => {
                 try {
                     let commandFunction = require(`./functions/${val.name}`).exec;
                     commandFunction(client, msg, args, val);
@@ -40,6 +48,8 @@ client.on("messageCreate", (msg) => {
             });
         }
     });
+
+    notFound ? msg.reply(config.commandNotFoundMessage) : null;
 });
 
-client.login(hidden.TOKEN);
+client.login(config.token);

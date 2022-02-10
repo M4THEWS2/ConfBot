@@ -5,10 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const readConfig_1 = __importDefault(require("./readConfig"));
+const readActivities_1 = __importDefault(require("./readActivities"));
 const hidden_1 = __importDefault(require("./hidden"));
 const client = new discord_js_1.Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES"] });
 client.on("ready", (c) => {
-    console.log("I'm ready!");
+    const date = new Date();
+    console.log(`I'm ready at: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`); // Manda uma mensagem quando o bot estiver pronto
+    let i;
+    setInterval(() => {
+        i = readActivities_1.default[Math.floor(Math.random() * readActivities_1.default.length)]; // Copia uma activity aleatória do array json
+        c.user.setActivity(i.msg, { type: i.type /*Type pode ser: "WATCHING", "PLAYING", "STREAMING", "LISTENING", "CUSTOM", "COMPETING"*/ });
+    }, 5000);
 });
 client.on("messageCreate", (msg) => {
     if (msg.author.bot === true) {
@@ -21,9 +28,11 @@ client.on("messageCreate", (msg) => {
     let commandName = msg.content.split(" ")[0]; // Cria uma variável que contém o comando enviado com o prefixo
     let args = msg.content.split(" "); // Cria variável que contém os parametros do comando
     commandName = commandName.substring(readConfig_1.default.prefix.length, commandName.length).toLowerCase(); // Retira o prefixo do comando
+    let notFound = true;
     readConfig_1.default.commands.forEach((command) => {
         if (command.name == commandName) {
-            command.functions.forEach(val => {
+            notFound = false;
+            command.functions.forEach((val) => {
                 try {
                     let commandFunction = require(`./functions/${val.name}`).exec;
                     commandFunction(client, msg, args, val);
@@ -40,5 +49,6 @@ client.on("messageCreate", (msg) => {
             });
         }
     });
+    notFound ? msg.reply(readConfig_1.default.commandNotFoundMessage) : null;
 });
 client.login(hidden_1.default.TOKEN);
