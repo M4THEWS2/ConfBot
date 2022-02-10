@@ -1,8 +1,8 @@
 {
     "token": "",
-    "prefix": "!",
+    "prefix": "c+!",
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
-    "printErrOnTerminal": false,
+    "printErrOnTerminal": true,
     "commands": [
         {
             "name": "errTemplate",

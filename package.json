@@ -7,6 +7,11 @@
     "type": "git",
     "url": "git+https://github.com/M4THEWS2/ConfBot.git"
   },
+  "scripts": {
+    "start": "node dist/",
+    "build": "tsc",
+    "test": "tsc && node dist/"
+  },
   "author": "M4THEWS",
   "license": "MIT",
   "bugs": {
@@ -14,6 +19,7 @@
   },
   "homepage": "https://github.com/M4THEWS2/ConfBot#readme",
   "dependencies": {
-    "discord.js": "^13.3.1"
+    "discord.js": "^13.6.0",
+    "typescript": "^4.5.5"
   }
 }
