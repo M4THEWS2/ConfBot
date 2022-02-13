@@ -68,6 +68,36 @@
                     "content": "Test"
                 }
             ]
+        },
+        {
+            "name": "btn_test",
+            "functions": [
+                {
+                    "name": "button",
+                    "content": "Test content",
+                    "buttons": [
+                        {
+                            "label": "test",
+                            "style": "SUCCESS",
+                            "onPress": {
+                                "name": "send",
+                                "content": "Olá mundo!"
+                            }
+                        },
+                        {
+                            "label": "testing2",
+                            "style": "DANGER",
+                            "onPress": {
+                                "name": "embed",
+                                "embedContent": {
+                                    "title": "ConfBot Ajuda",
+                                    "description": "Você apertou um botão!!"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
