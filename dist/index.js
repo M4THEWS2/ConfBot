@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const readConfig_1 = __importDefault(require("./readConfig"));
 const readActivities_1 = __importDefault(require("./readActivities"));
-// import hidden from "./hidden";
-const client = new discord_js_1.Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES"] });
+const hidden_1 = __importDefault(require("./hidden"));
+const client = new discord_js_1.Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES", "GUILD_BANS", "GUILD_MEMBERS"] });
 client.on("ready", (c) => {
     const date = new Date();
     console.log(`I'm ready at: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`); // Manda uma mensagem quando o bot estiver pronto
@@ -51,4 +51,4 @@ client.on("messageCreate", (msg) => {
     });
     notFound ? msg.reply(readConfig_1.default.commandNotFoundMessage) : null;
 });
-client.login(readConfig_1.default.token);
+client.login(hidden_1.default.token);

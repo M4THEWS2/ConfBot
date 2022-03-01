@@ -98,6 +98,32 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "ban",
+            "functions": [
+                {
+                    "name": "button",
+                    "content": "Você tem certeza que quer banir este usuário?",
+                    "buttons": [
+                        {
+                            "label": "Sim",
+                            "style": "DANGER",
+                            "onPress": {
+                                "name": "ban"
+                            }
+                        },
+                        {
+                            "label": "Não",
+                            "style": "SUCCESS",
+                            "onPress": {
+                                "name": "reply",
+                                "content": "Tudo bem!"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

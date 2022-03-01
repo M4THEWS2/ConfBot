@@ -5,7 +5,7 @@ import activities from "./readActivities";
 
 // import hidden from "./hidden";
 
-const client = new Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES"] });
+const client = new Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES", "GUILD_BANS", "GUILD_MEMBERS"] });
 
 client.on("ready", (c) => {
     const date = new Date();
@@ -52,4 +52,5 @@ client.on("messageCreate", (msg) => {
     notFound ? msg.reply(config.commandNotFoundMessage) : null;
 });
 
+// client.login(hidden.token);
 client.login(config.token);
