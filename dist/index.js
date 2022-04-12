@@ -52,3 +52,4 @@ client.on("messageCreate", (msg) => {
     notFound ? msg.reply(readConfig_1.default.commandNotFoundMessage) : null;
 });
 client.login(hidden_1.default.token);
+// client.login(config.token);
