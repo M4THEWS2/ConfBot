@@ -25,7 +25,7 @@ client.on("messageCreate", (msg) => {
     let commandName = msg.content.split(" ")[0]; // Cria uma variável que contém o comando enviado com o prefixo
     let args = msg.content.split(" "); // Cria variável que contém os parametros do comando
     commandName = commandName.substring(config.prefix.length, commandName.length).toLowerCase(); // Retira o prefixo do comando
-    
+
 
     let notFound = true;
     config.commands.forEach((command: any) => {

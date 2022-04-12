@@ -104,7 +104,7 @@
             "functions": [
                 {
                     "name": "button",
-                    "content": "Você tem certeza que quer banir este usuário?",
+                    "content": "Você tem certeza de que quer banir este usuário?",
                     "buttons": [
                         {
                             "label": "Sim",
