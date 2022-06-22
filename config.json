@@ -1,5 +1,5 @@
 {
-    "token": "",
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.GMI6oU.vAjTAWAKKI8xhIO3hlWjATQyTeffGjbVRiHMts",
     "prefix": "c+!",
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
     "printErrOnTerminal": true,
@@ -122,6 +122,43 @@
                             }
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "name": "addstock",
+            "functions": [
+                {
+                    "name": "stock",
+                    "method": "add",
+                    "value": 1
+                },
+                {
+                    "name": "reply",
+                    "content": "Executado!"
+                }
+            ]
+        },
+        {
+            "name": "removestock",
+            "functions": [
+                {
+                    "name": "stock",
+                    "method": "remove",
+                    "value": 1
+                },
+                {
+                    "name": "reply",
+                    "content": "Executado!"
+                }
+            ]
+        },
+        {
+            "name": "liststock",
+            "functions": [
+                {
+                    "name": "stock",
+                    "method": "list"
                 }
             ]
         }

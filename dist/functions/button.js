@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.exec = void 0;
 const discord_js_1 = require("discord.js");
 const Button_1 = require("../classes/Button");
-const readConfig_1 = __importDefault(require("../readConfig"));
+const readConfig_js_1 = __importDefault(require("../readConfig.js"));
 function exec(client, msg, args, val) {
     return __awaiter(this, void 0, void 0, function* () {
         const newButtons = new Button_1.Button();
@@ -40,7 +40,7 @@ function exec(client, msg, args, val) {
                             .setTitle("ConfBot Error")
                             .setDescription("> Ocorreu um erro durante a execução do código :disappointed_relieved:. Tente contatar o desenvolvedor deste bot saber a causa do erro. Se você for o desenvolvedor e encontrou um bug, entre na documentação do ConfBot: https://github.com/M4THEWS2/ConfBot/issues e reporte-o.\n ```" + err + "```");
                         msg.reply({ "embeds": [errembed] }); // Envia mensagem de erro
-                        if (readConfig_1.default.printErrOnTerminal) { // Se estiver ativo escreve no terminal o que aconteceu
+                        if (readConfig_js_1.default.printErrOnTerminal) { // Se estiver ativo escreve no terminal o que aconteceu
                             console.log(err);
                         }
                     }

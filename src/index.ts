@@ -1,11 +1,14 @@
 import { Client, MessageEmbed } from "discord.js";
+import { readFileSync } from "fs";
+import config from "./readConfig.js";
 
-import config from "./readConfig";
 import activities from "./readActivities";
 
 // import hidden from "./hidden";
 
 const client = new Client({ intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MESSAGES", "GUILD_BANS", "GUILD_MEMBERS"] });
+
+process.env.stock = readFileSync("./.stock").toString('utf-8');
 
 client.on("ready", (c) => {
     const date = new Date();

@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed } from "discord.js";
 import { Button } from "../classes/Button";
-import config from "../readConfig";
+import config from "../readConfig.js";
 
 interface event_btn_press {
     id: string;
