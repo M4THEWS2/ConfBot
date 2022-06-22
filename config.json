@@ -1,5 +1,5 @@
 {
-    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.GMI6oU.vAjTAWAKKI8xhIO3hlWjATQyTeffGjbVRiHMts",
+    "token": "",
     "prefix": "c+!",
     "commandNotFoundMessage": "Comando não encontrado, verifique se o comando está digitado corretamente ou digite !help para ver se o comando realmente existe.",
     "printErrOnTerminal": true,
