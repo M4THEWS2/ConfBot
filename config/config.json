@@ -1,0 +1,19 @@
+{
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.GeDfos.Au4VhsC6NVuGJxwxT1lzeGXI6Cgmw_BlpCN_nY",
+    "prefix": "!",
+    "commands": [
+      {
+        "name": "ping",
+        "functions": [
+          {
+            "name": "say",
+            "message": "Pong!"
+          },
+          {
+            "name": "say",
+            "message": "Life could be a dream!"
+          }
+        ]
+      }
+    ]
+}
