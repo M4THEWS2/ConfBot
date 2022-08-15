@@ -3,7 +3,8 @@
   "main": "src/index.js",
   "scripts": {
     "install": "npm install",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "update": "git pull && npm install"
   },
   "author": "matheuscristian",
   "license": "MIT",
