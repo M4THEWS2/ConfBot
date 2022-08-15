@@ -2,15 +2,12 @@
   "name": "confbot",
   "main": "src/index.js",
   "scripts": {
-    "test-linux": "./scripts/build-run.sh",
-    "test-windows": "./scripts/build-run.bat",
-    "start": "node src/index.js",
-    "build": "tsc"
+    "install": "npm install",
+    "start": "node src/index.js"
   },
   "author": "matheuscristian",
   "license": "MIT",
   "devDependencies": {
-    "discord.js": "^14.2.0",
-    "typescript": "^4.7.4"
+    "discord.js": "^14.2.0"
   }
 }

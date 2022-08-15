@@ -1,2 +1,13 @@
-[SóMatheus#5879] (694949148956426348) ran the function [say] (for the 1 time) with the command [ping] at Central Dos Soldados 🪖 (869308360804155433). ---> 8/13/2022, 8:50:23 PM
-[SóMatheus#5879] (694949148956426348) ran the function [say] (for the 2 time) with the command [ping] at Central Dos Soldados 🪖 (869308360804155433). ---> 8/13/2022, 8:50:23 PM
+---*Function bla does not exist.*---
+---*Function bla does not exist.*---
+SóMatheus#5879 (694949148956426348) ran command bb and got error DiscordAPIError[50035]: Invalid Form Body
+components[0].components[5][COMPONENT_LAYOUT_WIDTH_EXCEEDED]: The specified component exceeds the maximum width - 8/15/2022, 12:35:18 PM
+[SóMatheus#5879] (694949148956426348) ran the function [button] with the command [bb] (1 time(s)) at Central Dos Soldados 🪖 (869308360804155433). ---> 8/15/2022, 12:35:44 PM
+[SóMatheus#5879] (694949148956426348) ran the function [button] with the command [bb] (1 time(s)) at Central Dos Soldados 🪖 (869308360804155433). ---> 8/15/2022, 12:38:32 PM
+[SóMatheus#5879] (694949148956426348) ran the function [button] with the command [bb] (1 time(s)) at Central Dos Soldados 🪖 (869308360804155433). ---> 8/15/2022, 12:38:58 PM
+[SóMatheus#5879] (694949148956426348) ran the function [button] with the command [bb] (1 time(s)) at Central Dos Soldados 🪖 (869308360804155433). ---> 8/15/2022, 12:39:21 PM
+SóMatheus#5879 (694949148956426348) ran command bb and got error DiscordAPIError[50035]: Invalid Form Body
+components[0].components[5][COMPONENT_LAYOUT_WIDTH_EXCEEDED]: The specified component exceeds the maximum width - 8/15/2022, 12:39:46 PM
+SóMatheus#5879 (694949148956426348) ran command bb and got error Error: Expected the value to be a string or number - 8/15/2022, 12:40:25 PM
+SóMatheus#5879 (694949148956426348) ran command bb and got error Error: Expected the value to be a string or number - 8/15/2022, 12:41:38 PM
+[SóMatheus#5879] (694949148956426348) ran the function [button] with the command [bb] (1 time(s)) at Central Dos Soldados 🪖 (869308360804155433). ---> 8/15/2022, 12:41:58 PM

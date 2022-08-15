@@ -1,5 +1,5 @@
 {
-    "token": "",
+    "token": "You token",
     "prefix": "!",
     "commands": [
       {
@@ -8,10 +8,73 @@
           {
             "name": "say",
             "message": "Pong!"
+          }
+        ]
+      },
+      {
+        "name": "pig",
+        "functions": [
+          {
+            "name": "embed",
+            "embed": {
+              "title": "A liitle piggy has appeared! :pig:",
+              "description": "Would you like to make it happy?",
+              "color": 10038562
+            }
           },
           {
-            "name": "say",
-            "message": "Life could be a dream!"
+            "name": "button",
+            "buttons": [
+              {
+                "label": "Yes!",
+                "style": "Success",
+                "callback": {
+                  "name": "say",
+                  "message": "You made a pig happy :)"
+                }
+              },
+              {
+                "label": "No!",
+                "style": "Danger",
+                "callback": {
+                  "name": "say",
+                  "message": "You made a pig sad!! {user}, you are a **MONSTER**!"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "creeper",
+        "functions": [
+          {
+            "name": "button",
+            "buttons": [
+              {
+                "label": "Ohwn man!",
+                "style": "Success",
+                "callback": {
+                  "name": "array",
+                  "functions": [
+                    {
+                      "name": "say",
+                      "message": "***Creeper!*** **Ohwn man!**"
+                    },
+                    {
+                      "name": "embed",
+                      "embed": {
+                        "title": "Minecraft",
+                        "description": "***I am back into mine...***",
+                        "image": {
+                          "url": "https://c.tenor.com/Obt9ep5Es1QAAAAC/minecraft-creeper.gif"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       }

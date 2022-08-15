@@ -1,0 +1,6 @@
+{
+  "ready": "Your Bot is now online!",
+  "functionError": "There was an error trying to execute that command!",
+  "commandDoesNotExist": "Command does not exist.",
+  "buttonClickTimeout": "Message was not responded to in time."
+}
