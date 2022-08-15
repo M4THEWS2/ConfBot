@@ -1,5 +1,4 @@
 'use strict'
-const Discord = require('discord.js');
 const events = require('../events.js');
 
 module.exports = {
