@@ -91,7 +91,7 @@ Simple usage:
     "message": "Hello!"
   },
   {
-    "name: "sleep",
+    "name": "sleep",
     "time": 5000,
     "callback": {
       "name": "reply",
