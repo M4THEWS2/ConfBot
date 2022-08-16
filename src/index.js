@@ -35,8 +35,8 @@ config.commands.forEach((command) => {
 // Get all functions from the functions folder
 const functions = new Discord.Collection();
 fs.readdirSync(path.join(__dirname, "./functions")).forEach((file) => {
-  const func = require(`./functions/${file}`);
-  functions.set(func.func_name, func.func);
+  const func_obj = require(`./functions/${file}`);
+  functions.set(func_obj.func_name, func_obj.func_func);
 });
 
 // Create the log stream
@@ -52,60 +52,66 @@ client.on("ready", () => {
   console.log(lang.ready);
 });
 
-// Function to run a function
-async function runFunction(message, args, func, command, count) {
-  // If the function doesn't exist, send error message
-  if (functions.has(func.name)) {
-    // Replace the variables in the function
-    Object.entries(func).forEach(([key, value]) => {
-      if (typeof value === "string") {
-        func[key] = value.replace(/{user}/g, `<@${message.author.id}>`);
-      } else if (typeof value == "object") {
-        Object.entries(value).forEach(([key2, value2]) => {
-          if (typeof value2 === "string") {
-            value[key2] = value2.replace(/{user}/g, `<@${message.author.id}>`);
-          }
-        });
-      }
-    });
+function replace_variables(obj, message) {  
+  // Get all keys and values from the object
+  Object.entries(obj).forEach(([key, value]) => {
+    // If the value is a string replace the variables
+    if (typeof value === "string") {
+      obj[key] = obj[key].replace(/{user}/g, `<@${message.author.id}>`);
+      obj[key] = obj[key].replace(/{fmention}/g, message.mentions.members.first() ? `<@${message.mentions.members.first().id}>` : lang.noMentionMessage);
+      obj[key] = obj[key].replace(/{user_icon}/g, message.author.displayAvatarURL());
+      obj[key] = obj[key].replace(/{user_name}/g, message.author.username);
 
-    let success = true;
-    // Run the function
-    await functions.get(func.name)?.(message, args, func).catch((error) => {
-      // If there is an error, send error message
-      message.reply(lang.functionError);
-      // Log the error
-      log.write(
-        `${message.author.tag} (${message.author.id}) ran command ${command} and got error ${error} - ${new Date().toLocaleString()}\n`
-      );
-      // Send the error in the console
-      console.error(`\nERROR:\n ${error}`);
-      success = false;
-    });
-    // If the function was successful, log it
-    if (success) {
-      // Log the command
-      log.write(
-        `[${message.author.tag}] (${message.author.id}) ran the function [${func.name
-        }] with the command [${command}] (${count} time(s)) at ${message.guild?.name
-        } (${message.guild?.id}). ---> ${new Date().toLocaleString()}\n`
-      );
+    } else if (typeof value === "object") {
+      // If the value is an object, run the function again but in the object
+      replace_variables(obj[key], message);
+    }
+  });
+}
+
+function handleError(err, message, commandName) {
+  console.error("\n" + err + "\n");
+  message.reply(lang.functionError.replace(/{command}/g, commandName));
+  log.write(`${message.author.tag} (${message.author.id}) ran the command ${commandName} in ${message.guild.name} (${message.guild.id}) and got Error: ${err?.message} - ${new Date().toLocaleString()}\n`);
+}
+
+// Function to run a function
+async function runFunction(message, args, funcObj, commandName, isArrayFunc = false, isCommandSpawned = false) {
+  let success = true;
+  if (isArrayFunc) {
+    let func = null
+    if (isCommandSpawned) {
+      func = JSON.parse(JSON.stringify(funcObj));
+      replace_variables(func, message);
+    } else {
+      func = funcObj;
+    }
+
+    for (const fn of func) {
+      if (functions.has(fn.name)) {
+        await functions.get(fn.name)(message, args, fn, commandName).catch(err => { handleError(err, message, commandName); success = false; });
+      } else {
+        handleError(new Error("Function doesn't exist."), message, commandName);
+        success = false;
+        break;
+      }
     }
   } else {
-    // Send error message
-    console.error(
-      `\nERROR:\n---*Function ${func.name} does not exist.*---`
-    );
-    // Log the error
-    log.write("---*Function " + func.name + " does not exist.*---\n");
-    // Send error message in discord channel
-    message.reply(lang.functionError);
-    return;
+    if (functions.has(funcObj.name)) {
+      functions.get(funcObj.name)(message, args, funcObj, commandName).catch(err => { handleError(err, message, commandName); success = false; });
+    } else {
+      handleError(new Error("Function doesn't exist."), message, commandName);
+      success = false;
+    }
+  }
+
+  if (success && isCommandSpawned) {
+    log.write(`${message.author.tag} (${message.author.id}) ran the command ${commandName} in ${message.guild.name} (${message.guild.id}) - ${new Date().toLocaleString()}\n`);
   }
 }
 
 // When a message is sent, run this code
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   // If the message is sent by a bot, ignore it
   if (message.author.bot) return;
   // If the message doesn't start with the prefix, ignore it
@@ -113,18 +119,11 @@ client.on("messageCreate", (message) => {
 
   // Get the command name and arguments
   const args = message.content.slice(config.prefix.length).trim().split(/ +/);
-  const command = args.shift()?.toLowerCase() || "";
+  const commandName = args.shift() || "";
 
   // If the command doesn't exist, send error message
-  if (commands.has(command)) {
-    // Count the times the function has been called
-    let count = 1;
-    // Get the functions for the command
-    commands.get(command)?.forEach((func) => {
-      // Run the function
-      runFunction(message, args, func, command, count);
-      count += 1;
-    });
+  if (commands.has(commandName)) {
+    runFunction(message, args, commands.get(commandName), commandName, true, true);
   } else {
     // Send error message
     message.reply(lang.commandDoesNotExist);
@@ -132,8 +131,8 @@ client.on("messageCreate", (message) => {
 });
 
 // Run function received by other in execution
-events.on("runFunc", (message, args, func, command) => {
-  runFunction(message, args, func, command, 1);
+events.on("runFunc", (message, args, funcObj, commandName, isFuncArray = false) => {
+  runFunction(message, args, funcObj, commandName, isFuncArray, false);
 });
 
 // Login to Discord with your client's token
