@@ -112,32 +112,32 @@
               }
             ],
             "timeEndCallback": {
-                "name": "array",
-                "functions": [
-                  {
-                    "name": "embed",
-                    "embed": {
-                      "title": "Time's up!",
-                      "description": "You are now **banned** from this server. Bye!",
-                      "hexColor": "#FF0000",
-                      "image": {
-                        "url": "https://i.pinimg.com/474x/e1/98/af/e198af98fb125183813ae05313d892c9--minions--cute-minions.jpg"
-                      }
-                    }
-                  },
-                  {
-                    "name": "sleep",
-                    "time": 5000,
-                    "callback": {
-                      "name": "ban",
-                      "member": "{user}",
-                      "reason": "Refused to be owned by ***King Bob***.",
-                      "yourself": true,
-                      "bot": true
+              "name": "array",
+              "functions": [
+                {
+                  "name": "embed",
+                  "embed": {
+                    "title": "Time's up!",
+                    "description": "You are now **banned** from this server. Bye!",
+                    "hexColor": "#FF0000",
+                    "image": {
+                      "url": "https://i.pinimg.com/474x/e1/98/af/e198af98fb125183813ae05313d892c9--minions--cute-minions.jpg"
                     }
                   }
-                ]
-              }
+                },
+                {
+                  "name": "sleep",
+                  "time": 5000,
+                  "callback": {
+                    "name": "ban",
+                    "member": "{user}",
+                    "reason": "Refused to be owned by ***King Bob***.",
+                    "yourself": true,
+                    "bot": true
+                  }
+                }
+              ]
+            }
           }
         ]
       }
