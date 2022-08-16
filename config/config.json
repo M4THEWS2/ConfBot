@@ -1,47 +1,13 @@
 {
-    "token": "",
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.GvkqCO.kXhMp8pBYOWIKaxMVN3MS8ZFjX4SXwYHHFeJbo",
     "prefix": "!",
     "commands": [
       {
         "name": "ping",
         "functions": [
           {
-            "name": "say",
+            "name": "reply",
             "message": "Pong!"
-          }
-        ]
-      },
-      {
-        "name": "pig",
-        "functions": [
-          {
-            "name": "embed",
-            "embed": {
-              "title": "A liitle piggy has appeared! :pig:",
-              "description": "Would you like to make it happy?",
-              "color": 10038562
-            }
-          },
-          {
-            "name": "button",
-            "buttons": [
-              {
-                "label": "Yes!",
-                "style": "Success",
-                "callback": {
-                  "name": "say",
-                  "message": "You made a pig happy :)"
-                }
-              },
-              {
-                "label": "No!",
-                "style": "Danger",
-                "callback": {
-                  "name": "say",
-                  "message": "You made a pig sad!! {user}, you are a **MONSTER**!"
-                }
-              }
-            ]
           }
         ]
       },
@@ -49,32 +15,129 @@
         "name": "creeper",
         "functions": [
           {
+            "name": "embed",
+            "message": "***Ohwn Man!***",
+            "reply": true,
+            "embed": {
+              "title": "**Revenge**",
+              "author": {
+                "name": "*CaptainSparklez*"
+              },
+              "thumbnail": {
+                "url": "https://i.pinimg.com/originals/38/89/e6/3889e64b2a9bd3bd46f054560ef1cfcf.jpg"
+              },
+              "image": {
+                "url": "https://c.tenor.com/6W2UacbcvuoAAAAC/minecraft-revenge.gif"
+              },
+              "provider": {
+                "name": "CaptainSparklez",
+                "url": "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+              },
+              "description": "'Cuz baby tonight, the creeper's tryna steal all our stuff again"
+            }
+          }
+        ]
+      },
+      {
+        "name": "kingBob",
+        "functions": [
+          {
+            "name": "reply",
+            "message": "***KING BOOOOOOB!!!***"
+          },
+          {
+            "name": "embed",
+            "embed": {
+              "title": "***King Bob***",
+              "description": "***King Bob*** is the master, ***King Bob*** is everything we have and need. Now! Bow before ***King Bob***!",
+              "hexColor": "#FFFF00",
+              "thumbnail": {
+                "url": "https://c.tenor.com/pBMY3hhaNYUAAAAC/pjj-pyfrog.gif"
+              },
+              "image": {
+                "url": "https://c.tenor.com/PWylNltmvX0AAAAd/king-bob-bob-the-minion.gif"
+              }
+            }
+          },
+          {
             "name": "button",
+            "message": "{user}, do you accept be owned by ***King Bob?*** (You can't refuse or will be banned. I'm serious.) You have 1 minute to answer.",
+            "expiration": 60000,
             "buttons": [
               {
-                "label": "Ohwn man!",
+                "label": "Yes",
                 "style": "Success",
+                "callback": {
+                  "name": "embed",
+                  "embed": {
+                    "title": "Great!",
+                    "description": "You are now owned by ***King Bob***!",
+                    "hexColor": "#FFFF00",
+                    "image": {
+                      "url": "https://i.pinimg.com/originals/e8/3e/fc/e83efc660ae1fd1d420dacb58d00d953.jpg"
+                    }
+                  } 
+                }
+              },
+              {
+                "label": "No",
+                "style": "Danger",
                 "callback": {
                   "name": "array",
                   "functions": [
                     {
-                      "name": "say",
-                      "message": "***Creeper!*** **Ohwn man!**"
-                    },
-                    {
                       "name": "embed",
                       "embed": {
-                        "title": "Minecraft",
-                        "description": "***I am back into mine...***",
+                        "title": "Idiot!",
+                        "description": "{user} is now **banned** from this server. Bye!",
+                        "hexColor": "#FF0000",
                         "image": {
-                          "url": "https://c.tenor.com/Obt9ep5Es1QAAAAC/minecraft-creeper.gif"
+                          "url": "https://i.pinimg.com/474x/e1/98/af/e198af98fb125183813ae05313d892c9--minions--cute-minions.jpg"
                         }
+                      }
+                    },
+                    {
+                      "name": "sleep",
+                      "time": 5000,
+                      "callback": {
+                        "name": "ban",
+                        "member": "{user}",
+                        "reason": "Refused to be owned by ***King Bob***.",
+                        "yourself": true,
+                        "bot": true
                       }
                     }
                   ]
                 }
               }
-            ]
+            ],
+            "timeEndCallback": {
+                "name": "array",
+                "functions": [
+                  {
+                    "name": "embed",
+                    "embed": {
+                      "title": "Time's up!",
+                      "description": "You are now **banned** from this server. Bye!",
+                      "hexColor": "#FF0000",
+                      "image": {
+                        "url": "https://i.pinimg.com/474x/e1/98/af/e198af98fb125183813ae05313d892c9--minions--cute-minions.jpg"
+                      }
+                    }
+                  },
+                  {
+                    "name": "sleep",
+                    "time": 5000,
+                    "callback": {
+                      "name": "ban",
+                      "member": "{user}",
+                      "reason": "Refused to be owned by ***King Bob***.",
+                      "yourself": true,
+                      "bot": true
+                    }
+                  }
+                ]
+              }
           }
         ]
       }

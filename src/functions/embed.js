@@ -3,18 +3,14 @@ const Discord = require('discord.js');
 
 module.exports = {
   func_name: "embed",
-  func: async (message, args, func) => {
+  func_func: async (message, args, funcObj, commandName) => {
     // Create the embed
-    const embed = new Discord.Embed(func.embed);
+    const embed = new Discord.Embed(funcObj.embed);
     // Send the embed
-    try {
-      if (func.reply) {
-        await message.reply({ content: func.message, embeds: [embed] });
-      } else {
-        await message.channel.send({ content: func.message, embeds: [embed] });
-      }
-    } catch (err) {
-      throw err;
+    if (funcObj.reply) {
+      await message.reply({ content: funcObj.message, embeds: [embed] });
+    } else {
+      await message.channel.send({ content: funcObj.message, embeds: [embed] });
     }
   }
 }
