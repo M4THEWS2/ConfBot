@@ -69,6 +69,7 @@ function replace_variables(obj, message) {
   });
 }
 
+// Function to log errors
 function handleError(err, message, commandName) {
   console.error("\n" + err + "\n");
   message.reply(lang.functionError.replace(/{command}/g, commandName));
@@ -77,16 +78,21 @@ function handleError(err, message, commandName) {
 
 // Function to run a function
 async function runFunction(message, args, funcObj, commandName, isArrayFunc = false, isCommandSpawned = false) {
+  // This variable is used to check if the functions was ran successfully
   let success = true;
+  // If the funcObj is an array of functions, run all the functions
   if (isArrayFunc) {
+    // Initialize the funcObj variable
     let func = null
     if (isCommandSpawned) {
+      // If the function is a command spawned function, replace the variables on it
       func = JSON.parse(JSON.stringify(funcObj));
       replace_variables(func, message);
     } else {
       func = funcObj;
     }
 
+    // Run the function
     for (const fn of func) {
       if (functions.has(fn.name)) {
         await functions.get(fn.name)(message, args, fn, commandName).catch(err => { handleError(err, message, commandName); success = false; });
@@ -97,6 +103,7 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
       }
     }
   } else {
+    // If the funcObj is a single function, run it
     if (functions.has(funcObj.name)) {
       functions.get(funcObj.name)(message, args, funcObj, commandName).catch(err => { handleError(err, message, commandName); success = false; });
     } else {
@@ -105,6 +112,7 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
     }
   }
 
+  // If the function was ran successfully, log it
   if (success && isCommandSpawned) {
     log.write(`${message.author.tag} (${message.author.id}) ran the command ${commandName} in ${message.guild.name} (${message.guild.id}) - ${new Date().toLocaleString()}\n`);
   }
