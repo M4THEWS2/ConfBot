@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
   func_name: "embed",
-  func_func: async (message, args, funcObj, commandName) => {
+  func_func: async (message, args, funcObj) => {
     // Create the embed
     const embed = new Discord.Embed(funcObj.embed);
     // Send the embed

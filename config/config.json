@@ -1,6 +1,13 @@
 {
-    "token": "your token",
+    "token": "ODQwMjk5ODE3NjQxMDUwMTUy.GSAsDL.9Ht5Cz5DqAMbsr9g_5rH7X6FVc7ekMWvKYXVxo",
     "prefix": "!",
+    "allowedChannels": {
+      "type": "blacklist",
+      "channels": [
+        "869308360804155435",
+        "869321123660181504"
+      ]
+    },
     "commands": [
       {
         "name": "ping",

@@ -1,27 +1,35 @@
 # **ConfBot**: easy peasy bot creation
+
 This is the most new released version (in development branch) of ConfBot! This new version is coming out with many improvements and better performance. Which will make *your* experience with ConfBot the best possible!
 
-## What I have done so far:
+## What I have done so far
+
 I've been working on the functions that were present on the 'old' ConfBot. **But it won't take so long!** I'm sure in few days I'm gonna be ready to start creating other functions.
 
 ## Can I test this version now?
+
 For sure! You can download ConfBot as you normally did with the 'old' version and use it however you like.
 
-# New features already in:
+## New features already in
 
-## Logs
+### Logs
+
 Now, you can see every command people ran in your server. If you want to see the logs, go to the file `logs.log` and spy everyone.
 
-## Personalize every message
+### Personalize every message
+
 You can personalize every message that your bot will send. Got to the file `config/lang.json` and change the texts however you like.
 
-## Back with variables!
+### Back with variables
+
 A while ago I decided to remove the *variables*, but now, they are back!
 
-### How does it work?
+#### How does it work?
+
 Simple. For example: if you set a function to send *{user}* it will be replaced by the mention of who sent the command
 
-### These are the variables:
+#### These are the variables
+
 - {user}: Mention of who sent the command
 
 - {fmention}: First mention in the message sent by the {user}
@@ -30,10 +38,10 @@ Simple. For example: if you set a function to send *{user}* it will be replaced 
 
 - {user_name}: Only the username of the user
 
+### Better ban and kick functions
 
-
-## Better ban and kick functions
 Now, the ban/kick structure is like this:
+
 ```json
 "name": "ban",
 "member": "{user}",
@@ -43,6 +51,7 @@ Now, the ban/kick structure is like this:
 ```
 
 Where:
+
 - "ban": name of the function.
 
 - "{user}": user who sent the message.
@@ -53,10 +62,12 @@ Where:
 
 - "bot": Set who will be responsible for banning/kicking someone. If bot is selected, the user doesn't need to have *admin* permissions
 
-### Callback
+#### Callback
+
 Now, the ban/kick functions also have a callback (function that will be executed after banning/kicking someone)
 
 You can set it like this:
+
 ```json
 "callback": {
   "name": "say",
@@ -64,17 +75,22 @@ You can set it like this:
 }
 ```
 
-## Better button function
-### Expiration time
+### Better button function
+
+#### Expiration time
+
 You can set a expiration time to the button:
+
 ```json
 "expiration": 60000
 ```
 
 The expiration is in miliseconds: second divided by 1000
 
-### Time's up callback
+#### Time's up callback
+
 You also can set a `timeEndCallback`, which is a simple function like this:
+
 ```json
 "timeEndCallback": {
   "name": "reply",
@@ -82,8 +98,10 @@ You also can set a `timeEndCallback`, which is a simple function like this:
 }
 ```
 
-## Sleep function
+### Sleep function
+
 Simple usage:
+
 ```json
 [
   {
@@ -100,3 +118,21 @@ Simple usage:
   }
 ]
 ```
+
+### Allowed channels
+
+You can set a whitelist or blacklist to the Bot. Just follow this type of configuration:
+
+```json
+{
+  "allowedChannels": {
+    "type": "blacklist",
+    "channels": [
+      "869308360804155435",
+      "869321123660181504"
+    ]
+  }
+}
+```
+
+The `channels` array is a list of strings where each string is a channel ID.

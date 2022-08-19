@@ -27,13 +27,13 @@ const lang = JSON.parse(
 );
 
 // Get all the commands from the config file
-const commands = new Discord.Collection();
+const commands = new Map();
 config.commands.forEach((command) => {
   commands.set(command.name, command.functions);
 });
 
 // Get all functions from the functions folder
-const functions = new Discord.Collection();
+const functions = new Map();
 fs.readdirSync(path.join(__dirname, "./functions")).forEach((file) => {
   const func_obj = require(`./functions/${file}`);
   functions.set(func_obj.func_name, func_obj.func_func);
@@ -52,7 +52,7 @@ client.on("ready", () => {
   console.log(lang.ready);
 });
 
-function replace_variables(obj, message) {  
+function replace_variables(obj, message) {
   // Get all keys and values from the object
   Object.entries(obj).forEach(([key, value]) => {
     // If the value is a string replace the variables
@@ -112,6 +112,15 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
 
 // When a message is sent, run this code
 client.on("messageCreate", async (message) => {
+  // Check allowed channels
+  if (config.allowedChannels) {
+    if (config.allowedChannels.type == "whitelist") {
+      if (!config.allowedChannels.channels.includes(message.channel.id)) return;
+    } else if (config.allowedChannels.type == "blacklist") {
+      if (config.allowedChannels.channels.includes(message.channel.id)) return;
+    }
+  }
+  
   // If the message is sent by a bot, ignore it
   if (message.author.bot) return;
   // If the message doesn't start with the prefix, ignore it
