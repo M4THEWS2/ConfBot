@@ -8,6 +8,7 @@
   "author": "matheuscristian",
   "license": "MIT",
   "devDependencies": {
-    "discord.js": "^14.2.0"
+    "discord.js": "^14.2.0",
+    "eslint": "^8.22.0"
   }
 }

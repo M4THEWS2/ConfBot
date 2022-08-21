@@ -1,6 +1,13 @@
 {
-    "token": "your token",
+    "token": "",
     "prefix": "!",
+    "allowedChannels": {
+      "type": "blacklist",
+      "channels": [
+        "869308360804155435",
+        "869321123660181504"
+      ]
+    },
     "commands": [
       {
         "name": "ping",
@@ -21,7 +28,7 @@
             "embed": {
               "title": "**Revenge**",
               "author": {
-                "name": "*CaptainSparklez*"
+                "name": "CaptainSparklez"
               },
               "thumbnail": {
                 "url": "https://i.pinimg.com/originals/38/89/e6/3889e64b2a9bd3bd46f054560ef1cfcf.jpg"
@@ -101,7 +108,6 @@
                       "time": 5000,
                       "callback": {
                         "name": "ban",
-                        "member": "{user}",
                         "reason": "Refused to be owned by ***King Bob***.",
                         "yourself": true,
                         "bot": true
@@ -130,13 +136,38 @@
                   "time": 5000,
                   "callback": {
                     "name": "ban",
-                    "member": "{user}",
                     "reason": "Refused to be owned by ***King Bob***.",
                     "yourself": true,
                     "bot": true
                   }
                 }
               ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "testKick",
+        "functions": [
+          {
+            "name": "ban",
+            "yourself": true,
+            "bot": true,
+            "member": "{fmention}"
+          }
+        ]
+      },
+      {
+        "name": "testRole",
+        "functions": [
+          {
+            "name": "role",
+            "role": "1002320653661249556",
+            "member": "{fmention}",
+            "method": "add",
+            "callback": {
+              "name": "reply",
+              "message": "Role added!"
             }
           }
         ]

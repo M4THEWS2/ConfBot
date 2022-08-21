@@ -1,12 +1,11 @@
 {
   "ready": "Your Bot is now online!",
-  "functionError": "There was an error trying to execute {command}!",
-  "commandDoesNotExist": "Command does not exist.",
-  "buttonClickTimeout": "Message was not responded to in time.",
-  "cantBan&KickYourself": "You can't neither ban nor kick yourself!",
-  "cantBan&KickAdmin": "You can't neither ban nor kick an admin!",
-  "botMissingAdminPermissions": "I don't have the required permissions to do this!",
-  "MissingAdminPermissions": "You are missing the following permissions: \"ADMINISTRATOR\"",
-  "noMentionError": "You need to mention a user!",
+  "functionError": "There was an error trying to execute {command}! :exploding_head:",
+  "commandDoesNotExist": "Command does not exist. :warning:",
+  "cantBan&KickYourself": "You can't neither ban nor kick yourself! :clown:",
+  "cantBan&KickAdmin": "You can't neither ban nor kick an admin. :wink:",
+  "botMissingPermissions": "I don't have the required permissions to do this... :pensive:",
+  "MissingPermissions": "You are missing permissions to do this! :joy:",
+  "noMentionError": "You need to mention a user!!! :rage:",
   "noMentionMessage": "No user"
 }

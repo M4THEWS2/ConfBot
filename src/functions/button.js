@@ -1,7 +1,6 @@
 'use strict'
 const Discord = require('discord.js');
 const events = require('../events.js');
-const lang = require('../../config/lang.json');
 
 module.exports = {
   func_name: "button",
@@ -61,7 +60,6 @@ module.exports = {
     // If the collector stop because of the time, set the buttons to disabled, send the message, and stop the collector
     collector.on('end', (collected, reason) => {
       if (reason === "time") {
-        message.reply(lang.buttonClickTimeout);
         row.components.forEach((button) => {
           button.setDisabled(true);
         });

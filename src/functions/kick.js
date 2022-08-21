@@ -5,41 +5,42 @@ const events = require('../events.js');
 module.exports = {
   func_name: "kick",
   func_func: async (message, args, funcObj, commandName) => {
-    if (!funcObj.member) {
-      throw new Error("No member specified.");
-    }
+    let memberId = null
 
-    if (funcObj.member === lang.noMentionMessage || !message.mentions.members.has(funcObj.member.split("@")[1].split(">")[0])) {
-      if (!funcObj.bot) {
+    if (!funcObj.member) {
+      if (funcObj.yourself) {
+        memberId = message.author.id;
+      } else {
+        throw new Error("No member specified.");
+      }
+    } else {
+      if (funcObj.member === lang.noMentionMessage) {
         await message.reply(lang.noMentionError);
         return;
       }
+      memberId = funcObj.member.split("@")[1].split(">")[0];
     }
 
-    if (!funcObj.yourself && message.author.id === funcObj.member.split("@")[1].split(">")[0]) {
+    if (!funcObj.yourself && message.author.id === memberId) {
       await message.reply(lang['cantBan&KickYourself']);
       return;
     }
 
-    if (funcObj.bot || message.member.permissions.has("ADMINISTRATOR")) {
-      try {
-        if (!funcObj.bot) {
-          await message.mentions.members.get(funcObj.member.split("@")[1].split(">")[0]).kick({ reason: funcObj.reason || args.slice(1).join(" ") });
-        } else {
-          await message.guild.members.cache.get(funcObj.member.split("@")[1].split(">")[0]).kick({ reason: funcObj.reason || args.slice(1).join(" ") });
-        }
-      } catch (err) {
+    if (funcObj.bot || message.member.permissions.has("KICK_MEMBERS")) {
+      await message.guild.members.fetch(memberId).then(async member => {
+        await member.kick({ reason: funcObj.reason || args.slice(1).join(" ") });
+      }).catch(err => {
         if (err.code === 50013) {
-          await message.reply(lang.botMissingAdminPermissions);
+          message.reply(lang.botMissingPermissions);
         } else {
           throw err;
         }
-      }
+      });
       if (funcObj.callback) {
         events.emit("runFunc", message, args, funcObj.callback, commandName);
       }
     } else {
-      await message.reply(lang.missingAdminPermissions);
+      message.reply(lang.MissingPermissions);
     }
   }
 }
