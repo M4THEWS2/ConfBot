@@ -136,3 +136,51 @@ You can set a whitelist or blacklist to the Bot. Just follow this type of config
 ```
 
 The `channels` array is a list of strings where each string is a channel ID.
+
+### Activities
+
+Now, you can set custom activities to your bot! To do it go to the file `config/status.json` and configure it like this:
+
+```json
+[
+  {
+    "type": 3,
+    "text": "You using ConfBot."
+  },
+  {
+    "type": 0,
+    "text": "Soccer like a pro!"
+  }
+]
+```
+
+You can see all the types [here](https://discord-api-types.dev/api/discord-api-types-v10/enum/ActivityType).
+
+### Role function
+
+You can/remove role from users using the `role` function. Configure it like this:
+
+```json
+{
+  "name": "testRole",
+  "functions": [
+    {
+      "name": "role",
+      "role": "1002320653661249556",
+      "member": "{fmention}",
+      "method": "add",
+      "callback": {
+        "name": "reply",
+        "message": "Role added!"
+      }
+    }
+  ]
+}
+```
+
+**Where:**
+
+- *"role"*: Your role ID.
+- *"member"*: Member which will get the role.
+- *"method"*: It can be `add/remove`.
+- *"callback"*: Function that will be runned if the function ends with success.
