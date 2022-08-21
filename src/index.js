@@ -12,13 +12,18 @@ const client = new Discord.Client({
     "MessageContent",
     "Guilds",
     "GuildBans",
-    "GuildMembers",
+    "GuildMembers"
   ],
 });
 
 // Import config
 const config = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../config/config.json"), "utf8")
+);
+
+// Get status file
+const status = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../config/status.json"), "utf8")
 );
 
 // Import language
@@ -50,6 +55,12 @@ const events = require("./events");
 // When the client is ready, run this code
 client.on("ready", () => {
   console.log(lang.ready);
+
+  // Handle status
+  setInterval(() => {
+    const random = Math.floor(Math.random() * status.length);
+    client.user.setActivity({ "name": status[random].text, "type": status[random].type });
+  }, 10000);
 });
 
 function replace_variables(obj, message) {
@@ -128,7 +139,7 @@ client.on("messageCreate", async (message) => {
       if (config.allowedChannels.channels.includes(message.channel.id)) return;
     }
   }
-  
+
   // If the message is sent by a bot, ignore it
   if (message.author.bot) return;
   // If the message doesn't start with the prefix, ignore it
