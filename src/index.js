@@ -69,7 +69,7 @@ function replace_variables(obj, message) {
     // If the value is a string replace the variables
     if (typeof value === "string") {
       obj[key] = obj[key].replace(/{user}/g, `<@${message.author.id}>`);
-      obj[key] = obj[key].replace(/{fmention}/g, message.mentions.members.first() ? `<@${message.mentions.members.first().id}>` : lang.noMentionMessage);
+      obj[key] = obj[key].replace(/{first_mention}/g, message.mentions.members.first() ? `<@${message.mentions.members.first().id}>` : lang.noMentionMessage);
       obj[key] = obj[key].replace(/{user_icon}/g, message.author.displayAvatarURL());
       obj[key] = obj[key].replace(/{user_name}/g, message.author.username);
 

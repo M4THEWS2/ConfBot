@@ -1,4 +1,4 @@
-# **ConfBot**: easy peasy bot creation
+# **ConfBot**: easy bot creation
 
 This is the most new released version (in development branch) of ConfBot! This new version is coming out with many improvements and better performance. Which will make *your* experience with ConfBot the best possible!
 
@@ -32,7 +32,7 @@ Simple. For example: if you set a function to send *{user}* it will be replaced 
 
 - {user}: Mention of who sent the command
 
-- {fmention}: First mention in the message sent by the {user}
+- {first_mention}: First mention in the message sent by the {user}
 
 - {user_icon}: URL of the user icon
 
@@ -56,7 +56,7 @@ Where:
 
 - "{user}": user who sent the message.
 
-- "Refused to be owned by ***King Bob***.": Custom reason to ban/kick someone. If not especified, take it from the message.
+- "Refused to be owned by ***King Bob***.": Custom reason to ban/kick someone. If not specified, take it from the message.
 
 - "yourself": Set if the function will be able to ban who sent the message.
 
@@ -85,7 +85,7 @@ You can set a expiration time to the button:
 "expiration": 60000
 ```
 
-The expiration is in miliseconds: second divided by 1000
+The expiration is in milliseconds: second divided by 1000
 
 #### Time's up callback
 
@@ -94,7 +94,7 @@ You also can set a `timeEndCallback`, which is a simple function like this:
 ```json
 "timeEndCallback": {
   "name": "reply",
-  "message": "Banned!! Ohwn my goood"
+  "message": "Banned!! Ohwn my god"
 }
 ```
 
@@ -167,7 +167,7 @@ You can/remove role from users using the `role` function. Configure it like this
     {
       "name": "role",
       "role": "1002320653661249556",
-      "member": "{fmention}",
+      "member": "{first_mention}",
       "method": "add",
       "callback": {
         "name": "reply",
@@ -183,4 +183,4 @@ You can/remove role from users using the `role` function. Configure it like this
 - *"role"*: Your role ID.
 - *"member"*: Member which will get the role.
 - *"method"*: It can be `add/remove`.
-- *"callback"*: Function that will be runned if the function ends with success.
+- *"callback"*: Function that will be ran if the function ends with success.
