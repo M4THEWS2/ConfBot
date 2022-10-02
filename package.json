@@ -5,10 +5,10 @@
     "start": "node src/index.js",
     "update": "git pull && npm install"
   },
-  "author": "matheuscristian",
+  "author": "Matheus Cristian",
   "license": "MIT",
   "devDependencies": {
     "discord.js": "^14.2.0",
-    "eslint": "^8.22.0"
+    "eslint": "^8.24.0"
   }
 }
