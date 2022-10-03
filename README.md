@@ -2,14 +2,6 @@
 
 This is the most new released version (in development branch) of ConfBot! This new version is coming out with many improvements and better performance. Which will make *your* experience with ConfBot the best possible!
 
-## What I have done so far
-
-I've been working on the functions that were present on the 'old' ConfBot. **But it won't take so long!** I'm sure in few days I'm gonna be ready to start creating other functions.
-
-## Can I test this version now?
-
-For sure! You can download ConfBot as you normally did with the 'old' version and use it however you like.
-
 ## New features already in
 
 ### Logs
@@ -24,7 +16,7 @@ You can personalize every message that your bot will send. Got to the file `conf
 
 A while ago I decided to remove the *variables*, but now, they are back!
 
-#### How does it work?
+#### How does it works?
 
 Simple. For example: if you set a function to send *{user}* it will be replaced by the mention of who sent the command
 
@@ -37,6 +29,10 @@ Simple. For example: if you set a function to send *{user}* it will be replaced 
 - {user_icon}: URL of the user icon
 
 - {user_name}: Only the username of the user
+
+### Now you can create your own variables
+
+Go to `config/custom_variables.js` and, if you have some skills at programming, you can personalize/create your variables however you want.
 
 ### Better ban and kick functions
 
@@ -184,3 +180,37 @@ You can/remove role from users using the `role` function. Configure it like this
 - *"member"*: Member which will get the role.
 - *"method"*: It can be `add/remove`.
 - *"callback"*: Function that will be ran if the function ends with success.
+
+### Send from file function
+
+You can send text from files in your computer, it's just use the function `send_from_file`, which has a body like this:
+
+```json
+{
+  "name": "send_from_file",
+  "path": "Your file path",
+  "reply": true
+}
+```
+
+**Where**:
+
+- *"path"*: The path of your file in your PC, having the ConfBot folder as root path.
+- *"reply"*: Whether the function will send the message as a reply or not.
+
+### Loop function
+
+Don't finish you *CTRL+C & CTRL+V Keys*, you can simply use the loop function! Its name explains itself, so i'm not gonna tell you about what it does. Here is its body:
+
+```json
+{
+  "name": "loop",
+  "times": 0,
+  "callback": {}
+}
+```
+
+**Where:**
+
+- *"times"*: How many time *`callback`* is gonna be executed.
+- *"callback!*: Body of the function that will be executed in loop
