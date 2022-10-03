@@ -1,5 +1,5 @@
 {
-  "token": "",
+  "token": "ODQwMjk5ODE3NjQxMDUwMTUy.Gn4_3h.5MoRvH_EiTUzCxr0tCAXCJzDeciPeB7QSHWed4",
   "prefix": "!",
   "allowedChannels": {
     "type": "blacklist",
@@ -9,15 +9,6 @@
     ]
   },
   "commands": [
-    {
-      "name": "doc",
-      "functions": [
-        {
-          "name": "send_from_file",
-          "path": "README.md"
-        }
-      ]
-    },
     {
       "name": "ping",
       "functions": [
