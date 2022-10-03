@@ -16,6 +16,9 @@ const client = new Discord.Client({
   ],
 });
 
+// Import variables
+const get_variables = require("../config/custom_variables");
+
 // Import config
 const config = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../config/config.json"), "utf8")
@@ -68,11 +71,10 @@ function replace_variables(obj, message) {
   Object.entries(obj).forEach(([key, value]) => {
     // If the value is a string replace the variables
     if (typeof value === "string") {
-      obj[key] = obj[key].replace(/{user}/g, `<@${message.author.id}>`);
-      obj[key] = obj[key].replace(/{first_mention}/g, message.mentions.members.first() ? `<@${message.mentions.members.first().id}>` : lang.noMentionMessage);
-      obj[key] = obj[key].replace(/{user_icon}/g, message.author.displayAvatarURL());
-      obj[key] = obj[key].replace(/{user_name}/g, message.author.username);
-
+      const variables = get_variables(client, message, lang);
+      variables.forEach((value) => {
+        obj[key] = obj[key].replace(value.name, value.value);
+      });
     } else if (typeof value === "object") {
       // If the value is an object, run the function again but in the object
       replace_variables(obj[key], message);
