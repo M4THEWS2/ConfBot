@@ -24,7 +24,7 @@ module.exports = {
             member = m;
           });
         } else {
-          // If not the memeber will be the user who sent the command
+          // If not the member will be the user who sent the command
           member = message.member;
         }
 

@@ -5,7 +5,7 @@ const events = require('../events.js');
 module.exports = {
   func_name: "button",
   func_func: async (message, args, funcObj, commandName) => {
-    // Create a row wich the button(s) will be in
+    // Create a row which the button(s) will be in
     const row = new Discord.ActionRowBuilder();
     // Count the buttons
     let total_buttons = 1;
@@ -27,7 +27,7 @@ module.exports = {
 
     // Create a filter for the button collections
     const filter = i => i.member.id === message.author.id;
-    // Create a collector wich will be activated when someone press some button
+    // Create a collector which will be activated when someone press some button
     const collector = message.channel.createMessageComponentCollector({ filter, time: funcObj.expiration || 60000 });
     collector.on('collect', async i => {
       // If the interaction is not a button, ignore it
