@@ -1,0 +1,8 @@
+**This is *ConfBot*!!**
+*An easier way to create your Discord bots.*
+
+***Commands***:
+● *help*: Send this help message.
+● *info*: Send a little info message about ConfBot.
+
+You can download it and check the documentation here: https://github.com/matheuscristian/ConfBot.
