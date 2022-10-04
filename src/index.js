@@ -42,7 +42,7 @@ config.commands.forEach((command) => {
 
 // Get all functions from the functions folder
 const functions = new Map();
-fs.readdirSync(path.join(__dirname, "./functions")).forEach((file) => {
+fs.readdirSync(path.join(__dirname, "functions/")).forEach((file) => {
   const func_obj = require(`./functions/${file}`);
   functions.set(func_obj.func_name, func_obj.func_func);
 });
@@ -58,6 +58,8 @@ const events = require("./events");
 // When the client is ready, run this code
 client.on("ready", () => {
   console.log(lang.ready);
+
+  log.write(`${client.user.username} (${client.user.id}) is now online - ${new Date().toLocaleString()}\n`);
 
   // Handle status
   setInterval(() => {
