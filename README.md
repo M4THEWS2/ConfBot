@@ -1,216 +1,185 @@
-# **ConfBot**: easy bot creation
+# Welcome to the newest version of Natriy
 
-This is the most new released version (in development branch) of ConfBot! This new version is coming out with many improvements and better performance. Which will make *your* experience with ConfBot the best possible!
+This is the official documentation, it will help you to use Natriy by explaining all the functions and possibilities it has.
 
-## New features already in
+## Getting started
 
-### Logs
+### Adding your token
 
-Now, you can see every command people ran in your server. If you want to see the logs, go to the file `logs.log` and spy everyone.
+Your bot needs a token to initialize. The token is the identifier of the bot. With the token, Discord knows which bot it will communicate with.
 
-### Personalize every message
+#### How do I get a token?
 
-You can personalize every message that your bot will send. Got to the file `config/lang.json` and change the texts however you like.
+Go to [Discord Developer's portal](https://discord.com/developers/applications), log in with your Discord account, then hit *New Application*. Go to the bot tab and create a new bot. Now copy its token.
 
-### Back with variables
-
-A while ago I decided to remove the *variables*, but now, they are back!
-
-#### How does it works?
-
-Simple. For example: if you set a function to send *{user}* it will be replaced by the mention of who sent the command
-
-#### These are the variables
-
-- {user}: Mention of who sent the command
-
-- {first_mention}: First mention in the message sent by the {user}
-
-- {user_icon}: URL of the user icon
-
-- {user_name}: Only the username of the user
-
-### Now you can create your own variables
-
-Go to `config/custom_variables.js` and, if you have some skills at programming, you can personalize/create your variables however you want.
-
-### Better ban and kick functions
-
-Now, the ban/kick structure is like this:
-
-```json
-"name": "ban",
-"member": "{user}",
-"reason": "Refused to be owned by ***King Bob***.",
-"yourself": true,
-"bot": true
-```
-
-Where:
-
-- "ban": name of the function.
-
-- "{user}": user who sent the message.
-
-- "Refused to be owned by ***King Bob***.": Custom reason to ban/kick someone. If not specified, take it from the message.
-
-- "yourself": Set if the function will be able to ban who sent the message.
-
-- "bot": Set who will be responsible for banning/kicking someone. If bot is selected, the user doesn't need to have *admin* permissions
-
-#### Callback
-
-Now, the ban/kick functions also have a callback (function that will be executed after banning/kicking someone)
-
-You can set it like this:
-
-```json
-"callback": {
-  "name": "say",
-  "message": "User banned!"
-}
-```
-
-### Better button function
-
-#### Expiration time
-
-You can set a expiration time to the button:
-
-```json
-"expiration": 60000
-```
-
-The expiration is in milliseconds: second divided by 1000
-
-#### Time's up callback
-
-You also can set a `timeEndCallback`, which is a simple function like this:
-
-```json
-"timeEndCallback": {
-  "name": "reply",
-  "message": "Banned!! Ohwn my god"
-}
-```
-
-### Sleep function
-
-Simple usage:
-
-```json
-[
-  {
-    "name": "say",
-    "message": "Hello!"
-  },
-  {
-    "name": "sleep",
-    "time": 5000,
-    "callback": {
-      "name": "reply",
-      "message": "Have I already said 'Hello' to you?"
-    }
-  }
-]
-```
-
-### Allowed channels
-
-You can set a whitelist or blacklist to the Bot. Just follow this type of configuration:
+Paste your token in *config/config.json*:
 
 ```json
 {
-  "allowedChannels": {
-    "type": "blacklist",
-    "channels": [
-      "869308360804155435",
-      "869321123660181504"
+    "token": "TOKEN HERE! BETWEEN QUOTATION MARKS!"
+}
+```
+
+You may want to add your bot to your server. Go back to the general information tab and copy the application id. Then go to [Discord Permissions Calculator](https://discordapi.com/permissions.html), paste the id, check the *Administrator* permission and click on the link.
+
+### Difference between functions and commands
+
+Every bot has the help command, when running it, the bot usually sends an explanation of what it does and what its commands are.
+
+However, how can we create a help command with Natriy? It's not that difficult, you have to configure a command that has a function that will send an explain message. Easy, isn't it?
+
+This is an configuration example of a help command with Natriy:
+
+```json
+{
+    "name": "help",
+    "functions": [
+        {
+            "name": "say",
+            "message": "This is may help message!"
+        }
     ]
-  }
 }
 ```
 
-The `channels` array is a list of strings where each string is a channel ID.
+Now that you know about functions and commands, see all the available functions and how to use them.
 
-### Activities
+## Functions
 
-Now, you can set custom activities to your bot! To do it go to the file `config/status.json` and configure it like this:
+### Say
 
-```json
-[
-  {
-    "type": 3,
-    "text": "You using ConfBot."
-  },
-  {
-    "type": 0,
-    "text": "Soccer like a pro!"
-  }
-]
-```
+The function that you will use the most is the **say** function. This will be the responsible for sending all types of messages and their attachments (files, buttons and embeds).
 
-You can see all the types [here](https://discord-api-types.dev/api/discord-api-types-v10/enum/ActivityType).
-
-### Role function
-
-You can/remove role from users using the `role` function. Configure it like this:
+The most basic usage of it is like this:
 
 ```json
 {
-  "name": "testRole",
-  "functions": [
-    {
-      "name": "role",
-      "role": "1002320653661249556",
-      "member": "{first_mention}",
-      "method": "add",
-      "callback": {
-        "name": "reply",
-        "message": "Role added!"
-      }
+    "name": "say",
+    "message": "My beautiful message!"
+}
+```
+
+In this case, the function will send a simple message on the channel where the command came from.
+
+You can also define whether the function will send the message as a reply to the one who sent the command or not:
+
+```json
+{
+    "name": "say",
+    "message": "My beautiful message!",
+    "reply": true
+}
+```
+
+To send a message with buttons:
+
+```json
+{
+    "name": "say",
+    "message": "Is my message beautiful?",
+    "reply": true,
+    "buttons": [
+        {
+            "label": "yes",
+            "style": 3
+        },
+        {
+            "label": "no",
+            "style": 4
+        }
+    ]
+}
+```
+
+*Advices:*
+
+- You can use a maximum of 5 buttons per message.
+- See all available styles [here](https://discord-api-types.dev/api/discord-api-types-v10/enum/ButtonStyle).
+
+You can also define functions to be executed when a button is pressed by adding a callback:
+
+```json
+{
+    "buttons": [
+        {
+            "label": "yes",
+            "style": 3,
+            "callback": {
+                "name": "say",
+                "message": "Thanks!"
+            }
+        },
+        {
+            "label": "no",
+            "style": 4,
+            "callback": {
+                "name": "say",
+                "message": "How dare you?!"
+            }
+        }
+    ]
+}
+```
+
+By default, buttons take 1 minute to expire. But you can change it adding the expiration option:
+
+```json
+{
+    "name": "say",
+    "message": "Is my message beautiful?",
+    "reply": true,
+    "buttons": [...],
+    "expiration": 10000
+}
+```
+
+*Advices:*
+
+- Expiration option is in milliseconds (second * 1000), which means you can get the seconds by dividing the millisecond by 1000.
+
+If you want to execute some function if the button wasn't pressed in time, just add the timeIsUpCallback:
+
+```json
+{
+    "name": "say",
+    "message": "Is my message beautiful?",
+    "reply": true,
+    "buttons": [...],
+    "expiration": 10000,
+    "timeIsUpCallback": {
+        "name": "say",
+        "message": "Time's Up!"
     }
-  ]
 }
 ```
 
-**Where:**
-
-- *"role"*: Your role ID.
-- *"member"*: Member which will get the role.
-- *"method"*: It can be `add/remove`.
-- *"callback"*: Function that will be ran if the function ends with success.
-
-### Send from file function
-
-You can send text from files in your computer, it's just use the function `send_from_file`, which has a body like this:
+Let's talk about embeds! To append an embed to your message add the embed property:
 
 ```json
 {
-  "name": "send_from_file",
-  "path": "Your file path",
-  "reply": true
+    "name": "say",
+    "embed": {
+        "title": "**MY MESSAGE!!**",
+        "description": "My message is the message, which is the most beautiful."
+    }
 }
 ```
 
-**Where**:
+*Advices:*
 
-- *"path"*: The path of your file in your PC, having the ConfBot folder as root path.
-- *"reply"*: Whether the function will send the message as a reply or not.
+- You can see all the options for embed messages [here](https://discord.js.org/#/docs/discord.js/main/class/Embed).
 
-### Loop function
+### Array
 
-Don't finish you *CTRL+C & CTRL+V Keys*, you can simply use the loop function! Its name explains itself, so i'm not gonna tell you about what it does. Here is its body:
+You may want to execute more than one function in a callback, that's why the **array** function exists. Use it like this:
 
 ```json
 {
-  "name": "loop",
-  "times": 0,
-  "callback": {}
+    "name": "array",
+    "functions": [...]
 }
 ```
 
-**Where:**
+Put the functions you want inside *functions*.
 
-- *"times"*: How many time *`callback`* is gonna be executed.
-- *"callback!*: Body of the function that will be executed in loop
+## More documentation is coming out soon
