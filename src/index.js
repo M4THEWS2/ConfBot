@@ -1,5 +1,4 @@
 'use strict'
-
 // Import essential modules
 const Discord = require('discord.js');
 const fs = require('fs');
@@ -15,6 +14,9 @@ const client = new Discord.Client({
     "GuildMembers"
   ],
 });
+
+// Import variables
+const get_variables = require("../config/custom_variables");
 
 // Import config
 const config = JSON.parse(
@@ -39,7 +41,7 @@ config.commands.forEach((command) => {
 
 // Get all functions from the functions folder
 const functions = new Map();
-fs.readdirSync(path.join(__dirname, "./functions")).forEach((file) => {
+fs.readdirSync(path.join(__dirname, "functions/")).forEach((file) => {
   const func_obj = require(`./functions/${file}`);
   functions.set(func_obj.func_name, func_obj.func_func);
 });
@@ -56,6 +58,8 @@ const events = require("./events");
 client.on("ready", () => {
   console.log(lang.ready);
 
+  log.write(`${client.user.username} (${client.user.id}) is now online - ${new Date().toLocaleString()}\n`);
+
   // Handle status
   setInterval(() => {
     const random = Math.floor(Math.random() * status.length);
@@ -68,11 +72,10 @@ function replace_variables(obj, message) {
   Object.entries(obj).forEach(([key, value]) => {
     // If the value is a string replace the variables
     if (typeof value === "string") {
-      obj[key] = obj[key].replace(/{user}/g, `<@${message.author.id}>`);
-      obj[key] = obj[key].replace(/{fmention}/g, message.mentions.members.first() ? `<@${message.mentions.members.first().id}>` : lang.noMentionMessage);
-      obj[key] = obj[key].replace(/{user_icon}/g, message.author.displayAvatarURL());
-      obj[key] = obj[key].replace(/{user_name}/g, message.author.username);
-
+      const variables = get_variables(client, message, lang);
+      variables.forEach((value) => {
+        obj[key] = obj[key].replace(value.name, value.value);
+      });
     } else if (typeof value === "object") {
       // If the value is an object, run the function again but in the object
       replace_variables(obj[key], message);
@@ -106,7 +109,10 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
     // Run the function
     for (const fn of func) {
       if (functions.has(fn.name)) {
-        await functions.get(fn.name)(message, args, fn, commandName).catch(err => { handleError(err, message, commandName); success = false; });
+        await functions.get(fn.name)(message, args, fn, commandName).catch(err => {
+          handleError(err, message, commandName);
+          success = false;
+        });
       } else {
         handleError(new Error("Function doesn't exist."), message, commandName);
         success = false;
@@ -116,7 +122,10 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
   } else {
     // If the funcObj is a single function, run it
     if (functions.has(funcObj.name)) {
-      functions.get(funcObj.name)(message, args, funcObj, commandName).catch(err => { handleError(err, message, commandName); success = false; });
+      await functions.get(funcObj.name)(message, args, funcObj, commandName).catch(err => {
+        handleError(err, message, commandName);
+        success = false;
+      });
     } else {
       handleError(new Error("Function doesn't exist."), message, commandName);
       success = false;
@@ -131,11 +140,12 @@ async function runFunction(message, args, funcObj, commandName, isArrayFunc = fa
 
 // When a message is sent, run this code
 client.on("messageCreate", async (message) => {
-  // Check allowed channels
+  // Check for allowed channels configuration
   if (config.allowedChannels) {
+    // If allowed channels type is whitelist only runs the command if the channel is inside the list
     if (config.allowedChannels.type == "whitelist") {
       if (!config.allowedChannels.channels.includes(message.channel.id)) return;
-    } else if (config.allowedChannels.type == "blacklist") {
+    } else if (config.allowedChannels.type == "blacklist") { // Otherwise only runs the command if the channel is outside the list
       if (config.allowedChannels.channels.includes(message.channel.id)) return;
     }
   }
@@ -158,8 +168,8 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-// Run function received by other in execution
-events.on("runFunc", (message, args, funcObj, commandName, isFuncArray = false) => {
+// Run function received by another in execution
+events.on("runFunc", async (message, args, funcObj, commandName, isFuncArray = false) => {
   runFunction(message, args, funcObj, commandName, isFuncArray, false);
 });
 

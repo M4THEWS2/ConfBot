@@ -1,6 +1,6 @@
 'use strict'
 const lang = require('../../config/lang.json');
-const events = require('../events.js');
+const events = require('../events');
 
 module.exports = {
   func_name: "ban",
@@ -29,18 +29,18 @@ module.exports = {
     if (funcObj.bot || message.member.permissions.has("BAN_MEMBERS")) {
       await message.guild.members.fetch(memberId).then(async member => {
         await member.ban({ reason: funcObj.reason || args.slice(1).join(" ") });
-      }).catch(err => {
+        if (funcObj.callback) {
+          events.emit("runFunc", message, args, funcObj.callback, commandName);
+        }
+      }).catch(async err => {
         if (err.code === 50013) {
-          message.reply(lang.botMissingPermissions);
+          await message.reply(lang.botMissingPermissions);
         } else {
           throw err;
         }
       });
-      if (funcObj.callback) {
-        events.emit("runFunc", message, args, funcObj.callback, commandName);
-      }
     } else {
-      message.reply(lang.MissingPermissions);
+      await message.reply(lang.MissingPermissions);
     }
   }
 }

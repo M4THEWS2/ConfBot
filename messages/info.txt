@@ -1,0 +1,7 @@
+**This is *Natriy*!!**
+*An easier way to create your Discord bots.*
+
+Natriy helps you create bots. Using it, you won't have to worry about programming
+and time-consuming things: just download it and start setting it up however you want.
+
+You can download it and get the documentation here: https://github.com/matheuscristian/Natriy.
