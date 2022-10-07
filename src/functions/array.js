@@ -1,5 +1,5 @@
 'use strict'
-const events = require('../events.js');
+const events = require('../events');
 
 module.exports = {
   func_name: "array",

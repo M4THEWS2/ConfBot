@@ -1,7 +1,6 @@
 'use strict'
-
 const lang = require("../../config/lang.json");
-const events = require('../events.js');
+const events = require('../events');
 
 module.exports = {
   func_name: "role",
@@ -16,7 +15,7 @@ module.exports = {
         if (funcObj.member) {
           // If the member specified doesn't exists send error
           if (funcObj.member == lang.noMentionMessage) {
-            message.reply(lang.noMentionError);
+            await message.reply(lang.noMentionError);
             return;
           }
           // Set member
@@ -56,7 +55,7 @@ module.exports = {
           throw err;
         });
       } else {
-        message.reply(lang.MissingPermissions);
+        await message.reply(lang.MissingPermissions);
       }
     } else {
       // If not, send error
