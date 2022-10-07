@@ -10,6 +10,16 @@
   },
   "commands": [
     {
+      "name": "ping",
+      "functions": [
+        {
+          "name": "say",
+          "message": "Pong!",
+          "reply": true
+        }
+      ]
+    },
+    {
       "name": "info",
       "functions": [
         {
@@ -26,6 +36,45 @@
           "name": "send_from_file",
           "reply": true,
           "path": "messages/help.txt"
+        }
+      ]
+    },
+    {
+      "name": "ban",
+      "functions": [
+        {
+          "name": "say",
+          "message": "**Are you sure?**",
+          "buttons": [
+            {
+              "label": "No",
+              "style": 3,
+              "callback": {
+                "name": "say",
+                "message": "Okay! Always think twice before banning someone.",
+                "reply": true
+              }
+            },
+            {
+              "label": "Yes",
+              "style": 4,
+              "callback": {
+                "name": "ban",
+                "member": "{first_mention}",
+                "callback": {
+                  "name": "say",
+                  "message": "User banned successfully!",
+                  "reply": true
+                }
+              }
+            }
+          ],
+          "timeIsUpCallback": {
+            "name": "say",
+            "message": "Time's Up! No more time for answering.",
+            "reply": true
+          },
+          "expiration": 10000
         }
       ]
     }
