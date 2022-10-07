@@ -31,12 +31,10 @@ module.exports = {
             .setLabel(button.label)
             .setStyle(button.style)
         );
-      });
-
-      // Create a filter for the button collections
-      const filter = i => i.member.id === message.author.id;
+      })
+      
       // Create a collector which will be activated when someone press some button
-      collector = message.channel.createMessageComponentCollector({ filter, time: funcObj.expiration || 60000 });
+      collector = message.channel.createMessageComponentCollector({ filter: i => i.member.id === message.author.id , time: funcObj.expiration || 60000 });
 
       collector.on('collect', async i => {
         // If the interaction is not a button, ignore it

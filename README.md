@@ -169,6 +169,73 @@ Let's talk about embeds! To append an embed to your message add the embed proper
 
 - You can see all the options for embed messages [here](https://discord.js.org/#/docs/discord.js/main/class/Embed).
 
+To send the message with files:
+
+```json
+{
+    "name": "say",
+    "message": "Listen to this song!",
+    "files": [
+        {
+            "attachment": "song.mp3",
+            "name": "It Was A Good Day.mp3",
+            "description": "Best song!"
+        }
+    ]
+}
+```
+
+### Ban & Kick
+
+The **ban** & **kick** function have the same way of working so I will explain them together.
+
+When using these functions you need to specify which user is going to be banned:
+
+```json
+{
+    "name": "ban",
+    "member": "{first_mention}"
+}
+```
+
+*Advices:*
+
+- `{first_mention}` corresponds to the first mention in the message. If there isn't, send an error message (We will see how you can personalize it later).
+
+You can use the *bot* option to set whether the user will need permissions of banning to do it or not:
+
+```json
+{
+    "name": "ban",
+    "member": "{first_mention}",
+    "bot": true
+}
+```
+
+You also can set whether the user will be able to ban himself or not:
+
+```json
+{
+    "name": "ban",
+    "member": "{first_mention}",
+    "bot": true,
+    "yourself": true
+}
+```
+
+If all occurred fine, you may want to send a message or do something else:
+
+```json
+{
+    "name": "ban",
+    "member": "{first_mention}",
+    "callback": {
+        "name": "say",
+        "message": "User banned!"
+    }
+}
+```
+
 ### Array
 
 You may want to execute more than one function in a callback, that's why the **array** function exists. Use it like this:
@@ -181,5 +248,39 @@ You may want to execute more than one function in a callback, that's why the **a
 ```
 
 Put the functions you want inside *functions*.
+
+### Sleep
+
+If you're not in a hurry, you can set a delay for the bot to executing your command:
+
+```json
+{
+    "name": "sleep",
+    "callback": {
+        "name": "say",
+        "message": "How much time did I sleep for?"
+    },
+    "time": 5000
+}
+```
+
+*Advices:*
+
+- *time* is always in milliseconds.
+
+### Loop
+
+To repeat a function for X times, use this function:
+
+```json
+{
+    "name": "loop",
+    "callback": {
+        "name": "say",
+        "message": "Hi, my name is Dory!"
+    },
+    "times": "10"
+}
+```
 
 ## More documentation is coming out soon
