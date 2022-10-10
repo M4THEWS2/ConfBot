@@ -28,7 +28,7 @@ module.exports = {
 
         if (funcObj.bot || message.member.permissions.has("KICK_MEMBERS")) {
             await message.guild.members.fetch(memberId).then(async member => {
-                await member.kick({ reason: funcObj.reason || args.slice(1).join(" ") });
+                await member.kick({reason: funcObj.reason || args.slice(1).join(" ")});
                 if (funcObj.callback) {
                     events.emit("runFunc", message, args, funcObj.callback, commandName);
                 }

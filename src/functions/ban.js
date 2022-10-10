@@ -6,7 +6,7 @@ module.exports = {
     funcName: "ban",
     funcFunc: async (message, args, funcObj, commandName) => {
         let memberId = null
-    
+
         if (!funcObj.member) {
             if (funcObj.yourself) {
                 memberId = message.author.id;
@@ -28,7 +28,7 @@ module.exports = {
 
         if (funcObj.bot || message.member.permissions.has("BAN_MEMBERS")) {
             await message.guild.members.fetch(memberId).then(async member => {
-                await member.ban({ reason: funcObj.reason || args.slice(1).join(" ") });
+                await member.ban({reason: funcObj.reason || args.slice(1).join(" ")});
                 if (funcObj.callback) {
                     events.emit("runFunc", message, args, funcObj.callback, commandName);
                 }
