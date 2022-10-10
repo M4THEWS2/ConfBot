@@ -1,4 +1,4 @@
-'use strict'
-const EventEmmiter = require('events');
+"use strict"
+const EventEmmiter = require("events");
 
 module.exports = new EventEmmiter();

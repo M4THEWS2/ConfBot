@@ -7,5 +7,5 @@
   "botMissingPermissions": "I don't have the required permissions to do this... :pensive:",
   "MissingPermissions": "You are missing permissions to do this! :joy:",
   "noMentionError": "You need to mention a user!!! :rage:",
-  "noMentionMessage": "No user"
+  "noMentionMessage": "{no_user}"
 }
