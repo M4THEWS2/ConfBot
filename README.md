@@ -22,6 +22,22 @@ Paste your token in *config/config.json*:
 
 You may want to add your bot to your server. Go back to the general information tab and copy the application id. Then go to [Discord Permissions Calculator](https://discordapi.com/permissions.html), paste the id, check the *Administrator* permission and click on the link.
 
+### Downloading dependencies
+
+To start Natriy you need to have *NodeJS* and *Git* all installed on your computer.
+
+#### Installing NodeJS
+
+Click [here](https://nodejs.org/en/download/current/) and install the *current* version according to your operating system.
+
+#### Installing Git
+
+Click [here](https://git-scm.com/) and download the latest version of Git, once again, according to your operating system.
+
+### Downloading node dependencies
+
+Once before you start your bot, you need to run `scripts/update`, it will download all NPM packages that Natriy needs.
+
 ### Difference between functions and commands
 
 Every bot has the help command, when running it, the bot usually sends an explanation of what it does and what its commands are.
@@ -283,4 +299,77 @@ To repeat a function for X times, use this function:
 }
 ```
 
-## More documentation is coming out soon
+### Send From File
+
+You can also send content from files in your Discord chats:
+
+```json
+{
+    "name": "send_from_file",
+    "path": "messages/help.txt"
+}
+```
+
+The example above sends the help message that is within the `help.txt`.
+
+### Role
+
+The *role* function can add/remove roles from members of a guild. You can use it like this:
+
+```json
+{
+    "name": "role",
+    "method": "add",
+    "role": "some random id",
+    "bot": false,
+    "member": "{first_mention}"
+}
+```
+
+*Explanation:*
+
+- The *method* property can be add or remove.
+- The *role* property is a role identificador, which can be a role ID for example.
+- The *bot* property defines whether the member who sent the command needs to have permissions of managing roles to run it.
+- The *member* property defines who will be the target where the function will add a role.
+
+## Activities
+
+You can set activities for your bot that will be switched between each other randomly.
+
+Go to the file: `config/activities.json`, these are the default activities:
+
+```json
+[
+  {
+    "type": 3,
+    "text": "You using Natriy."
+  },
+  {
+    "type": 0,
+    "text": "Soccer like a pro!"
+  }
+]
+```
+
+Every activity has two properties: *type* and *text*. You can see all available types [here](https://discord-api-types.dev/api/discord-api-types-v10/enum/ActivityType) (Natriy doesn't support type 4).
+
+## Custom error messages
+
+A while ago it wasn't possible to change error messages in Natriy, but now you can do it! Go to the file: `config/lang.json`, now it's just personalize everything however you like.
+
+This is the default configuration of *`config/lang.json`*:
+
+```json
+{
+  "ready": "Your Bot is now online!",
+  "functionError": "There was an error trying to execute {command}! :exploding_head:",
+  "commandDoesNotExist": "Command does not exist. :warning:",
+  "cantBan&KickYourself": "You can't neither ban nor kick yourself! :clown:",
+  "cantBan&KickAdmin": "You can't neither ban nor kick an admin. :wink:",
+  "botMissingPermissions": "I don't have the required permissions to do this... :pensive:",
+  "MissingPermissions": "You are missing permissions to do this! :joy:",
+  "noMentionError": "You need to mention a user!!! :rage:",
+  "noMentionMessage": "{no_user}"
+}
+```
