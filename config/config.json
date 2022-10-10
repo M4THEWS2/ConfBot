@@ -1,5 +1,5 @@
 {
-  "token": "",
+  "token": "ODQwMjk5ODE3NjQxMDUwMTUy.G-bIgd.jtdHsbrZP0ftA33y4xWQ0-6i9tm8IaBS9kLAbo",
   "prefix": "!",
   "allowedChannels": {
     "type": "blacklist",
@@ -24,8 +24,8 @@
       "functions": [
         {
           "name": "send_from_file",
-          "reply": true,
-          "path": "messages/info.txt"
+          "path": "messages/info.txt",
+          "reply": true
         }
       ]
     },

@@ -1,10 +1,10 @@
-'use strict'
-const events = require('../events');
+"use strict"
+const events = require("../events");
 
 module.exports = {
-    func_name: "loop",
-    func_func: async (message, args, funcObj, commandName) => {
-        if (!funcObj.times || typeof(funcObj.times) != 'number') {
+    funcName: "loop",
+    funcFunc: async (message, args, funcObj, commandName) => {
+        if (!funcObj.times || typeof(funcObj.times) != "number") {
             throw new Error("'loop' function must has times property (as a number)!");
         }
 

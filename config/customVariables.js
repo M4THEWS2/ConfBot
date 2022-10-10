@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 const date = new Date();
 
 module.exports = (client, message, lang) => {
@@ -26,6 +26,6 @@ module.exports = (client, message, lang) => {
     ]
 
     return variables.map((currentValue) => {
-        return { name: new RegExp(`{${currentValue.name}}`, 'g'), value: currentValue.value };
+        return { name: new RegExp(`{${currentValue.name}}`, "g"), value: currentValue.value };
     });
 }
