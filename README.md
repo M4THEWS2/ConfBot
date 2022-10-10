@@ -305,7 +305,7 @@ You can also send content from files in your Discord chats:
 
 ```json
 {
-    "name": "send_from_file",
+    "name": "sendFromFile",
     "path": "messages/help.txt"
 }
 ```

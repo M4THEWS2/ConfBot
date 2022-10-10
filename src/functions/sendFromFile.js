@@ -1,6 +1,6 @@
 "use strict"
 module.exports = {
-    funcName: "send_from_file",
+    funcName: "sendFromFile",
     funcFunc: async (message, args, funcObj) => {
         // Import fs module
         const fs = require("fs");

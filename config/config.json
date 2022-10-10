@@ -1,5 +1,5 @@
 {
-  "token": "ODQwMjk5ODE3NjQxMDUwMTUy.G-bIgd.jtdHsbrZP0ftA33y4xWQ0-6i9tm8IaBS9kLAbo",
+  "token": "",
   "prefix": "!",
   "allowedChannels": {
     "type": "blacklist",
@@ -23,7 +23,7 @@
       "name": "info",
       "functions": [
         {
-          "name": "send_from_file",
+          "name": "sendFromFile",
           "path": "messages/info.txt",
           "reply": true
         }
@@ -33,7 +33,7 @@
       "name": "help",
       "functions": [
         {
-          "name": "send_from_file",
+          "name": "sendFromFile",
           "reply": true,
           "path": "messages/help.txt"
         }
@@ -47,7 +47,7 @@
           "message": "**Are you sure?**",
           "buttons": [
             {
-              "label": "No",
+              "label": "Yeah, never mind.",
               "style": 3,
               "callback": {
                 "name": "say",
@@ -56,7 +56,7 @@
               }
             },
             {
-              "label": "Yes",
+              "label": "I'm sure.",
               "style": 4,
               "callback": {
                 "name": "ban",
