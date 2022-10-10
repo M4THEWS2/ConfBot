@@ -23,9 +23,9 @@ const config = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../config/config.json"), "utf8")
 );
 
-// Get status file
-const status = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "../config/status.json"), "utf8")
+// Get activities file
+const activities = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../config/activities.json"), "utf8")
 );
 
 // Import language
@@ -60,11 +60,11 @@ client.on("ready", () => {
 
   log.write(`${client.user.username} (${client.user.id}) is now online - ${new Date().toLocaleString()}\n`);
 
-  // Handle status
+  // Handle activities
   setInterval(() => {
-    const random = Math.floor(Math.random() * status.length);
-    client.user.setActivity({ "name": status[random].text, "type": status[random].type });
-  }, 10000);
+    const random = Math.floor(Math.random() * activities.length);
+    client.user.setActivity({ "name": activities[random].text, "type": activities[random].type });
+  }, 20000 / activities.length);
 });
 
 function replace_variables(obj, message) {

@@ -46,7 +46,7 @@ module.exports = {
             }
           } catch (err) {
             if (err.code == 50013) {
-              message.reply(lang.botMissingPermissions);
+              await message.reply(lang.botMissingPermissions);
             } else {
               throw err;
             }
