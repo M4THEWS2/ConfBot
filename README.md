@@ -228,7 +228,7 @@ You can use the *bot* option to set whether the user will need permissions of ba
 }
 ```
 
-You also can set whether the user will be able to ban himself or not:
+You can also set whether the user will be able to ban himself or not:
 
 ```json
 {
@@ -332,6 +332,36 @@ The *role* function can add/remove roles from members of a guild. You can use it
 - The *role* property is a role identificador, which can be a role ID for example.
 - The *bot* property defines whether the member who sent the command needs to have permissions of managing roles to run it.
 - The *member* property defines who will be the target where the function will add a role.
+
+### Stock
+
+You might wanna have a database or something. This is what the stock function does, it takes a line out of the file in *path* property and sends it to you in a custom message:
+
+```json
+{
+    "name": "stock",
+    "path": "stock.txt",
+    "message": "This is your message: {item}"
+}
+```
+
+*Advices:*
+
+- *{item}* is gonna be replaced by the line removed.
+
+Yoy can also set a message to be sent if there's no more items in stock with *emptyStockCallback*:
+
+```json
+{
+    "name": "stock",
+    "path": "stock.txt",
+    "message": "This is your message: {item}",
+    "emptyStockCallback": {
+        "name": "say",
+        "message": "We ran out of items in stock."
+    }
+}
+```
 
 ## Activities
 

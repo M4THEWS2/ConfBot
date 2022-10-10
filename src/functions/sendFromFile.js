@@ -1,9 +1,15 @@
 "use strict"
+
+// Import fs module
+const fs = require("fs");
+
 module.exports = {
     funcName: "sendFromFile",
     funcFunc: async (message, args, funcObj) => {
-        // Import fs module
-        const fs = require("fs");
+        if (!funcObj.path) {
+            throw new Error("send From File function must have path property.");
+        }
+
         // Read the file
         let fileText = fs.readFileSync(funcObj.path, "utf-8");
 

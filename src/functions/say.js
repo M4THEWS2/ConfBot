@@ -1,6 +1,6 @@
-'use strict'
-const Discord = require('discord.js');
-const events = require('../events');
+"use strict"
+const Discord = require("discord.js");
+const events = require("../events");
 
 module.exports = {
     funcName: "say",
@@ -32,11 +32,11 @@ module.exports = {
                         .setStyle(button.style)
                 );
             })
-      
-            // Create a collector which will be activated when someone press some button
-            collector = message.channel.createMessageComponentCollector({ filter: i => i.member.id === message.author.id , time: funcObj.expiration || 60000 });
 
-            collector.on('collect', async i => {
+            // Create a collector which will be activated when someone press some button
+            collector = message.channel.createMessageComponentCollector({filter: i => i.member.id === message.author.id , time: funcObj.expiration || 60000});
+
+            collector.on("collect", async i => {
                 // If the interaction is not a button, ignore it
                 if (!i.isButton()) return;
                 row.components.forEach((button, index) => {
@@ -53,7 +53,7 @@ module.exports = {
                 // Stop collecting buttons
                 collector.stop();
                 // Update the message
-                await i.update({ components: [row] });
+                await i.update({components: [row]});
             });
         }
 
@@ -63,14 +63,14 @@ module.exports = {
         }
 
         if (funcObj.reply) {
-            messageSent = await message.reply({ content: funcObj.message ? funcObj.message : undefined, embeds: embed ? [embed] : undefined, components: row ? [row] : undefined, files: funcObj.files ? funcObj.files : undefined });
+            messageSent = await message.reply({content: funcObj.message ? funcObj.message : undefined, embeds: embed ? [embed] : undefined, components: row ? [row] : undefined, files: funcObj.files ? funcObj.files : undefined});
         } else {
-            messageSent = await message.channel.send({ content: funcObj.message ? funcObj.message : undefined, embeds: embed ? [embed] : undefined, components: row ? [row] : undefined, files: funcObj.files ? funcObj.files : undefined });
+            messageSent = await message.channel.send({content: funcObj.message ? funcObj.message : undefined, embeds: embed ? [embed] : undefined, components: row ? [row] : undefined, files: funcObj.files ? funcObj.files : undefined});
         }
 
         if (row && collector) {
             // If the collector stop because of the time, set the buttons to disabled, send the message, and stop the collector
-            collector.on('end', async (collected, reason) => {
+            collector.on("end", async (collected, reason) => {
                 // Executing the script below generates an error if the messageSent is deleted, the try statement prevents the program from stopping
                 try {
                     if (reason === "time") {
@@ -79,7 +79,7 @@ module.exports = {
                             button.setDisabled(true);
                         });
                         // Update buttons in message
-                        await messageSent.edit({ components: [row] });
+                        await messageSent.edit({components: [row]});
 
                         // If there's a time's up function runs it
                         if (funcObj.timeIsUpCallback) {

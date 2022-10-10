@@ -4,79 +4,10 @@
   "allowedChannels": {
     "type": "blacklist",
     "channels": [
-      "869308360804155435",
-      "869321123660181504"
+      
     ]
   },
   "commands": [
-    {
-      "name": "ping",
-      "functions": [
-        {
-          "name": "say",
-          "message": "Pong!",
-          "reply": true
-        }
-      ]
-    },
-    {
-      "name": "info",
-      "functions": [
-        {
-          "name": "sendFromFile",
-          "path": "messages/info.txt",
-          "reply": true
-        }
-      ]
-    },
-    {
-      "name": "help",
-      "functions": [
-        {
-          "name": "sendFromFile",
-          "reply": true,
-          "path": "messages/help.txt"
-        }
-      ]
-    },
-    {
-      "name": "ban",
-      "functions": [
-        {
-          "name": "say",
-          "message": "**Are you sure?**",
-          "buttons": [
-            {
-              "label": "Yeah, never mind.",
-              "style": 3,
-              "callback": {
-                "name": "say",
-                "message": "Okay! Always think twice before banning someone.",
-                "reply": true
-              }
-            },
-            {
-              "label": "I'm sure.",
-              "style": 4,
-              "callback": {
-                "name": "ban",
-                "member": "{first_mention}",
-                "callback": {
-                  "name": "say",
-                  "message": "User banned successfully!",
-                  "reply": true
-                }
-              }
-            }
-          ],
-          "timeIsUpCallback": {
-            "name": "say",
-            "message": "Time's Up! No more time for answering.",
-            "reply": true
-          },
-          "expiration": 10000
-        }
-      ]
-    }
+
   ]
 }

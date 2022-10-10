@@ -63,7 +63,7 @@ client.on("ready", () => {
     // Handle activities
     setInterval(() => {
         const random = Math.floor(Math.random() * activities.length);
-        client.user.setActivity({ "name": activities[random].text, "type": activities[random].type });
+        client.user.setActivity({"name": activities[random].text, "type": activities[random].type});
     }, 20000 / activities.length);
 });
 
