@@ -1,0 +1,15 @@
+{
+  "name": "natriy",
+  "main": "Code/index.js",
+  "scripts": {
+    "test": "tsc && node Code"
+  },
+  "author": "matheuscristian",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.7.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
