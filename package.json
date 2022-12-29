@@ -1,6 +1,6 @@
 {
   "name": "natriy",
-  "main": "Code/index.js",
+  "main": "Build/index.js",
   "scripts": {
     "test": "tsc && node Code"
   },
