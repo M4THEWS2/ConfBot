@@ -49,3 +49,5 @@ Now, start Natriy:
 ```sh-session
 npm start
 ```
+
+**Read more at [Documentation](https://github.com/matheuscristian/Natriy/blob/development/Docs.md).**
