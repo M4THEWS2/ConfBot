@@ -9,9 +9,10 @@ export class MacroAction extends BaseAction {
 	}
 
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
-		if (!this.options.has("macro")) {
+		const _m = this.options.has("macro");
+		if (!_m) {
 			throw new Error("Macro action needs 'macro' option!");
 		}
-		emitter.emit("macro", <string>this.options.get("macro"), message);
+		emitter.emit("macro", _m, message);
 	}
 }

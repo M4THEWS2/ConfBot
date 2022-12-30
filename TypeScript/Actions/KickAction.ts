@@ -9,7 +9,8 @@ export class KickAction extends BaseAction {
 	}
 
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
-		if (!this.options.get("member")) {
+		const _m = this.options.get("member");
+		if (!_m) {
 			throw new Error("Kick action requires 'member' option.");
 		}
 
@@ -26,11 +27,11 @@ export class KickAction extends BaseAction {
 			}
 		}
 
-		let member: GuildMember | undefined, _m: string | undefined, _c: number;
-		if ((_m = this.options.get("member")) && _m == "user" && message.member) {
+		let member: GuildMember | undefined, _c: number;
+		if (_m == "user" && message.member) {
 			member = message.member;
-		} else if ((<string>_m).startsWith("mention-")) {
-			_s = (<string>_m).split("-");
+		} else if (_m.startsWith("mention-")) {
+			_s = _m.split("-");
 			if (_s.length < 2 || Number.isNaN((_c = Number.parseInt(_s[1])))) {
 				throw new Error("Kick action has invalid 'member' option.");
 			}
@@ -61,7 +62,7 @@ export class KickAction extends BaseAction {
 				emitter.emit("macro", _s, message);
 			}
 		} catch (err) {
-			if ((_s = this.options.get("missing-permissions")) && (<{ code: number }>err)?.code === 50013) {
+			if ((<{ code: number }>err)?.code === 50013 && (_s = this.options.get("missing-permissions"))) {
 				emitter.emit("macro", _s, message);
 			}
 		}
