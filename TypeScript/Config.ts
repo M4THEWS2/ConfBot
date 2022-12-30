@@ -1,10 +1,24 @@
 import { readFileSync } from "fs";
 
-export type Options = Map<string, string>;
 export type ExecutableList = Map<string, { options: Options; actions: Array<Options> }>;
 
 type Section = { children: SectionList; items?: Options };
 type SectionList = Map<string, Section>;
+
+export class Options extends Map<string, string> {
+	getArray(prefix: string): Array<string> {
+		let arr: Array<string> = [];
+
+		for (let [key, value] of this) {
+			let _c: Array<string>;
+			if (key.startsWith(prefix) && !Number.isNaN(Number.parseInt((_c = key.split("-"))[_c.length - 1]))) {
+				arr.push(value);
+			}
+		}
+
+		return arr;
+	}
+}
 
 export class Config {
 	private readonly data: SectionList;
@@ -40,13 +54,13 @@ export class Config {
 				if (value) {
 					value = value.trimStart().trimEnd();
 				} else {
-					value = "true";
+					value = "";
 				}
 
 				key = key.trimStart().trimEnd();
 
 				if (!sectionFather.items) {
-					sectionFather.items = new Map();
+					sectionFather.items = new Options();
 				}
 
 				sectionFather.items.set(key, value);
@@ -65,7 +79,7 @@ export class Config {
 
 		for (let [executable, section] of <SectionList>this.global.children.get(type)?.children) {
 			let actions: Array<Options> = [],
-				options: Options = new Map();
+				options: Options = new Options();
 
 			if (section.children.has("options") && section.children.get("options")?.items) {
 				for (let [key, value] of <Options>section.children.get("options")?.items) {
@@ -79,7 +93,7 @@ export class Config {
 						continue;
 					}
 
-					let newAction: Options = new Map();
+					let newAction: Options = new Options();
 					for (let [key, value] of action.items) {
 						newAction.set(key, value);
 					}
