@@ -1,16 +1,16 @@
 import { Client, GuildMember, Message } from "discord.js";
 import { BaseAction } from "./BaseAction";
-import { Options } from "../Config";
+import { Items } from "../Config";
 import { EventEmitter } from "events";
 
 export class KickAction extends BaseAction {
-	constructor(options: Options) {
+	constructor(options: Items) {
 		super(options);
 	}
 
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
 		if (!this.options.get("member")) {
-			throw new Error("Kick action requires member option.");
+			throw new Error("Kick action requires 'member' option.");
 		}
 
 		let method: "kick" | "ban" = "kick",
@@ -32,7 +32,7 @@ export class KickAction extends BaseAction {
 		} else if ((<string>_m).startsWith("mention-")) {
 			_s = (<string>_m).split("-");
 			if (_s.length < 2 || Number.isNaN((_c = Number.parseInt(_s[1])))) {
-				throw new Error("Kick action has invalid member option.");
+				throw new Error("Kick action has invalid 'member' option.");
 			}
 
 			member = message.mentions.members?.at(_c - 1);
@@ -50,7 +50,7 @@ export class KickAction extends BaseAction {
 					member = m;
 				})
 				.catch(() => {
-					throw new Error("Kick action has invalid member option.");
+					throw new Error("Kick action has invalid 'member' option.");
 				});
 		}
 

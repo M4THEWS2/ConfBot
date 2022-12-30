@@ -1,11 +1,11 @@
 import { Client, Message } from "discord.js";
-import { Options } from "../Config";
-import EventEmitter from "events";
+import { Items } from "../Config";
+import { EventEmitter } from "events";
 
 export class BaseAction {
-	options: Options;
+	protected readonly options: Items;
 
-	constructor(options: Options) {
+	constructor(options: Items) {
 		this.options = options;
 	}
 

@@ -1,41 +1,40 @@
 import { Client, EmbedBuilder, Message, ButtonBuilder } from "discord.js";
-import { Options } from "../Config";
+import { Items } from "../Config";
 import { BaseAction } from "./BaseAction";
 
 export class SayAction extends BaseAction {
-	constructor(options: Options) {
+	constructor(options: Items) {
 		super(options);
 	}
 
-	public async do(client: Client<boolean>, message: Message<boolean>): Promise<void> {
-		let embedOptions: Map<number, Options> = new Map();
-		for (let [key, value] of this.options) {
+	public async do(client: Client, message: Message): Promise<void> {
+		let componentOptions: Map<string, Items> = new Map();
+		for (const [key, value] of this.options) {
 			if (!key.startsWith("embed")) {
 				continue;
 			}
 
-			let items = key.split("-");
+			const items = key.split("-");
 			if (items.length < 3) {
-				continue;
+				throw new Error("Error: some embed option is incomplete.");
 			}
 
-			let index = Number.parseInt(items[items.length - 1]);
-
-			if (Number.isNaN(index)) {
-				continue;
+			const index = items[items.length - 1];
+			if (!this.options.isAlphaNumeric(index)) {
+				throw new Error("Error: some embed property is missing index.");
 			}
 
-			items.slice(0, -1);
-			if (!embedOptions.has(index)) {
-				embedOptions.set(index, new Options());
+			items.pop();
+			if (!componentOptions.has(index)) {
+				componentOptions.set(index, new Items());
 			}
 
-			embedOptions.get(index)?.set(items[1], value);
+			componentOptions.get(index)?.set(items[1], value);
 		}
 
-		let embeds: Array<EmbedBuilder> = [];
+		const embeds: Array<EmbedBuilder> = [];
 		let _c: number | string | undefined;
-		for (let [_, embed] of embedOptions) {
+		for (const [_, embed] of componentOptions) {
 			embeds.push(
 				new EmbedBuilder({
 					title: embed.get("title"),
@@ -62,33 +61,32 @@ export class SayAction extends BaseAction {
 			);
 		}
 
-		let buttonOptions: Map<number, Options> = new Map();
-		for (let [key, value] of this.options) {
+		componentOptions = new Map();
+		for (const [key, value] of this.options) {
 			if (!key.startsWith("button")) {
 				continue;
 			}
 
-			let items = key.split("-");
+			const items = key.split("-");
 			if (items.length < 3) {
-				continue;
+				throw new Error("Error: some button option is incomplete.");
 			}
 
-			let index = Number.parseInt(items[items.length - 1]);
-
-			if (Number.isNaN(index)) {
-				continue;
+			const index = items[items.length - 1];
+			if (!this.options.isAlphaNumeric(index)) {
+				throw new Error("Error: some button property is missing index.");
 			}
 
-			items.slice(0, -1);
-			if (!buttonOptions.has(index)) {
-				buttonOptions.set(index, new Options());
+			items.pop();
+			if (!componentOptions.has(index)) {
+				componentOptions.set(index, new Items());
 			}
 
-			buttonOptions.get(index)?.set(items[1], value);
+			componentOptions.get(index)?.set(items[1], value);
 		}
 
-		let buttons: Array<ButtonBuilder> = [];
-		for (let [_, button] of buttonOptions) {
+		const buttons: Array<ButtonBuilder> = [];
+		for (const [_, button] of componentOptions) {
 			buttons.push(
 				new ButtonBuilder({
 					label: button.get("label"),

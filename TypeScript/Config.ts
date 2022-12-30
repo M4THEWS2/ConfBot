@@ -1,17 +1,47 @@
 import { readFileSync } from "fs";
 
-export type ExecutableList = Map<string, { options: Options; actions: Array<Options> }>;
+export type ExecutableList = Map<string, { options: Items; actions: Array<Items> }>;
 
-type Section = { children: SectionList; items?: Options };
+type Section = { children: SectionList; items?: Items };
 type SectionList = Map<string, Section>;
 
-export class Options extends Map<string, string> {
-	getArray(prefix: string): Array<string> {
-		let arr: Array<string> = [];
+export class Items extends Map<string, string> {
+	public isAlphaNumeric(x: string): boolean {
+		for (const c of x) {
+			switch (c) {
+				case "0":
+					break;
+				case "1":
+					break;
+				case "2":
+					break;
+				case "3":
+					break;
+				case "4":
+					break;
+				case "5":
+					break;
+				case "6":
+					break;
+				case "7":
+					break;
+				case "8":
+					break;
+				case "9":
+					break;
+				default:
+					return false;
+			}
+		}
+		return true;
+	}
 
-		for (let [key, value] of this) {
+	public getArray(prefix: string): Array<string> {
+		const arr: Array<string> = [];
+
+		for (const [key, value] of this) {
 			let _c: Array<string>;
-			if (key.startsWith(prefix) && !Number.isNaN(Number.parseInt((_c = key.split("-"))[_c.length - 1]))) {
+			if (key.startsWith(prefix) && !this.isAlphaNumeric((_c = key.split("-"))[_c.length - 1])) {
 				arr.push(value);
 			}
 		}
@@ -22,15 +52,14 @@ export class Options extends Map<string, string> {
 
 export class Config {
 	private readonly data: SectionList;
-	private readonly global: Section;
 
 	constructor(path: string) {
 		this.data = new Map();
 		this.data.set("global", { children: new Map() });
 
-		const configLines: Array<string> = readFileSync(path, { encoding: "utf-8" }).split("\n");
+		const configLines: Array<string> = readFileSync(path, { encoding: "utf-8" }).split("\n"); // Find better way to split lines
 
-		let sectionFather: Section = <Section>this.data.get("global");
+		let sectionFather: Section = this.global;
 		for (let line of configLines) {
 			line = line.trimStart().trimEnd();
 
@@ -39,9 +68,9 @@ export class Config {
 			}
 
 			if (line.startsWith("[") && line.endsWith("]")) {
-				let tree: Array<string> = line.slice(1, -1).split(".");
-				sectionFather = <Section>this.data.get("global");
-				for (let sectionName of tree) {
+				const tree: Array<string> = line.slice(1, -1).split(".");
+				sectionFather = this.global;
+				for (const sectionName of tree) {
 					if (!sectionFather.children.has(sectionName)) {
 						sectionFather.children.set(sectionName, { children: new Map() });
 					}
@@ -60,41 +89,41 @@ export class Config {
 				key = key.trimStart().trimEnd();
 
 				if (!sectionFather.items) {
-					sectionFather.items = new Options();
+					sectionFather.items = new Items();
 				}
 
 				sectionFather.items.set(key, value);
 			}
 		}
-
-		this.global = <Section>this.data.get("global");
 	}
 
 	public getExecutables(type: string): ExecutableList {
-		let executableList: ExecutableList = new Map();
+		const executableList: ExecutableList = new Map();
 
 		if (!this.global.children.has(type)) {
-			throw new Error(`Configuration file doesn't has section of name: ${type}`);
+			throw new Error(`Configuration file doesn't has section of name: '${type}'`);
 		}
 
-		for (let [executable, section] of <SectionList>this.global.children.get(type)?.children) {
-			let actions: Array<Options> = [],
-				options: Options = new Options();
+		for (const [executable, section] of <SectionList>this.global.children.get(type)?.children) {
+			const actions: Array<Items> = [],
+				options: Items = new Items();
 
-			if (section.children.has("options") && section.children.get("options")?.items) {
-				for (let [key, value] of <Options>section.children.get("options")?.items) {
+			let _o: Items | undefined;
+			if ((_o = section.children.get("options")?.items)) {
+				for (const [key, value] of _o) {
 					options.set(key, value);
 				}
 			}
 
-			if (section.children.has("actions") && section.children.get("actions")?.children.size) {
-				for (let [_, action] of <SectionList>section.children.get("actions")?.children) {
+			let _l: Section | undefined;
+			if ((_l = section.children.get("actions")) && _l?.children?.size) {
+				for (const [_, action] of _l.children) {
 					if (!action.items) {
-						continue;
+						throw new Error(`Error: action doesn't have any options. On executable: '${executable}'`);
 					}
 
-					let newAction: Options = new Options();
-					for (let [key, value] of action.items) {
+					const newAction: Items = new Items();
+					for (const [key, value] of action.items) {
 						newAction.set(key, value);
 					}
 
@@ -108,7 +137,11 @@ export class Config {
 		return executableList;
 	}
 
-	public get options(): Options | undefined {
+	public get options(): Items | undefined {
 		return this.global.children.get("options")?.items;
+	}
+
+	public get global(): Section {
+		return <Section>this.data.get("global");
 	}
 }

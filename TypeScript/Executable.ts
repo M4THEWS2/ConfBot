@@ -1,20 +1,19 @@
 import { ChannelType, Client, Message } from "discord.js";
 import { BaseAction } from "./Actions/BaseAction";
-import EventEmitter from "events";
-import { Options } from "./Config";
-
+import { Items } from "./Config";
+import { EventEmitter } from "events";
 interface log {
 	successful: boolean;
 	text: string;
 }
 
 export class Executable {
-	public name: string;
-	public macro: boolean;
-	private actions: Array<BaseAction>;
-	private options: Options;
+	public readonly name: string;
+	public readonly macro: boolean;
+	private readonly actions: Array<BaseAction>;
+	private readonly options: Items;
 
-	constructor(name: string, actions: Array<BaseAction>, options: Options, macro: boolean = false) {
+	constructor(name: string, actions: Array<BaseAction>, options: Items, macro: boolean = false) {
 		this.name = name;
 		this.actions = actions;
 		this.macro = macro;
@@ -22,7 +21,7 @@ export class Executable {
 	}
 
 	public async execute(client: Client, message: Message, emitter: EventEmitter): Promise<log> {
-		let date = new Date();
+		const date = new Date();
 
 		let _c: string | undefined;
 		if ((_c = this.options.get("allowedchannels"))) {
@@ -42,7 +41,7 @@ export class Executable {
 		}
 
 		try {
-			for (let action of this.actions) {
+			for (const action of this.actions) {
 				await action.do(client, message, emitter);
 			}
 

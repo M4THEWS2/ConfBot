@@ -1,13 +1,13 @@
 import { Client, Message } from "discord.js";
-import { Options } from "../Config";
+import { Items } from "../Config";
 import { BaseAction } from "./BaseAction";
 
 export class DelayAction extends BaseAction {
-	constructor(options: Options) {
+	constructor(options: Items) {
 		super(options);
 	}
 
-	public async do(client: Client<boolean>, message: Message<boolean>): Promise<void> {
+	public async do(client: Client, message: Message): Promise<void> {
 		return new Promise<void>((res) => {
 			let _c: number;
 			setTimeout(

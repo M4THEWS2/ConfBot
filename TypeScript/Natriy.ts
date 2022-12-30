@@ -2,23 +2,23 @@ import { ButtonBuilder, Client, ComponentType, Message } from "discord.js";
 
 import { BaseAction } from "./Actions/BaseAction";
 import { Executable } from "./Executable";
-import { Config, Options } from "./Config";
+import { Config, Items } from "./Config";
 
 import { SayAction } from "./Actions/SayAction";
 import { MacroAction } from "./Actions/MacroAction";
 import { DelayAction } from "./Actions/DelayAction";
 import { RepeatAction } from "./Actions/RepeatAction";
-
-import EventEmitter from "events";
 import { KickAction } from "./Actions/KickAction";
 
+import { EventEmitter } from "events";
+
 export class Natriy {
-	private client: Client;
-	private config: Config;
-	private commands: Map<string, Executable>;
-	private macros: Map<string, Executable>;
-	private emitter: EventEmitter;
-	private prefix: string;
+	private readonly client: Client;
+	private readonly config: Config;
+	private readonly commands: Map<string, Executable>;
+	private readonly macros: Map<string, Executable>;
+	private readonly emitter: EventEmitter;
+	private readonly prefix: string;
 
 	private typeTable: Array<[string, typeof BaseAction]> = [
 		["say", SayAction],
@@ -35,7 +35,7 @@ export class Natriy {
 
 		this.config = new Config(configPath);
 		if (!this.config.options) {
-			throw new Error("You must set at least the token option! Missing options section in config file!");
+			throw new Error("You must set at least the 'token' option! Missing options section in config file!");
 		}
 
 		this.commands = new Map();
@@ -46,25 +46,26 @@ export class Natriy {
 			this.runMacro(name, message);
 		});
 
-		if (!this.config.options?.has("prefix")) {
+		let _c: string | undefined;
+		if (!(_c = this.config.options?.get("prefix"))) {
 			this.prefix = "!";
 			console.warn('Warn: No prefix in config file. Using "!".');
 		} else {
-			this.prefix = <string>this.config.options.get("prefix");
+			this.prefix = _c;
 		}
 
-		let commandList = this.config.getExecutables("commands");
-		for (let [commandName, command] of commandList) {
+		const commandList = this.config.getExecutables("commands");
+		for (const [commandName, command] of commandList) {
 			this.commands.set(commandName, new Executable(commandName, this.resolveActions(command.actions), command.options));
 		}
 
-		let macroList = this.config.getExecutables("macros");
-		for (let [macroName, macro] of macroList) {
+		const macroList = this.config.getExecutables("macros");
+		for (const [macroName, macro] of macroList) {
 			this.macros.set(macroName, new Executable(macroName, this.resolveActions(macro.actions), macro.options, true));
 		}
 
 		this.client.on("ready", () => {
-			let date = new Date();
+			const date = new Date();
 			console.log(`Ready! ${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`);
 		});
 
@@ -75,13 +76,13 @@ export class Natriy {
 				return;
 			}
 
-			let command = message.content.slice(this.prefix.length).split(" ")[0];
+			const command = message.content.split(" ")[0].slice(this.prefix.length);
 
-			let log = await this.commands.get(command)?.execute(this.client, message, this.emitter);
+			const log = await this.commands.get(command)?.execute(this.client, message, this.emitter);
 
 			if (!log) {
-				if (this.config.options?.has("command-not-found")) {
-					this.runMacro(<string>this.config.options.get("command-not-found"), message);
+				if ((_c = this.config.options?.get("command-not-found"))) {
+					this.runMacro(_c, message);
 				}
 			} else {
 				console.log(log.text);
@@ -90,8 +91,8 @@ export class Natriy {
 
 		this.client.on("interactionCreate", async (interaction) => {
 			if (interaction.isButton()) {
-				let buttons: Array<ButtonBuilder> = [];
-				for (let button of interaction.message.components[0].components) {
+				const buttons: Array<ButtonBuilder> = [];
+				for (const button of interaction.message.components[0].components) {
 					if (button.type == ComponentType.Button) {
 						buttons.push(new ButtonBuilder(button.data).setDisabled(true));
 					}
@@ -104,10 +105,6 @@ export class Natriy {
 				let [eventName, messageId] = interaction.customId.split("/");
 
 				messageId = messageId.split(" ")[0];
-
-				if (!this.macros.has(eventName)) {
-					return;
-				}
 
 				interaction.channel?.messages
 					.fetch(messageId)
@@ -122,17 +119,18 @@ export class Natriy {
 	}
 
 	public async login(): Promise<void> {
-		if (!this.config.options?.get("token")) {
+		let _c: string | undefined;
+		if (!(_c = this.config.options?.get("token"))) {
 			throw new Error("No token in configuration file!");
 		}
-		this.client.login(this.config.options?.get("token"));
+		this.client.login(_c);
 	}
 
 	private async runMacro(name: string, message: Message): Promise<void> {
-		let log = await this.macros.get(name)?.execute(this.client, message, this.emitter);
+		const log = await this.macros.get(name)?.execute(this.client, message, this.emitter);
 
 		if (!log) {
-			console.error(`Error: macro '${name}' does not exists.`);
+			throw new Error(`Error: macro '${name}' does not exists.`);
 		} else {
 			if (this.config.options?.has("log-macro")) {
 				console.log(log.text);
@@ -140,19 +138,20 @@ export class Natriy {
 		}
 	}
 
-	private resolveActions(actions: Array<Options>): Array<BaseAction> {
-		let definedActions: Array<BaseAction> = [];
+	private resolveActions(actions: Array<Items>): Array<BaseAction> {
+		const definedActions: Array<BaseAction> = [];
 
-		for (let action of actions) {
-			if (!action.has("type")) {
-				continue;
+		let _c: string | undefined;
+		for (const action of actions) {
+			if (!(_c = action.get("type"))) {
+				throw new Error("Error: action requires option 'type'.");
 			}
 
-			let type = action.get("type");
+			const type = _c;
 
-			for (let t of this.typeTable) {
-				if (t[0] == type) {
-					definedActions.push(new t[1](action));
+			for (const [actionName, actionClass] of this.typeTable) {
+				if (actionName == type) {
+					definedActions.push(new actionClass(action));
 				}
 			}
 		}
