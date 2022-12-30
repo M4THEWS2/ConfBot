@@ -2,7 +2,8 @@
   "name": "natriy",
   "main": "Build/index.js",
   "scripts": {
-    "test": "tsc && node Code"
+    "start": "node .",
+    "test": "tsc && node Build"
   },
   "author": "matheuscristian",
   "license": "MIT",
