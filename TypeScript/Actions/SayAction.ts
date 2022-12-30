@@ -27,7 +27,7 @@ export class SayAction extends BaseAction {
 
 			items.slice(0, -1);
 			if (!embedOptions.has(index)) {
-				embedOptions.set(index, new Map());
+				embedOptions.set(index, new Options());
 			}
 
 			embedOptions.get(index)?.set(items[1], value);
@@ -81,7 +81,7 @@ export class SayAction extends BaseAction {
 
 			items.slice(0, -1);
 			if (!buttonOptions.has(index)) {
-				buttonOptions.set(index, new Map());
+				buttonOptions.set(index, new Options());
 			}
 
 			buttonOptions.get(index)?.set(items[1], value);
