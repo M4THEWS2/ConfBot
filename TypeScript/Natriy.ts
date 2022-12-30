@@ -10,6 +10,7 @@ import { DelayAction } from "./Actions/DelayAction";
 import { RepeatAction } from "./Actions/RepeatAction";
 
 import EventEmitter from "events";
+import { KickAction } from "./Actions/KickAction";
 
 export class Natriy {
 	private client: Client;
@@ -24,6 +25,7 @@ export class Natriy {
 		["macro", MacroAction],
 		["delay", DelayAction],
 		["repeat", RepeatAction],
+		["kick", KickAction],
 	];
 
 	constructor(configPath: string) {
@@ -73,7 +75,7 @@ export class Natriy {
 				return;
 			}
 
-			let command = message.content.slice(this.prefix.length);
+			let command = message.content.slice(this.prefix.length).split(" ")[0];
 
 			let log = await this.commands.get(command)?.execute(this.client, message, this.emitter);
 
