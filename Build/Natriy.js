@@ -8,9 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Natriy = void 0;
 const discord_js_1 = require("discord.js");
@@ -20,8 +17,8 @@ const SayAction_1 = require("./Actions/SayAction");
 const MacroAction_1 = require("./Actions/MacroAction");
 const DelayAction_1 = require("./Actions/DelayAction");
 const RepeatAction_1 = require("./Actions/RepeatAction");
-const events_1 = __importDefault(require("events"));
 const KickAction_1 = require("./Actions/KickAction");
+const events_1 = require("events");
 class Natriy {
     constructor(configPath) {
         var _a;
@@ -37,44 +34,45 @@ class Natriy {
         });
         this.config = new Config_1.Config(configPath);
         if (!this.config.options) {
-            throw new Error("You must set at least the token option! Missing options section in config file!");
+            throw new Error("You must set at least the 'token' option! Missing options section in config file!");
         }
         this.commands = new Map();
         this.macros = new Map();
-        this.emitter = new events_1.default();
+        this.emitter = new events_1.EventEmitter();
         this.emitter.on("macro", (name, message) => {
             this.runMacro(name, message);
         });
-        if (!((_a = this.config.options) === null || _a === void 0 ? void 0 : _a.has("prefix"))) {
+        let _c;
+        if (!(_c = (_a = this.config.options) === null || _a === void 0 ? void 0 : _a.get("prefix"))) {
             this.prefix = "!";
             console.warn('Warn: No prefix in config file. Using "!".');
         }
         else {
-            this.prefix = this.config.options.get("prefix");
+            this.prefix = _c;
         }
-        let commandList = this.config.getExecutables("commands");
-        for (let [commandName, command] of commandList) {
+        const commandList = this.config.getExecutables("commands");
+        for (const [commandName, command] of commandList) {
             this.commands.set(commandName, new Executable_1.Executable(commandName, this.resolveActions(command.actions), command.options));
         }
-        let macroList = this.config.getExecutables("macros");
-        for (let [macroName, macro] of macroList) {
+        const macroList = this.config.getExecutables("macros");
+        for (const [macroName, macro] of macroList) {
             this.macros.set(macroName, new Executable_1.Executable(macroName, this.resolveActions(macro.actions), macro.options, true));
         }
         this.client.on("ready", () => {
-            let date = new Date();
+            const date = new Date();
             console.log(`Ready! ${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`);
         });
         this.client.on("messageCreate", (message) => __awaiter(this, void 0, void 0, function* () {
-            var _b, _c;
+            var _b, _d;
             message.content = message.content.trimStart().trimEnd();
             if (!message.content.startsWith(this.prefix)) {
                 return;
             }
-            let command = message.content.slice(this.prefix.length).split(" ")[0];
-            let log = yield ((_b = this.commands.get(command)) === null || _b === void 0 ? void 0 : _b.execute(this.client, message, this.emitter));
+            const command = message.content.split(" ")[0].slice(this.prefix.length);
+            const log = yield ((_b = this.commands.get(command)) === null || _b === void 0 ? void 0 : _b.execute(this.client, message, this.emitter));
             if (!log) {
-                if ((_c = this.config.options) === null || _c === void 0 ? void 0 : _c.has("command-not-found")) {
-                    this.runMacro(this.config.options.get("command-not-found"), message);
+                if ((_c = (_d = this.config.options) === null || _d === void 0 ? void 0 : _d.get("command-not-found"))) {
+                    this.runMacro(_c, message);
                 }
             }
             else {
@@ -82,10 +80,10 @@ class Natriy {
             }
         }));
         this.client.on("interactionCreate", (interaction) => __awaiter(this, void 0, void 0, function* () {
-            var _d;
+            var _e;
             if (interaction.isButton()) {
-                let buttons = [];
-                for (let button of interaction.message.components[0].components) {
+                const buttons = [];
+                for (const button of interaction.message.components[0].components) {
                     if (button.type == discord_js_1.ComponentType.Button) {
                         buttons.push(new discord_js_1.ButtonBuilder(button.data).setDisabled(true));
                     }
@@ -95,10 +93,7 @@ class Natriy {
                 });
                 let [eventName, messageId] = interaction.customId.split("/");
                 messageId = messageId.split(" ")[0];
-                if (!this.macros.has(eventName)) {
-                    return;
-                }
-                (_d = interaction.channel) === null || _d === void 0 ? void 0 : _d.messages.fetch(messageId).then((message) => {
+                (_e = interaction.channel) === null || _e === void 0 ? void 0 : _e.messages.fetch(messageId).then((message) => {
                     this.runMacro(eventName, message);
                 }).catch(() => {
                     this.runMacro(eventName, interaction.message);
@@ -107,20 +102,21 @@ class Natriy {
         }));
     }
     login() {
-        var _a, _b;
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            if (!((_a = this.config.options) === null || _a === void 0 ? void 0 : _a.get("token"))) {
+            let _c;
+            if (!(_c = (_a = this.config.options) === null || _a === void 0 ? void 0 : _a.get("token"))) {
                 throw new Error("No token in configuration file!");
             }
-            this.client.login((_b = this.config.options) === null || _b === void 0 ? void 0 : _b.get("token"));
+            this.client.login(_c);
         });
     }
     runMacro(name, message) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            let log = yield ((_a = this.macros.get(name)) === null || _a === void 0 ? void 0 : _a.execute(this.client, message, this.emitter));
+            const log = yield ((_a = this.macros.get(name)) === null || _a === void 0 ? void 0 : _a.execute(this.client, message, this.emitter));
             if (!log) {
-                console.error(`Error: macro '${name}' does not exists.`);
+                throw new Error(`Error: macro '${name}' does not exists.`);
             }
             else {
                 if ((_b = this.config.options) === null || _b === void 0 ? void 0 : _b.has("log-macro")) {
@@ -130,15 +126,16 @@ class Natriy {
         });
     }
     resolveActions(actions) {
-        let definedActions = [];
-        for (let action of actions) {
-            if (!action.has("type")) {
-                continue;
+        const definedActions = [];
+        let _c;
+        for (const action of actions) {
+            if (!(_c = action.get("type"))) {
+                throw new Error("Error: action requires option 'type'.");
             }
-            let type = action.get("type");
-            for (let t of this.typeTable) {
-                if (t[0] == type) {
-                    definedActions.push(new t[1](action));
+            const type = _c;
+            for (const [actionName, actionClass] of this.typeTable) {
+                if (actionName == type) {
+                    definedActions.push(new actionClass(action));
                 }
             }
         }

@@ -20,7 +20,7 @@ class Executable {
     }
     execute(client, message, emitter) {
         return __awaiter(this, void 0, void 0, function* () {
-            let date = new Date();
+            const date = new Date();
             let _c;
             if ((_c = this.options.get("allowedchannels"))) {
                 if ((_c == "whitelist" && !this.options.getArray("channel-id").includes(message.channelId)) ||
@@ -32,7 +32,7 @@ class Executable {
                 }
             }
             try {
-                for (let action of this.actions) {
+                for (const action of this.actions) {
                     yield action.do(client, message, emitter);
                 }
                 return {

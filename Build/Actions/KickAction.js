@@ -18,8 +18,9 @@ class KickAction extends BaseAction_1.BaseAction {
     do(client, message, emitter) {
         var _a, _b, _d;
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.options.get("member")) {
-                throw new Error("Kick action requires member option.");
+            const _m = this.options.get("member");
+            if (!_m) {
+                throw new Error("Kick action requires 'member' option.");
             }
             let method = "kick", _s;
             if (this.options.has("ban")) {
@@ -31,14 +32,14 @@ class KickAction extends BaseAction_1.BaseAction {
                     return;
                 }
             }
-            let member, _m, _c;
-            if ((_m = this.options.get("member")) && _m == "user" && message.member) {
+            let member, _c;
+            if (_m == "user" && message.member) {
                 member = message.member;
             }
             else if (_m.startsWith("mention-")) {
                 _s = _m.split("-");
                 if (_s.length < 2 || Number.isNaN((_c = Number.parseInt(_s[1])))) {
-                    throw new Error("Kick action has invalid member option.");
+                    throw new Error("Kick action has invalid 'member' option.");
                 }
                 member = (_b = message.mentions.members) === null || _b === void 0 ? void 0 : _b.at(_c - 1);
                 if (!member) {
@@ -52,7 +53,7 @@ class KickAction extends BaseAction_1.BaseAction {
                 yield ((_d = message.guild) === null || _d === void 0 ? void 0 : _d.members.fetch(_m).then((m) => {
                     member = m;
                 }).catch(() => {
-                    throw new Error("Kick action has invalid member option.");
+                    throw new Error("Kick action has invalid 'member' option.");
                 }));
             }
             try {
@@ -62,7 +63,7 @@ class KickAction extends BaseAction_1.BaseAction {
                 }
             }
             catch (err) {
-                if ((_s = this.options.get("missing-permissions")) && (err === null || err === void 0 ? void 0 : err.code) === 50013) {
+                if ((err === null || err === void 0 ? void 0 : err.code) === 50013 && (_s = this.options.get("missing-permissions"))) {
                     emitter.emit("macro", _s, message);
                 }
             }

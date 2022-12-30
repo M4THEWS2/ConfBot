@@ -1,35 +1,64 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Config = exports.Options = void 0;
+exports.Config = exports.Items = void 0;
 const fs_1 = require("fs");
-class Options extends Map {
+class Items extends Map {
+    isAlphaNumeric(x) {
+        for (const c of x) {
+            switch (c) {
+                case "0":
+                    break;
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    break;
+                case "8":
+                    break;
+                case "9":
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
     getArray(prefix) {
-        let arr = [];
-        for (let [key, value] of this) {
+        const arr = [];
+        for (const [key, value] of this) {
             let _c;
-            if (key.startsWith(prefix) && !Number.isNaN(Number.parseInt((_c = key.split("-"))[_c.length - 1]))) {
+            if (key.startsWith(prefix) && !this.isAlphaNumeric((_c = key.split("-"))[_c.length - 1])) {
                 arr.push(value);
             }
         }
         return arr;
     }
 }
-exports.Options = Options;
+exports.Items = Items;
 class Config {
     constructor(path) {
         this.data = new Map();
         this.data.set("global", { children: new Map() });
-        const configLines = (0, fs_1.readFileSync)(path, { encoding: "utf-8" }).split("\n");
-        let sectionFather = this.data.get("global");
+        const configLines = (0, fs_1.readFileSync)(path, { encoding: "utf-8" }).split("\n"); // Find better way to split lines
+        let sectionFather = this.global;
         for (let line of configLines) {
             line = line.trimStart().trimEnd();
             if (line.startsWith("#") || line.startsWith(";") || line == "") {
                 continue;
             }
             if (line.startsWith("[") && line.endsWith("]")) {
-                let tree = line.slice(1, -1).split(".");
-                sectionFather = this.data.get("global");
-                for (let sectionName of tree) {
+                const tree = line.slice(1, -1).split(".");
+                sectionFather = this.global;
+                for (const sectionName of tree) {
                     if (!sectionFather.children.has(sectionName)) {
                         sectionFather.children.set(sectionName, { children: new Map() });
                     }
@@ -46,33 +75,34 @@ class Config {
                 }
                 key = key.trimStart().trimEnd();
                 if (!sectionFather.items) {
-                    sectionFather.items = new Options();
+                    sectionFather.items = new Items();
                 }
                 sectionFather.items.set(key, value);
             }
         }
-        this.global = this.data.get("global");
     }
     getExecutables(type) {
-        var _a, _b, _d, _e, _f;
-        let executableList = new Map();
+        var _a, _b, _d;
+        const executableList = new Map();
         if (!this.global.children.has(type)) {
-            throw new Error(`Configuration file doesn't has section of name: ${type}`);
+            throw new Error(`Configuration file doesn't has section of name: '${type}'`);
         }
-        for (let [executable, section] of (_a = this.global.children.get(type)) === null || _a === void 0 ? void 0 : _a.children) {
-            let actions = [], options = new Options();
-            if (section.children.has("options") && ((_b = section.children.get("options")) === null || _b === void 0 ? void 0 : _b.items)) {
-                for (let [key, value] of (_d = section.children.get("options")) === null || _d === void 0 ? void 0 : _d.items) {
+        for (const [executable, section] of (_a = this.global.children.get(type)) === null || _a === void 0 ? void 0 : _a.children) {
+            const actions = [], options = new Items();
+            let _o;
+            if ((_o = (_b = section.children.get("options")) === null || _b === void 0 ? void 0 : _b.items)) {
+                for (const [key, value] of _o) {
                     options.set(key, value);
                 }
             }
-            if (section.children.has("actions") && ((_e = section.children.get("actions")) === null || _e === void 0 ? void 0 : _e.children.size)) {
-                for (let [_, action] of (_f = section.children.get("actions")) === null || _f === void 0 ? void 0 : _f.children) {
+            let _l;
+            if ((_l = section.children.get("actions")) && ((_d = _l === null || _l === void 0 ? void 0 : _l.children) === null || _d === void 0 ? void 0 : _d.size)) {
+                for (const [_, action] of _l.children) {
                     if (!action.items) {
-                        continue;
+                        throw new Error(`Error: action doesn't have any options. On executable: '${executable}'`);
                     }
-                    let newAction = new Options();
-                    for (let [key, value] of action.items) {
+                    const newAction = new Items();
+                    for (const [key, value] of action.items) {
                         newAction.set(key, value);
                     }
                     actions.push(newAction);
@@ -85,6 +115,9 @@ class Config {
     get options() {
         var _a;
         return (_a = this.global.children.get("options")) === null || _a === void 0 ? void 0 : _a.items;
+    }
+    get global() {
+        return this.data.get("global");
     }
 }
 exports.Config = Config;

@@ -17,18 +17,20 @@ class RepeatAction extends BaseAction_1.BaseAction {
     }
     do(client, message, emitter) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.options.has("macro")) {
-                throw new Error("Repeat action needs macro option!");
+            let _m;
+            if (!(_m = this.options.get("macro"))) {
+                throw new Error("Repeat action needs 'macro' option!");
             }
-            if (!this.options.has("times")) {
-                throw new Error("Repeat action needs times option!");
+            let _t;
+            if (!(_t = this.options.get("times"))) {
+                throw new Error("Repeat action needs 'times' option!");
             }
-            const _c = Number.parseInt(this.options.get("times"));
+            const _c = Number.parseInt(_t);
             if (Number.isNaN(_c)) {
                 return;
             }
             for (let i = 0; i < _c; i++) {
-                emitter.emit("macro", this.options.get("macro"), message);
+                emitter.emit("macro", _m, message);
             }
         });
     }

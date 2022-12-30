@@ -20,28 +20,28 @@ class SayAction extends BaseAction_1.BaseAction {
     do(client, message) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            let embedOptions = new Map();
-            for (let [key, value] of this.options) {
+            let componentOptions = new Map();
+            for (const [key, value] of this.options) {
                 if (!key.startsWith("embed")) {
                     continue;
                 }
-                let items = key.split("-");
+                const items = key.split("-");
                 if (items.length < 3) {
-                    continue;
+                    throw new Error("Error: some embed option is incomplete.");
                 }
-                let index = Number.parseInt(items[items.length - 1]);
-                if (Number.isNaN(index)) {
-                    continue;
+                const index = items[items.length - 1];
+                if (!this.options.isAlphaNumeric(index)) {
+                    throw new Error("Error: some embed property is missing index.");
                 }
-                items.slice(0, -1);
-                if (!embedOptions.has(index)) {
-                    embedOptions.set(index, new Config_1.Options());
+                items.pop();
+                if (!componentOptions.has(index)) {
+                    componentOptions.set(index, new Config_1.Items());
                 }
-                (_a = embedOptions.get(index)) === null || _a === void 0 ? void 0 : _a.set(items[1], value);
+                (_a = componentOptions.get(index)) === null || _a === void 0 ? void 0 : _a.set(items[1], value);
             }
-            let embeds = [];
+            const embeds = [];
             let _c;
-            for (let [_, embed] of embedOptions) {
+            for (const [_, embed] of componentOptions) {
                 embeds.push(new discord_js_1.EmbedBuilder({
                     title: embed.get("title"),
                     description: embed.get("description"),
@@ -65,27 +65,27 @@ class SayAction extends BaseAction_1.BaseAction {
                     color: embed.has("color") ? (Number.isNaN((_c = Number.parseInt(embed.get("color")))) ? undefined : _c) : undefined,
                 }));
             }
-            let buttonOptions = new Map();
-            for (let [key, value] of this.options) {
+            componentOptions = new Map();
+            for (const [key, value] of this.options) {
                 if (!key.startsWith("button")) {
                     continue;
                 }
-                let items = key.split("-");
+                const items = key.split("-");
                 if (items.length < 3) {
-                    continue;
+                    throw new Error("Error: some button option is incomplete.");
                 }
-                let index = Number.parseInt(items[items.length - 1]);
-                if (Number.isNaN(index)) {
-                    continue;
+                const index = items[items.length - 1];
+                if (!this.options.isAlphaNumeric(index)) {
+                    throw new Error("Error: some button property is missing index.");
                 }
-                items.slice(0, -1);
-                if (!buttonOptions.has(index)) {
-                    buttonOptions.set(index, new Config_1.Options());
+                items.pop();
+                if (!componentOptions.has(index)) {
+                    componentOptions.set(index, new Config_1.Items());
                 }
-                (_b = buttonOptions.get(index)) === null || _b === void 0 ? void 0 : _b.set(items[1], value);
+                (_b = componentOptions.get(index)) === null || _b === void 0 ? void 0 : _b.set(items[1], value);
             }
-            let buttons = [];
-            for (let [_, button] of buttonOptions) {
+            const buttons = [];
+            for (const [_, button] of componentOptions) {
                 buttons.push(new discord_js_1.ButtonBuilder({
                     label: button.get("label"),
                     style: button.has("style") ? (Number.isNaN((_c = Number.parseInt(button.get("style")))) ? 1 : _c) : 1,
