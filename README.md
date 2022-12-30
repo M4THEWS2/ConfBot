@@ -1,4 +1,4 @@
-# Welcome to the newest version of Natriy
+# Welcome to the old version of Natriy
 
 This is the official documentation, it will help you to use Natriy by explaining all the functions and possibilities it has.
 
