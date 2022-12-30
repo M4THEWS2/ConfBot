@@ -10,15 +10,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Executable = void 0;
+const discord_js_1 = require("discord.js");
 class Executable {
     constructor(name, actions, options, macro = false) {
         this.name = name;
         this.actions = actions;
         this.macro = macro;
+        this.options = options;
     }
     execute(client, message, emitter) {
         return __awaiter(this, void 0, void 0, function* () {
             let date = new Date();
+            let _c;
+            if ((_c = this.options.get("allowedchannels"))) {
+                if ((_c == "whitelist" && !this.options.getArray("channel-id").includes(message.channelId)) ||
+                    (_c == "blacklist" && this.options.getArray("channel-id").includes(message.channelId))) {
+                    return {
+                        successful: false,
+                        text: `${message.author.username} (${message.author.id}) tried to execute '${this.name}'${this.macro ? " (macro)" : ""} in a prohibited channel: '${message.channel.type == discord_js_1.ChannelType.GuildText ? message.channel.name : "Could not get name"}' (${message.channelId}) --> ${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`,
+                    };
+                }
+            }
             try {
                 for (let action of this.actions) {
                     yield action.do(client, message, emitter);

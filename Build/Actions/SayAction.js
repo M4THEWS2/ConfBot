@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SayAction = void 0;
 const discord_js_1 = require("discord.js");
+const Config_1 = require("../Config");
 const BaseAction_1 = require("./BaseAction");
 class SayAction extends BaseAction_1.BaseAction {
     constructor(options) {
@@ -34,7 +35,7 @@ class SayAction extends BaseAction_1.BaseAction {
                 }
                 items.slice(0, -1);
                 if (!embedOptions.has(index)) {
-                    embedOptions.set(index, new Map());
+                    embedOptions.set(index, new Config_1.Options());
                 }
                 (_a = embedOptions.get(index)) === null || _a === void 0 ? void 0 : _a.set(items[1], value);
             }
@@ -79,7 +80,7 @@ class SayAction extends BaseAction_1.BaseAction {
                 }
                 items.slice(0, -1);
                 if (!buttonOptions.has(index)) {
-                    buttonOptions.set(index, new Map());
+                    buttonOptions.set(index, new Config_1.Options());
                 }
                 (_b = buttonOptions.get(index)) === null || _b === void 0 ? void 0 : _b.set(items[1], value);
             }

@@ -21,6 +21,7 @@ const MacroAction_1 = require("./Actions/MacroAction");
 const DelayAction_1 = require("./Actions/DelayAction");
 const RepeatAction_1 = require("./Actions/RepeatAction");
 const events_1 = __importDefault(require("events"));
+const KickAction_1 = require("./Actions/KickAction");
 class Natriy {
     constructor(configPath) {
         var _a;
@@ -29,6 +30,7 @@ class Natriy {
             ["macro", MacroAction_1.MacroAction],
             ["delay", DelayAction_1.DelayAction],
             ["repeat", RepeatAction_1.RepeatAction],
+            ["kick", KickAction_1.KickAction],
         ];
         this.client = new discord_js_1.Client({
             intents: ["Guilds", "GuildBans", "GuildMembers", "GuildMessages", "MessageContent"],
@@ -68,7 +70,7 @@ class Natriy {
             if (!message.content.startsWith(this.prefix)) {
                 return;
             }
-            let command = message.content.slice(this.prefix.length);
+            let command = message.content.slice(this.prefix.length).split(" ")[0];
             let log = yield ((_b = this.commands.get(command)) === null || _b === void 0 ? void 0 : _b.execute(this.client, message, this.emitter));
             if (!log) {
                 if ((_c = this.config.options) === null || _c === void 0 ? void 0 : _c.has("command-not-found")) {
