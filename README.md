@@ -13,7 +13,7 @@
 
 ## About
 
-Natriy is a program that helps you create Bots for Discord. All you need to do is edit your Bot's program settings and commands to your liking and your Bot is ready to go.
+Natriy is a program that helps you create bots for Discord. All you need to do is edit your bot's program settings and commands to your liking and your bot is ready to go.
 
 - Easy to configure
 - Configuration file follows [INI format](https://en.wikipedia.org/wiki/INI_file)
@@ -50,4 +50,4 @@ Now, start Natriy:
 npm start
 ```
 
-**Read more at [Documentation](https://github.com/matheuscristian/Natriy/blob/development/Docs.md).**
+**Read more at [Documentation](https://github.com/matheuscristian/Natriy/blob/main/Docs.md).**
