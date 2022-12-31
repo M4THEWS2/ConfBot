@@ -17,7 +17,7 @@ class MacroAction extends BaseAction_1.BaseAction {
     }
     do(client, message, emitter) {
         return __awaiter(this, void 0, void 0, function* () {
-            const _m = this.options.has("macro");
+            const _m = this.options.get("macro");
             if (!_m) {
                 throw new Error("Macro action needs 'macro' option!");
             }

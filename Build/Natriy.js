@@ -116,7 +116,7 @@ class Natriy {
         return __awaiter(this, void 0, void 0, function* () {
             const log = yield ((_a = this.macros.get(name)) === null || _a === void 0 ? void 0 : _a.execute(this.client, message, this.emitter));
             if (!log) {
-                throw new Error(`Error: macro '${name}' does not exists.`);
+                throw new Error(`macro '${name}' does not exists.`);
             }
             else {
                 if ((_b = this.config.options) === null || _b === void 0 ? void 0 : _b.has("log-macro")) {
@@ -130,7 +130,7 @@ class Natriy {
         let _c;
         for (const action of actions) {
             if (!(_c = action.get("type"))) {
-                throw new Error("Error: action requires option 'type'.");
+                throw new Error("action requires option 'type'.");
             }
             const type = _c;
             for (const [actionName, actionClass] of this.typeTable) {

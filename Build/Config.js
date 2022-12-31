@@ -99,7 +99,7 @@ class Config {
             if ((_l = section.children.get("actions")) && ((_d = _l === null || _l === void 0 ? void 0 : _l.children) === null || _d === void 0 ? void 0 : _d.size)) {
                 for (const [_, action] of _l.children) {
                     if (!action.items) {
-                        throw new Error(`Error: action doesn't have any options. On executable: '${executable}'`);
+                        throw new Error(`action doesn't have any options. On executable: '${executable}'`);
                     }
                     const newAction = new Items();
                     for (const [key, value] of action.items) {
