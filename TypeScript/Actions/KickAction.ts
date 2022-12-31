@@ -9,7 +9,7 @@ export class KickAction extends BaseAction {
 	}
 
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
-		const _m = this.options.get("member");
+		const _m: string | undefined = this.options.get("member");
 		if (!_m) {
 			throw new Error("Kick action requires 'member' option.");
 		}

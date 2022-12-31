@@ -16,12 +16,12 @@ export class SayAction extends BaseAction {
 
 			const items = key.split("-");
 			if (items.length < 3) {
-				throw new Error("Error: some embed option is incomplete.");
+				throw new Error("some embed option is incomplete.");
 			}
 
 			const index = items[items.length - 1];
 			if (!this.options.isAlphaNumeric(index)) {
-				throw new Error("Error: some embed property is missing index.");
+				throw new Error("some embed property is missing index.");
 			}
 
 			items.pop();
@@ -69,12 +69,12 @@ export class SayAction extends BaseAction {
 
 			const items = key.split("-");
 			if (items.length < 3) {
-				throw new Error("Error: some button option is incomplete.");
+				throw new Error("some button option is incomplete.");
 			}
 
 			const index = items[items.length - 1];
 			if (!this.options.isAlphaNumeric(index)) {
-				throw new Error("Error: some button property is missing index.");
+				throw new Error("some button property is missing index.");
 			}
 
 			items.pop();

@@ -119,7 +119,7 @@ export class Config {
 			if ((_l = section.children.get("actions")) && _l?.children?.size) {
 				for (const [_, action] of _l.children) {
 					if (!action.items) {
-						throw new Error(`Error: action doesn't have any options. On executable: '${executable}'`);
+						throw new Error(`action doesn't have any options. On executable: '${executable}'`);
 					}
 
 					const newAction: Items = new Items();

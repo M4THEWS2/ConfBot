@@ -130,7 +130,7 @@ export class Natriy {
 		const log = await this.macros.get(name)?.execute(this.client, message, this.emitter);
 
 		if (!log) {
-			throw new Error(`Error: macro '${name}' does not exists.`);
+			throw new Error(`macro '${name}' does not exists.`);
 		} else {
 			if (this.config.options?.has("log-macro")) {
 				console.log(log.text);
@@ -144,7 +144,7 @@ export class Natriy {
 		let _c: string | undefined;
 		for (const action of actions) {
 			if (!(_c = action.get("type"))) {
-				throw new Error("Error: action requires option 'type'.");
+				throw new Error("action requires option 'type'.");
 			}
 
 			const type = _c;
