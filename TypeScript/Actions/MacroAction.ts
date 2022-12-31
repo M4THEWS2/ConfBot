@@ -11,7 +11,7 @@ export class MacroAction extends BaseAction {
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
 		const _m: string | undefined = this.options.get("macro");
 		if (!_m) {
-			throw new Error("Macro action needs 'macro' option!");
+			throw new Error("macro action needs 'macro' option!");
 		}
 		emitter.emit("macro", _m, message);
 	}

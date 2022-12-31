@@ -101,7 +101,7 @@ export class Config {
 		const executableList: ExecutableList = new Map();
 
 		if (!this.global.children.has(type)) {
-			throw new Error(`Configuration file doesn't has section of name: '${type}'`);
+			throw new Error(`configuration file doesn't has section of name: '${type}'`);
 		}
 
 		for (const [executable, section] of <SectionList>this.global.children.get(type)?.children) {

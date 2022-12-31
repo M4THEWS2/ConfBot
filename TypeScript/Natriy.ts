@@ -35,7 +35,7 @@ export class Natriy {
 
 		this.config = new Config(configPath);
 		if (!this.config.options) {
-			throw new Error("You must set at least the 'token' option! Missing options section in config file!");
+			throw new Error("you must set at least the 'token' option! Missing options section in config file!");
 		}
 
 		this.commands = new Map();
@@ -49,7 +49,7 @@ export class Natriy {
 		let _c: string | undefined;
 		if (!(_c = this.config.options?.get("prefix"))) {
 			this.prefix = "!";
-			console.warn('Warn: No prefix in config file. Using "!".');
+			console.warn('No prefix in config file. Using "!".');
 		} else {
 			this.prefix = _c;
 		}
@@ -121,7 +121,7 @@ export class Natriy {
 	public async login(): Promise<void> {
 		let _c: string | undefined;
 		if (!(_c = this.config.options?.get("token"))) {
-			throw new Error("No token in configuration file!");
+			throw new Error("no token in configuration file!");
 		}
 		this.client.login(_c);
 	}
@@ -130,7 +130,7 @@ export class Natriy {
 		const log = await this.macros.get(name)?.execute(this.client, message, this.emitter);
 
 		if (!log) {
-			console.warn(`macro '${name}' does not exists.`);
+			console.warn(`Macro '${name}' does not exists.`);
 		} else {
 			if (this.config.options?.has("log-macro")) {
 				console.log(log.text);

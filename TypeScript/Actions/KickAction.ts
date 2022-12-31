@@ -11,7 +11,7 @@ export class KickAction extends BaseAction {
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
 		const _m: string | undefined = this.options.get("member");
 		if (!_m) {
-			throw new Error("Kick action requires 'member' option.");
+			throw new Error("kick action requires 'member' option.");
 		}
 
 		let method: "kick" | "ban" = "kick",
@@ -33,7 +33,7 @@ export class KickAction extends BaseAction {
 		} else if (_m.startsWith("mention-")) {
 			_s = _m.split("-");
 			if (_s.length < 2 || Number.isNaN((_c = Number.parseInt(_s[1])))) {
-				throw new Error("Kick action has invalid 'member' option.");
+				throw new Error("kick action has invalid 'member' option.");
 			}
 
 			member = message.mentions.members?.at(_c - 1);
@@ -51,7 +51,7 @@ export class KickAction extends BaseAction {
 					member = m;
 				})
 				.catch(() => {
-					throw new Error("Kick action has invalid 'member' option.");
+					throw new Error("kick action has invalid 'member' option.");
 				});
 		}
 

@@ -11,12 +11,12 @@ export class RepeatAction extends BaseAction {
 	public async do(client: Client, message: Message, emitter: EventEmitter): Promise<void> {
 		let _m: string | undefined;
 		if (!(_m = this.options.get("macro"))) {
-			throw new Error("Repeat action needs 'macro' option!");
+			throw new Error("repeat action needs 'macro' option!");
 		}
 
 		let _t: string | undefined;
 		if (!(_t = this.options.get("times"))) {
-			throw new Error("Repeat action needs 'times' option!");
+			throw new Error("repeat action needs 'times' option!");
 		}
 
 		const _c: number = Number.parseInt(_t);
