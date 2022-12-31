@@ -19,11 +19,11 @@ class RepeatAction extends BaseAction_1.BaseAction {
         return __awaiter(this, void 0, void 0, function* () {
             let _m;
             if (!(_m = this.options.get("macro"))) {
-                throw new Error("Repeat action needs 'macro' option!");
+                throw new Error("repeat action needs 'macro' option!");
             }
             let _t;
             if (!(_t = this.options.get("times"))) {
-                throw new Error("Repeat action needs 'times' option!");
+                throw new Error("repeat action needs 'times' option!");
             }
             const _c = Number.parseInt(_t);
             if (Number.isNaN(_c)) {

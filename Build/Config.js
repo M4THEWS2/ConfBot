@@ -85,7 +85,7 @@ class Config {
         var _a, _b, _d;
         const executableList = new Map();
         if (!this.global.children.has(type)) {
-            throw new Error(`Configuration file doesn't has section of name: '${type}'`);
+            throw new Error(`configuration file doesn't has section of name: '${type}'`);
         }
         for (const [executable, section] of (_a = this.global.children.get(type)) === null || _a === void 0 ? void 0 : _a.children) {
             const actions = [], options = new Items();

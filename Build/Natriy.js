@@ -34,7 +34,7 @@ class Natriy {
         });
         this.config = new Config_1.Config(configPath);
         if (!this.config.options) {
-            throw new Error("You must set at least the 'token' option! Missing options section in config file!");
+            throw new Error("you must set at least the 'token' option! Missing options section in config file!");
         }
         this.commands = new Map();
         this.macros = new Map();
@@ -45,7 +45,7 @@ class Natriy {
         let _c;
         if (!(_c = (_a = this.config.options) === null || _a === void 0 ? void 0 : _a.get("prefix"))) {
             this.prefix = "!";
-            console.warn('Warn: No prefix in config file. Using "!".');
+            console.warn('No prefix in config file. Using "!".');
         }
         else {
             this.prefix = _c;
@@ -106,7 +106,7 @@ class Natriy {
         return __awaiter(this, void 0, void 0, function* () {
             let _c;
             if (!(_c = (_a = this.config.options) === null || _a === void 0 ? void 0 : _a.get("token"))) {
-                throw new Error("No token in configuration file!");
+                throw new Error("no token in configuration file!");
             }
             this.client.login(_c);
         });
@@ -116,7 +116,7 @@ class Natriy {
         return __awaiter(this, void 0, void 0, function* () {
             const log = yield ((_a = this.macros.get(name)) === null || _a === void 0 ? void 0 : _a.execute(this.client, message, this.emitter));
             if (!log) {
-                throw new Error(`macro '${name}' does not exists.`);
+                console.warn(`Macro '${name}' does not exists.`);
             }
             else {
                 if ((_b = this.config.options) === null || _b === void 0 ? void 0 : _b.has("log-macro")) {
