@@ -130,7 +130,7 @@ export class Natriy {
 		const log = await this.macros.get(name)?.execute(this.client, message, this.emitter);
 
 		if (!log) {
-			throw new Error(`macro '${name}' does not exists.`);
+			console.warn(`macro '${name}' does not exists.`);
 		} else {
 			if (this.config.options?.has("log-macro")) {
 				console.log(log.text);
