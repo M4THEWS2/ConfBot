@@ -30,11 +30,11 @@ npm install
 Create command *bread*: 
 
 ```ini
-[options]
+[settings]
 prefix=!
 token=Your token.
 
-[cmds.bread.act.1]
+[commands.bread.action.1]
 type=say
 reply=
 content=I love :bread:!
