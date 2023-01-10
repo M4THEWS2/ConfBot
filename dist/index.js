@@ -1,2 +1,99 @@
-"use strict";var _path=require("path");var _fs=require("fs");var _child_process=require("child_process");var mainPackage="main";var mainClass="Program";var mainFilePath=(0,_path.join)(__dirname,"./packages/".concat(mainPackage,"/").concat(mainClass,".js"));var configFilePath=(0,_path.join)(__dirname,"../natriy.cfg");if(!(0,_fs.existsSync)(mainFilePath)){throw new Error("class ".concat(mainPackage,"/").concat(mainClass," (").concat(mainFilePath,") doesn't exists."));}if(!(0,_fs.existsSync)(configFilePath)){throw new Error("config file (".concat(configFilePath,") wasn't found."));}function spawnProgramProcess(){var newProcess=(0,_child_process.fork)(mainFilePath);newProcess.once("spawn",function(){newProcess.send("start",function(err){if(err)console.error(err);});});newProcess.once("error",function(err){console.error(err);});return newProcess;}var programProcess=spawnProgramProcess();var canUpdate=true;(0,_fs.watch)(configFilePath,function(e){if(e=="rename"){throw new Error("config file (".concat(configFilePath,") was renamed."));}if(!programProcess.connected){programProcess=spawnProgramProcess();canUpdate=false;return;}if(canUpdate){programProcess.send("update",function(err){if(err)console.error(err);});canUpdate=false;return;}if(!canUpdate)canUpdate=true;});
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJtYWluUGFja2FnZSIsIm1haW5DbGFzcyIsIm1haW5GaWxlUGF0aCIsImpvaW5QYXRoIiwiX19kaXJuYW1lIiwiY29uZmlnRmlsZVBhdGgiLCJmaWxlRXhpc3RzIiwiRXJyb3IiLCJzcGF3blByb2dyYW1Qcm9jZXNzIiwibmV3UHJvY2VzcyIsImZvcmsiLCJvbmNlIiwic2VuZCIsImVyciIsImNvbnNvbGUiLCJlcnJvciIsInByb2dyYW1Qcm9jZXNzIiwiY2FuVXBkYXRlIiwid2F0Y2hGaWxlIiwiZSIsImNvbm5lY3RlZCJdLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBqb2luIGFzIGpvaW5QYXRoIH0gZnJvbSBcInBhdGhcIjtcbmltcG9ydCB7IGV4aXN0c1N5bmMgYXMgZmlsZUV4aXN0cywgd2F0Y2ggYXMgd2F0Y2hGaWxlIH0gZnJvbSBcImZzXCI7XG5pbXBvcnQgeyBmb3JrLCBDaGlsZFByb2Nlc3MgfSBmcm9tIFwiY2hpbGRfcHJvY2Vzc1wiO1xuXG5jb25zdCBtYWluUGFja2FnZSA9IFwibWFpblwiO1xuY29uc3QgbWFpbkNsYXNzID0gXCJQcm9ncmFtXCI7XG5cbmNvbnN0IG1haW5GaWxlUGF0aCA9IGpvaW5QYXRoKF9fZGlybmFtZSwgYC4vcGFja2FnZXMvJHttYWluUGFja2FnZX0vJHttYWluQ2xhc3N9LmpzYCk7XG5jb25zdCBjb25maWdGaWxlUGF0aCA9IGpvaW5QYXRoKF9fZGlybmFtZSwgXCIuLi9uYXRyaXkuY2ZnXCIpO1xuXG5pZiAoIWZpbGVFeGlzdHMobWFpbkZpbGVQYXRoKSkge1xuXHR0aHJvdyBuZXcgRXJyb3IoYGNsYXNzICR7bWFpblBhY2thZ2V9LyR7bWFpbkNsYXNzfSAoJHttYWluRmlsZVBhdGh9KSBkb2Vzbid0IGV4aXN0cy5gKTtcbn1cblxuaWYgKCFmaWxlRXhpc3RzKGNvbmZpZ0ZpbGVQYXRoKSkge1xuXHR0aHJvdyBuZXcgRXJyb3IoYGNvbmZpZyBmaWxlICgke2NvbmZpZ0ZpbGVQYXRofSkgd2Fzbid0IGZvdW5kLmApO1xufVxuXG5mdW5jdGlvbiBzcGF3blByb2dyYW1Qcm9jZXNzKCk6IENoaWxkUHJvY2VzcyB7XG5cdGNvbnN0IG5ld1Byb2Nlc3MgPSBmb3JrKG1haW5GaWxlUGF0aCk7XG5cblx0bmV3UHJvY2Vzcy5vbmNlKFwic3Bhd25cIiwgKCkgPT4ge1xuXHRcdG5ld1Byb2Nlc3Muc2VuZChcInN0YXJ0XCIsIChlcnIpID0+IHtcblx0XHRcdGlmIChlcnIpIGNvbnNvbGUuZXJyb3IoZXJyKTtcblx0XHR9KTtcblx0fSk7XG5cblx0bmV3UHJvY2Vzcy5vbmNlKFwiZXJyb3JcIiwgKGVycikgPT4ge1xuXHRcdGNvbnNvbGUuZXJyb3IoZXJyKTtcblx0fSk7XG5cblx0cmV0dXJuIG5ld1Byb2Nlc3M7XG59XG5cbmxldCBwcm9ncmFtUHJvY2VzcyA9IHNwYXduUHJvZ3JhbVByb2Nlc3MoKTtcblxubGV0IGNhblVwZGF0ZSA9IHRydWU7XG53YXRjaEZpbGUoY29uZmlnRmlsZVBhdGgsIChlKSA9PiB7XG5cdGlmIChlID09IFwicmVuYW1lXCIpIHtcblx0XHR0aHJvdyBuZXcgRXJyb3IoYGNvbmZpZyBmaWxlICgke2NvbmZpZ0ZpbGVQYXRofSkgd2FzIHJlbmFtZWQuYCk7XG5cdH1cblxuXHRpZiAoIXByb2dyYW1Qcm9jZXNzLmNvbm5lY3RlZCkge1xuXHRcdHByb2dyYW1Qcm9jZXNzID0gc3Bhd25Qcm9ncmFtUHJvY2VzcygpO1xuXHRcdGNhblVwZGF0ZSA9IGZhbHNlO1xuXHRcdHJldHVybjtcblx0fVxuXG5cdGlmIChjYW5VcGRhdGUpIHtcblx0XHRwcm9ncmFtUHJvY2Vzcy5zZW5kKFwidXBkYXRlXCIsIChlcnIpID0+IHtcblx0XHRcdGlmIChlcnIpIGNvbnNvbGUuZXJyb3IoZXJyKTtcblx0XHR9KTtcblxuXHRcdGNhblVwZGF0ZSA9IGZhbHNlO1xuXHRcdHJldHVybjtcblx0fVxuXG5cdGlmICghY2FuVXBkYXRlKSBjYW5VcGRhdGUgPSB0cnVlO1xufSk7XG4iXSwibWFwcGluZ3MiOiJhQUFBLDBCQUNBLHNCQUNBLDRDQUVBLEdBQU1BLFlBQVcsQ0FBRyxNQUFNLENBQzFCLEdBQU1DLFVBQVMsQ0FBRyxTQUFTLENBRTNCLEdBQU1DLGFBQVksQ0FBRyxHQUFBQyxVQUFRLEVBQUNDLFNBQVMsc0JBQWdCSixXQUFXLGFBQUlDLFNBQVMsUUFBTSxDQUNyRixHQUFNSSxlQUFjLENBQUcsR0FBQUYsVUFBUSxFQUFDQyxTQUFTLENBQUUsZUFBZSxDQUFDLENBRTNELEdBQUksQ0FBQyxHQUFBRSxjQUFVLEVBQUNKLFlBQVksQ0FBQyxDQUFFLENBQzlCLEtBQU0sSUFBSUssTUFBSyxpQkFBVVAsV0FBVyxhQUFJQyxTQUFTLGNBQUtDLFlBQVksc0JBQW9CLENBQ3ZGLENBRUEsR0FBSSxDQUFDLEdBQUFJLGNBQVUsRUFBQ0QsY0FBYyxDQUFDLENBQUUsQ0FDaEMsS0FBTSxJQUFJRSxNQUFLLHdCQUFpQkYsY0FBYyxvQkFBa0IsQ0FDakUsQ0FFQSxRQUFTRyxvQkFBbUIsRUFBaUIsQ0FDNUMsR0FBTUMsV0FBVSxDQUFHLEdBQUFDLG1CQUFJLEVBQUNSLFlBQVksQ0FBQyxDQUVyQ08sVUFBVSxDQUFDRSxJQUFJLENBQUMsT0FBTyxDQUFFLFVBQU0sQ0FDOUJGLFVBQVUsQ0FBQ0csSUFBSSxDQUFDLE9BQU8sQ0FBRSxTQUFDQyxHQUFHLENBQUssQ0FDakMsR0FBSUEsR0FBRyxDQUFFQyxPQUFPLENBQUNDLEtBQUssQ0FBQ0YsR0FBRyxDQUFDLENBQzVCLENBQUMsQ0FBQyxDQUNILENBQUMsQ0FBQyxDQUVGSixVQUFVLENBQUNFLElBQUksQ0FBQyxPQUFPLENBQUUsU0FBQ0UsR0FBRyxDQUFLLENBQ2pDQyxPQUFPLENBQUNDLEtBQUssQ0FBQ0YsR0FBRyxDQUFDLENBQ25CLENBQUMsQ0FBQyxDQUVGLE1BQU9KLFdBQVUsQ0FDbEIsQ0FFQSxHQUFJTyxlQUFjLENBQUdSLG1CQUFtQixFQUFFLENBRTFDLEdBQUlTLFVBQVMsQ0FBRyxJQUFJLENBQ3BCLEdBQUFDLFNBQVMsRUFBQ2IsY0FBYyxDQUFFLFNBQUNjLENBQUMsQ0FBSyxDQUNoQyxHQUFJQSxDQUFDLEVBQUksUUFBUSxDQUFFLENBQ2xCLEtBQU0sSUFBSVosTUFBSyx3QkFBaUJGLGNBQWMsbUJBQWlCLENBQ2hFLENBRUEsR0FBSSxDQUFDVyxjQUFjLENBQUNJLFNBQVMsQ0FBRSxDQUM5QkosY0FBYyxDQUFHUixtQkFBbUIsRUFBRSxDQUN0Q1MsU0FBUyxDQUFHLEtBQUssQ0FDakIsT0FDRCxDQUVBLEdBQUlBLFNBQVMsQ0FBRSxDQUNkRCxjQUFjLENBQUNKLElBQUksQ0FBQyxRQUFRLENBQUUsU0FBQ0MsR0FBRyxDQUFLLENBQ3RDLEdBQUlBLEdBQUcsQ0FBRUMsT0FBTyxDQUFDQyxLQUFLLENBQUNGLEdBQUcsQ0FBQyxDQUM1QixDQUFDLENBQUMsQ0FFRkksU0FBUyxDQUFHLEtBQUssQ0FDakIsT0FDRCxDQUVBLEdBQUksQ0FBQ0EsU0FBUyxDQUFFQSxTQUFTLENBQUcsSUFBSSxDQUNqQyxDQUFDLENBQUMifQ==
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+const INIParser_1 = require("./INIParser");
+const node_process_1 = require("node:process");
+const node_readline_1 = require("node:readline");
+const Bot_1 = require("./Bot");
+const discordAPIBaseURL = 'https://discord.com/api';
+const configFile = (0, INIParser_1.parseFile)('natriy.cfg');
+const authorization = (_a = configFile.global.settings) === null || _a === void 0 ? void 0 : _a.token;
+if (!authorization)
+    throw new Error('Cannot find \'token\' in section settings');
+function updateSlashCommands() {
+    var _a, _b;
+    return __awaiter(this, void 0, void 0, function* () {
+        const appID = (_a = configFile.global.settings) === null || _a === void 0 ? void 0 : _a.appID;
+        if (!appID)
+            throw new Error('Cannot find \'appID\' in section settings');
+        const defaultHeaders = {
+            Authorization: `Bot ${authorization}`,
+            'Content-Type': 'application/json'
+        };
+        console.log('Retrieving commands...');
+        const res = yield fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, { headers: defaultHeaders });
+        if (!res.ok)
+            throw new Error(`Failed retrieving commands with code: ${res.status}. Maybe your token is incorrect`);
+        const resData = yield res.json();
+        console.log(`Got ${resData.length} command(s)`);
+        for (const command of resData) {
+            const { status, statusText } = yield fetch(`${discordAPIBaseURL}/applications/${appID}/commands/${command.id}`, {
+                method: 'DELETE',
+                headers: defaultHeaders
+            });
+            if (status !== 204)
+                console.warn(`Failed deleting command ${command.name} (${command.id}) with code: ${status} ${statusText}`);
+            else
+                console.log(`Deleted command successfully: ${command.name}`);
+        }
+        if (!configFile.global.commands)
+            return;
+        for (const commandName in configFile.global.commands.children) {
+            const command = configFile.global.commands.children[commandName];
+            const { status, statusText } = yield fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, {
+                method: 'POST',
+                headers: defaultHeaders,
+                body: JSON.stringify({
+                    name: commandName,
+                    description: (_b = command.description) !== null && _b !== void 0 ? _b : ''
+                })
+            });
+            if (status === 201)
+                console.log(`Created command successfully: ${commandName}`);
+            else if (status === 200)
+                console.warn(`Command already exists: ${commandName}`);
+            else
+                console.error(`Got error trying to create command '${commandName}' with code: ${status} ${statusText}`);
+        }
+    });
+}
+if (node_process_1.argv.length <= 2) {
+    const completions = 'start update'.split(' ');
+    function completer(line) {
+        const hits = completions.filter((c) => c.startsWith(line));
+        return [hits.length ? hits : completions, line];
+    }
+    const rl = (0, node_readline_1.createInterface)({ input: node_process_1.stdin, output: node_process_1.stdout, completer });
+    rl.write("'1' --> Start Bot\n");
+    rl.write("'2' --> Update commands\n");
+    rl.on('line', (line) => {
+        line = line.trim();
+        if (line.startsWith('1') || line.startsWith('start'))
+            (0, Bot_1.start)(configFile, authorization);
+        else if (line.startsWith('2') || line.startsWith('update'))
+            updateSlashCommands();
+        else {
+            rl.prompt();
+            return;
+        }
+        rl.close();
+    });
+    rl.prompt();
+}
+else {
+    if (node_process_1.argv[2] === 'update') {
+        updateSlashCommands();
+    }
+    else
+        (0, Bot_1.start)(configFile, authorization);
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7O0FBQUEsMkNBQXVDO0FBQ3ZDLCtDQUE2RTtBQUM3RSxpREFBK0M7QUFFL0MsK0JBQXlDO0FBRXpDLE1BQU0saUJBQWlCLEdBQUcseUJBQXlCLENBQUE7QUFDbkQsTUFBTSxVQUFVLEdBQUcsSUFBQSxxQkFBUyxFQUFDLFlBQVksQ0FBQyxDQUFBO0FBRTFDLE1BQU0sYUFBYSxHQUF1QixNQUFBLFVBQVUsQ0FBQyxNQUFNLENBQUMsUUFBUSwwQ0FBRSxLQUFLLENBQUE7QUFDM0UsSUFBSSxDQUFDLGFBQWE7SUFBRSxNQUFNLElBQUksS0FBSyxDQUFDLDJDQUEyQyxDQUFDLENBQUE7QUFFaEYsU0FBZSxtQkFBbUI7OztRQUNoQyxNQUFNLEtBQUssR0FBRyxNQUFBLFVBQVUsQ0FBQyxNQUFNLENBQUMsUUFBUSwwQ0FBRSxLQUFLLENBQUE7UUFDL0MsSUFBSSxDQUFDLEtBQUs7WUFBRSxNQUFNLElBQUksS0FBSyxDQUFDLDJDQUEyQyxDQUFDLENBQUE7UUFFeEUsTUFBTSxjQUFjLEdBQUc7WUFDckIsYUFBYSxFQUFFLE9BQU8sYUFBYSxFQUFFO1lBQ3JDLGNBQWMsRUFBRSxrQkFBa0I7U0FDbkMsQ0FBQTtRQUVELE9BQU8sQ0FBQyxHQUFHLENBQUMsd0JBQXdCLENBQUMsQ0FBQTtRQUNyQyxNQUFNLEdBQUcsR0FBRyxNQUFNLEtBQUssQ0FBQyxHQUFHLGlCQUFpQixpQkFBaUIsS0FBSyxXQUFXLEVBQUUsRUFBRSxPQUFPLEVBQUUsY0FBYyxFQUFFLENBQUMsQ0FBQTtRQUUzRyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUU7WUFBRSxNQUFNLElBQUksS0FBSyxDQUFDLHlDQUF5QyxHQUFHLENBQUMsTUFBTSxpQ0FBaUMsQ0FBQyxDQUFBO1FBRWxILE1BQU0sT0FBTyxHQUF5QixNQUFNLEdBQUcsQ0FBQyxJQUFJ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

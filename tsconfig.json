@@ -1,5 +1,12 @@
-{ 
+{
     "compilerOptions": {
-        "strict": true
-    }
+        "target": "ES6",
+        "module": "CommonJS",
+        "strict": true,
+        "inlineSourceMap": true,
+        "allowJs": false,
+        "outDir": "dist/"
+    },
+    "include": [ "src/**/*.ts" ],
+    "exclude": [ "node_modules/**/*" ]
 }
