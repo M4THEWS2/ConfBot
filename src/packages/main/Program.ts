@@ -1,6 +1,6 @@
 import { INIFile, parse as parseINI, Section } from "./INIParser";
 import { join as joinPath } from "path";
-import { Client } from "discord.js";
+import { ApplicationCommandType, Client } from "discord.js";
 import { Executable, loadExecutables } from "./Executable";
 
 const configFilePath = joinPath(__dirname, "../../../natriy.cfg");
@@ -49,6 +49,20 @@ export class Program {
 			}
 		});
 
+		// this.bot.on("interactionCreate", (interaction) => {
+		// 	if (!interaction.isCommand()) return;
+		// 	if (interaction.commandType != ApplicationCommandType.ChatInput) return;
+
+		// 	const command = interaction.commandName;
+
+		// 	for (const executable of this.commands) {
+		// 		if (executable.name == command) {
+		// 			executable.execute(this.bot);
+		// 			return;
+		// 		}
+		// 	}
+		// });
+
 		this.bot.login(token);
 	}
 
@@ -69,8 +83,7 @@ export class Program {
 		const tmpPrefix = this.config.getItem("prefix", this.settings);
 		
 		if (tmpPrefix) this.prefix = tmpPrefix;
-		else
-			console.warn(
+		else console.warn(
 				"Warn: using '!' as prefix because no prefix was found in section 'settings'."
 			);
 	}

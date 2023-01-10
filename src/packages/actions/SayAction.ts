@@ -7,10 +7,11 @@ export class SayAction extends BaseAction {
 		super(options);
 	}
 	async do(bot: Client, message: Message): Promise<void> {
+		
+
 		await message.channel.send({
 			content: this.options.content,
-			reply:
-				this.options.reply != null
+			reply: this.options.reply != null
 					? {
 						messageReference: message,
 						failIfNotExists: false
