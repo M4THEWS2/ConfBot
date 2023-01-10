@@ -39,8 +39,8 @@ async function updateSlashCommands () {
 
   if (!configFile.global.commands) return
 
-  for (const commandName in configFile.global.commands.children) {
-    const command = configFile.global.commands.children[commandName]
+  for (const commandName in configFile.global.commands.__children) {
+    const command = configFile.global.commands.__children[commandName]
 
     const { status, statusText } = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, {
       method: 'POST',

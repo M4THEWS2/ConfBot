@@ -11,8 +11,12 @@ export class Executable {
   }
 
   async execute (inter: ChatInputCommandInteraction, client: Client) {
-    for (const action of this.actions) {
-      await action.do(inter, client)
+    try {
+      for (const action of this.actions) {
+        await action.do(inter, client)
+      }
+    } catch (err) {
+      console.error(err)
     }
   }
 }
@@ -27,14 +31,14 @@ export function getExecutables (config: INIFile, rootSection: string): Map<strin
 
   if (!config.global[rootSection]) return executables
 
-  for (const executableName in config.global[rootSection].children) {
-    const executable = config.global[rootSection].children[executableName]
+  for (const executableName in config.global[rootSection].__children) {
+    const executable = config.global[rootSection].__children[executableName]
 
-    if (!executable.children.action) continue
+    if (!executable.__children.action) continue
 
     const actions: BaseAction[] = []
-    for (const actionKey in executable.children.action.children) {
-      const action = executable.children.action.children[actionKey]
+    for (const actionKey in executable.__children.action.__children) {
+      const action = executable.__children.action.__children[actionKey]
 
       if (!action.type) {
         console.warn(`Missing type in action: ${executableName}.action.${actionKey}`)
