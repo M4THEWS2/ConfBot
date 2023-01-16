@@ -1,7 +1,9 @@
 import BaseAction from './BaseAction'
-import { ChatInputCommandInteraction, Client } from 'discord.js'
+import { Client, Interaction } from 'discord.js'
 import { INIFile } from './INIParser'
 import SayAction from './actions/SayAction'
+import DelayAction from './actions/DelayAction'
+import MacroAction from './actions/MacroAction'
 
 export class Executable {
   private readonly actions: BaseAction[]
@@ -10,7 +12,7 @@ export class Executable {
     this.actions = actions
   }
 
-  async execute (inter: ChatInputCommandInteraction, client: Client) {
+  async execute (inter: Interaction, client: Client) {
     try {
       for (const action of this.actions) {
         await action.do(inter, client)
@@ -23,7 +25,9 @@ export class Executable {
 
 const actionsTable: { [key: string]: typeof BaseAction } = {
   none: BaseAction,
-  say: SayAction
+  say: SayAction,
+  delay: DelayAction,
+  macro: MacroAction
 }
 
 export function getExecutables (config: INIFile, rootSection: string): Map<string, Executable> {

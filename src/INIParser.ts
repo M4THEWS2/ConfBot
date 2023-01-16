@@ -44,8 +44,10 @@ export function parseFile (path: string): INIFile {
       key = key.trimEnd()
       if (key === '__children') continue
 
-      if (value) value = value.trimStart()
-      else value = ''
+      if (value) {
+        value = value.trimStart()
+        value = value.replace(/\\n/g, '\n')
+      } else value = ''
 
       lastSection[key] = value
     }

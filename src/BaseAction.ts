@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client } from 'discord.js'
+import { Client, Interaction } from 'discord.js'
 import { Section } from './INIParser'
 
 export class BaseAction {
@@ -8,9 +8,7 @@ export class BaseAction {
     this.options = options
   }
 
-  async do (inter: ChatInputCommandInteraction, client: Client) {
-    await inter.reply({ content: 'Executed!' })
-  }
+  async do (inter: Interaction, client: Client) {}
 }
 
 export default BaseAction

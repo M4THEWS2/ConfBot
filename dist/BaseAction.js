@@ -15,11 +15,9 @@ class BaseAction {
         this.options = options;
     }
     do(inter, client) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield inter.reply({ content: 'Executed!' });
-        });
+        return __awaiter(this, void 0, void 0, function* () { });
     }
 }
 exports.BaseAction = BaseAction;
 exports.default = BaseAction;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQmFzZUFjdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3NyYy9CYXNlQWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7OztBQUdBLE1BQWEsVUFBVTtJQUdyQixZQUFhLE9BQWdCO1FBQzNCLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFBO0lBQ3hCLENBQUM7SUFFSyxFQUFFLENBQUUsS0FBa0MsRUFBRSxNQUFjOztZQUMxRCxNQUFNLEtBQUssQ0FBQyxLQUFLLENBQUMsRUFBRSxPQUFPLEVBQUUsV0FBVyxFQUFFLENBQUMsQ0FBQTtRQUM3QyxDQUFDO0tBQUE7Q0FDRjtBQVZELGdDQVVDO0FBRUQsa0JBQWUsVUFBVSxDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQmFzZUFjdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3NyYy9CYXNlQWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7OztBQUdBLE1BQWEsVUFBVTtJQUdyQixZQUFhLE9BQWdCO1FBQzNCLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFBO0lBQ3hCLENBQUM7SUFFSyxFQUFFLENBQUUsS0FBa0IsRUFBRSxNQUFjOzhEQUFHLENBQUM7S0FBQTtDQUNqRDtBQVJELGdDQVFDO0FBRUQsa0JBQWUsVUFBVSxDQUFBIn0=

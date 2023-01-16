@@ -1,8 +1,22 @@
-import { APIEmbed, ChatInputCommandInteraction, Client } from 'discord.js'
+import { APIActionRowComponent, APIButtonComponent, APIEmbed, APIMessageActionRowComponent, Interaction, InteractionReplyOptions, MessageCreateOptions } from 'discord.js'
 import BaseAction from '../BaseAction'
+import { Buffer } from 'node:buffer'
+
+function generateRandomID (): string {
+  const strBuffer = Buffer.allocUnsafe(20)
+
+  for (let i = 0; i < 20; i++) {
+    let charCode = 32 + Math.floor(Math.random() * 94)
+    if (charCode === 47) charCode++
+
+    strBuffer[i] = charCode
+  }
+
+  return strBuffer.toString('ascii')
+}
 
 export class SayAction extends BaseAction {
-  async do (inter: ChatInputCommandInteraction, client: Client) {
+  async do (inter: Interaction) {
     let embed: APIEmbed | undefined
 
     if (this.options.__children.embed) {
@@ -25,10 +39,48 @@ export class SayAction extends BaseAction {
       embed.timestamp = embedOptions.timestamp != null ? (new Date()).toISOString() : undefined
     }
 
-    await inter.reply({
+    let components: APIActionRowComponent<APIMessageActionRowComponent> | undefined
+
+    if (this.options.__children.component) {
+      components = { type: 1, components: [] }
+
+      for (const componentKey in this.options.__children.component.__children) {
+        const component = this.options.__children.component.__children[componentKey]
+
+        if (!component.type) {
+          console.warn(`Missing type in component '${componentKey}'`)
+        }
+
+        if (component.type === 'button') {
+          const button: APIButtonComponent = {
+            label: <string | undefined>component.label,
+            type: 2,
+            custom_id: `${<string | undefined>component.macro ? <string>component.macro : inter.channelId}/${generateRandomID()}/${component['disable-all'] != null ? '1' : '0'}`,
+            style: <string | undefined>component.style ? (Number.parseInt(<string>component.style) ?? 1) : 1,
+            disabled: component.disabled != null,
+            url: <string | undefined>component.style === '5' ? <string | undefined>component.url : undefined
+          }
+
+          components.components.push(button)
+        }
+      }
+    }
+
+    const messageOptions: MessageCreateOptions & InteractionReplyOptions = {
       content: this.options.content ? `${this.options.reply != null ? `<@${inter.user.id}>, ` : ''}${this.options.content}` : undefined,
-      embeds: embed ? [embed] : undefined
-    })
+      embeds: embed ? [embed] : undefined,
+      components: components ? [components] : undefined
+    }
+
+    if (!inter.isChatInputCommand()) {
+      if (inter.isRepliable()) await inter.reply(messageOptions)
+
+      return
+    }
+
+    if (inter.deferred) await inter.editReply(messageOptions)
+    else if (inter.replied) await inter.followUp(messageOptions)
+    else await inter.reply(messageOptions)
   }
 }
 

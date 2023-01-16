@@ -47,7 +47,7 @@ async function updateSlashCommands () {
       headers: defaultHeaders,
       body: JSON.stringify({
         name: commandName,
-        description: <string>command.description ?? ''
+        description: <string | undefined>command.description ?? 'No description provided'
       })
     })
 
