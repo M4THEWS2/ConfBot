@@ -3,6 +3,7 @@
     <p>
         <img src="https://img.shields.io/node/v/discord.js" />
         <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/discord.js" />
+        <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/dev/typescript" />
     </p>
 </div>
 <hr />
@@ -25,14 +26,15 @@ git clone https://github.com/matheuscristian/Natriy.git
 cd Natriy
 npm install
 ```
+
 ## Example usage
 
 Create command *bread*: 
 
 ```ini
 [settings]
-prefix=!
-token=Your token.
+token=Your token
+appID=Your application ID
 
 [commands.bread.action.1]
 type=say
