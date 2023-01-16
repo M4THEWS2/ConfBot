@@ -3,6 +3,7 @@
     <p>
         <img src="https://img.shields.io/node/v/discord.js" />
         <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/discord.js" />
+        <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/dev/typescript" />
     </p>
 </div>
 <hr />
