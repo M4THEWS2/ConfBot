@@ -29,17 +29,29 @@ npm install
 
 ## Example usage
 
-Create command *bread*: 
+Create command *bread*:
 
 ```ini
 [settings]
 token=Your token
 appID=Your application ID
 
+###########
+#BREAD CMD#
+###########
+[commands.bread]
+description=Say something about breads
+
 [commands.bread.action.1]
 type=say
 reply=
 content=I love :bread:!
+```
+
+Send commands to Discord as slash commands:
+
+```sh-session
+npm run update
 ```
 
 Now, start Natriy:
