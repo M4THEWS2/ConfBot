@@ -4,7 +4,7 @@ import { BaseAction } from '../BaseAction'
 export class DelayAction extends BaseAction {
   async do (inter: Interaction): Promise<void> {
     const time = Number.parseFloat(<string> this.options.time ?? '')
-    if (inter.isChatInputCommand()) inter.deferReply()
+    if (inter.isChatInputCommand() && !inter.deferred && !inter.replied) inter.deferReply()
     return new Promise((resolve) => {
       setTimeout(() => { resolve() }, !Number.isNaN(time) ? (time * 1000) : 5000)
     })
