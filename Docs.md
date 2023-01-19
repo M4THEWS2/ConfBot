@@ -2,7 +2,7 @@
 
 ## Settings
 
-Natriy use the settings to change its way of working. Futhermore, it uses some settings values (i.e. `token` and `appID`) to be able of starting and registering commands.
+Natriy uses the settings to change its way of working. Futhermore, it uses some settings values (i.e. `token` and `appID`) to be able of starting and registering commands.
 
 **Some settings are:**
 
@@ -93,7 +93,7 @@ A macro is created the same way as a command:
 [macros.<macro-name>]
 ```
 
-Let's add an action the a macro called *'macro'*:
+Let's add an action to the a macro called *'macro'*:
 
 ```ini
 [macros.macro.action.1]
@@ -130,7 +130,7 @@ timestamp=Boolean
 
 # Each message can have a max of 5 components
 [commands.<command-name>.action.#.component.#]
-type=Component-Type # Available types: Button
+type=Component-Type # Available types: button
 
 ## Options For Button Type
 label=Text
