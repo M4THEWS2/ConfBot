@@ -16,7 +16,7 @@ function generateRandomID (): string {
 }
 
 export class SayAction extends BaseAction {
-  async do (inter: Interaction) {
+  async baseDo (inter: Interaction) {
     let embed: APIEmbed | undefined
 
     if (this.options.__children.embed) {

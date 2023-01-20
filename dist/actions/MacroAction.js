@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MacroAction = void 0;
 const BaseAction_1 = require("../BaseAction");
 class MacroAction extends BaseAction_1.BaseAction {
-    do(inter, client) {
+    baseDo(inter, client) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.options.macro) {
                 throw new Error("Macro action needs 'macro' option");
@@ -23,4 +23,4 @@ class MacroAction extends BaseAction_1.BaseAction {
 }
 exports.MacroAction = MacroAction;
 exports.default = MacroAction;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTWFjcm9BY3Rpb24uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvYWN0aW9ucy9NYWNyb0FjdGlvbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7QUFDQSw4Q0FBMEM7QUFFMUMsTUFBYSxXQUFZLFNBQVEsdUJBQVU7SUFDbkMsRUFBRSxDQUFFLEtBQTZCLEVBQUUsTUFBdUI7O1lBQzlELElBQUksQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssRUFBRTtnQkFDdkIsTUFBTSxJQUFJLEtBQUssQ0FBQyxtQ0FBbUMsQ0FBQyxDQUFBO2FBQ3JEO1lBQ0QsTUFBTSxDQUFDLElBQUksQ0FBQyxPQUFPLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLLEVBQUUsS0FBSyxDQUFDLENBQUE7UUFDakQsQ0FBQztLQUFBO0NBQ0Y7QUFQRCxrQ0FPQztBQUVELGtCQUFlLFdBQVcsQ0FBQSJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTWFjcm9BY3Rpb24uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvYWN0aW9ucy9NYWNyb0FjdGlvbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7QUFDQSw4Q0FBMEM7QUFFMUMsTUFBYSxXQUFZLFNBQVEsdUJBQVU7SUFDbkMsTUFBTSxDQUFFLEtBQTZCLEVBQUUsTUFBdUI7O1lBQ2xFLElBQUksQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssRUFBRTtnQkFDdkIsTUFBTSxJQUFJLEtBQUssQ0FBQyxtQ0FBbUMsQ0FBQyxDQUFBO2FBQ3JEO1lBQ0QsTUFBTSxDQUFDLElBQUksQ0FBQyxPQUFPLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLLEVBQUUsS0FBSyxDQUFDLENBQUE7UUFDakQsQ0FBQztLQUFBO0NBQ0Y7QUFQRCxrQ0FPQztBQUVELGtCQUFlLFdBQVcsQ0FBQSJ9
