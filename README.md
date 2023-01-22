@@ -5,8 +5,15 @@
         <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/discord.js" />
         <img src="https://img.shields.io/github/package-json/dependency-version/matheuscristian/Natriy/dev/typescript" />
     </p>
+    <p>
+        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" />
+    </p>
 </div>
 <hr />
+
+## This code uses
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
 ## About
 
@@ -22,8 +29,8 @@ Natriy is a program that helps you create bots for Discord. All you need to do i
 **Node.js 16.9.0 or newer is required.**
 
 ```sh-session
-git clone https://github.com/matheuscristian/Natriy.git
-cd Natriy
+git clone https://github.com/matheuscristian/Natriy.git && \
+cd Natriy && \
 npm install
 ```
 
@@ -36,9 +43,7 @@ Create command *bread*:
 token=Your token
 appID=Your application ID
 
-###########
-#BREAD CMD#
-###########
+# Bread command
 [commands.bread]
 description=Say something about breads
 
