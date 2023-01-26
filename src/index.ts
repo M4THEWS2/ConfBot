@@ -1,6 +1,6 @@
 import { parseFile } from './INIParser'
-import { stdout as output, stdin as input, argv as args } from 'node:process'
-import { createInterface } from 'node:readline'
+import { stdout as output, stdin as input, argv as args } from 'process'
+import { createInterface } from 'readline'
 import { ApplicationCommand } from 'discord.js'
 import { start as startBot } from './Bot'
 
@@ -19,8 +19,16 @@ async function updateSlashCommands () {
     'Content-Type': 'application/json'
   }
 
+  let res: { [key: string]: any }
+
   console.log('Retrieving commands...')
-  const res = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, { headers: defaultHeaders })
+
+  try {
+    res = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, { headers: defaultHeaders })
+  } catch {
+    console.warn('Failed retrieving commands')
+    return
+  }
 
   if (!res.ok) throw new Error(`Failed retrieving commands with code: ${res.status}. Maybe your token is incorrect`)
 
@@ -28,12 +36,17 @@ async function updateSlashCommands () {
   console.log(`Got ${resData.length} command(s)`)
 
   for (const command of resData) {
-    const { status, statusText } = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands/${command.id}`, {
-      method: 'DELETE',
-      headers: defaultHeaders
-    })
+    try {
+      res = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands/${command.id}`, {
+        method: 'DELETE',
+        headers: defaultHeaders
+      })
+    } catch {
+      console.warn(`Failed deleting command ${command.name} (${command.id})`)
+      continue
+    }
 
-    if (status !== 204) console.warn(`Failed deleting command ${command.name} (${command.id}) with code: ${status} ${statusText}`)
+    if (res.status !== 204) console.warn(`Failed deleting command ${command.name} (${command.id}) with code: ${res.status} ${res.statusText}`)
     else console.log(`Deleted command successfully: ${command.name}`)
   }
 
@@ -42,22 +55,27 @@ async function updateSlashCommands () {
   for (const commandName in configFile.global.commands.__children) {
     const command = configFile.global.commands.__children[commandName]
 
-    const { status, statusText } = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, {
-      method: 'POST',
-      headers: defaultHeaders,
-      body: JSON.stringify({
-        name: commandName,
-        description: <string | undefined>command.description ?? 'No description provided'
+    try {
+      res = await fetch(`${discordAPIBaseURL}/applications/${appID}/commands`, {
+        method: 'POST',
+        headers: defaultHeaders,
+        body: JSON.stringify({
+          name: commandName,
+          description: <string | undefined>command.description ?? 'No description provided'
+        })
       })
-    })
+    } catch {
+      console.warn(`Got error trying to create command ${commandName}`)
+      continue
+    }
 
-    if (status === 201) console.log(`Created command successfully: ${commandName}`)
-    else if (status === 200) console.warn(`Command already exists: ${commandName}`)
-    else console.error(`Got error trying to create command '${commandName}' with code: ${status} ${statusText}`)
+    if (res.status === 201) console.log(`Created command successfully: ${commandName}`)
+    else if (res.status === 200) console.warn(`Command already exists: ${commandName}`)
+    else console.error(`Got error trying to create command '${commandName}' with code: ${res.status} ${res.statusText}`)
   }
 }
 
-if (args.length <= 2) {
+if (args.length <= 2 && !module.children) {
   const completions = 'start update'.split(' ')
   function completer (line: string) {
     const hits = completions.filter((c) => c.startsWith(line))

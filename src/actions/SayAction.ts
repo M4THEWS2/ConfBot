@@ -1,6 +1,5 @@
 import { APIActionRowComponent, APIButtonComponent, APIEmbed, APIMessageActionRowComponent, Interaction, InteractionReplyOptions, MessageCreateOptions } from 'discord.js'
 import BaseAction from '../BaseAction'
-import { Buffer } from 'node:buffer'
 
 function generateRandomID (): string {
   const strBuffer = Buffer.allocUnsafe(20)
@@ -48,7 +47,8 @@ export class SayAction extends BaseAction {
         const component = this.options.__children.component.__children[componentKey]
 
         if (!component.type) {
-          console.warn(`Missing type in component '${componentKey}'`)
+          console.error(`Missing type in component '${componentKey}'`)
+          continue
         }
 
         if (component.type === 'button') {

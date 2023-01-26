@@ -16,15 +16,18 @@ export function start (config: INIFile, token: string) {
 
   bot.on('interactionCreate', async (inter) => {
     if (inter.type === InteractionType.ApplicationCommand && inter.commandType === ApplicationCommandType.ChatInput) {
+      if (!commands.has(inter.commandName)) return
       await commands.get(inter.commandName)?.execute(inter, bot)
     } else if (inter.type === InteractionType.MessageComponent) {
       const interArgs = inter.customId.split('/')
+      if (interArgs.length < 3) return
+
       const macroName = interArgs[0]
 
-      await macros.get(macroName)?.execute(inter, bot)
+      if (macros.has(macroName)) await macros.get(macroName)?.execute(inter, bot)
 
-      if (inter.isButton() && interArgs[2] === '1') {
-        const newComponents = Object.assign({}, inter.message.components)[0].toJSON()
+      if (interArgs[2] !== '0') {
+        const newComponents = inter.message.components[0].toJSON()
 
         for (const component of newComponents.components) {
           if (component.type === 2) {
@@ -38,6 +41,8 @@ export function start (config: INIFile, token: string) {
   })
 
   bot.on('macro', async (macroName: string, inter: Interaction) => {
+    if (!macroName) return
+    if (!macros.has(macroName)) return
     await macros.get(macroName)?.execute(inter, bot)
   })
 
