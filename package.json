@@ -1,6 +1,5 @@
 {
-  "name": "discord-bot-maker",
-  "version": "1.0.0",
+  "name": "natriy",
   "description": "A Discord bot maker",
   "main": "build/app.js",
   "scripts": {
@@ -12,6 +11,10 @@
     "delete_commands": "tsc && node build/scripts/delete_commands.js"
   },
   "author": "Matheus Cristian",
+  "repository": {
+    "url": "https://github.com/matheuscristian/Natriy/",
+    "type": "github"
+  },
   "license": "GPL-3.0",
   "devDependencies": {
     "@jest/globals": "^29.6.2",
