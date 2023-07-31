@@ -1,0 +1,8 @@
+token:
+application:
+commands:
+    ping:
+        description: Sends pong!
+        actions:
+            - type: say
+              content: Pong!

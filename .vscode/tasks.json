@@ -1,0 +1,46 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "test",
+			"group": "test",
+			"problemMatcher": [],
+			"label": "npm: test",
+			"detail": "tsc && jest --rootDir=build/"
+		},
+		{
+			"type": "npm",
+			"script": "deploy_commands",
+			"problemMatcher": [],
+			"label": "npm: deploy_commands",
+			"detail": "tsc && node build/scripts/deploy_commands.js"
+		},
+		{
+			"type": "npm",
+			"script": "delete_commands",
+			"problemMatcher": [],
+			"label": "npm: delete_commands",
+			"detail": "tsc && node build/scripts/delete_commands.js"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "tsc"
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: watch",
+			"detail": "tsc --watch"
+		}
+	]
+}
